@@ -1,9 +1,8 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
   postgres:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     container_name: glacier_postgres
     environment:
       POSTGRES_USER: ${DB_USER:-glacier_user}
@@ -19,7 +18,6 @@ services:
       timeout: 5s
       retries: 5
 
-  # Redis Cache
   redis:
     image: redis:7-alpine
     container_name: glacier_redis
@@ -33,19 +31,26 @@ services:
       timeout: 5s
       retries: 5
 
-  # Python Backend (FastAPI)
   backend:
     build:
-      context: .
-      dockerfile: backend.Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: glacier_backend
     environment:
       DATABASE_URL: postgresql://${DB_USER:-glacier_user}:${DB_PASSWORD:-glacier_password}@postgres:5432/${DB_NAME:-glacier_ai}
-      REDIS_URL: redis://redis:6379
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: ${SECRET_KEY:-your_secret_key_change_in_prod}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
+      TWILIO_PHONE_NUMBER: ${TWILIO_PHONE_NUMBER}
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
       NODE_ENV: ${NODE_ENV:-development}
       PYTHONUNBUFFERED: 1
     volumes:
-      - ./backend:/app/backend
+      - ./backend:/app
     ports:
       - "8000:8000"
     depends_on:
@@ -60,25 +65,23 @@ services:
       timeout: 3s
       retries: 3
 
-  # Next.js Frontend
   frontend:
     build:
-      context: .
-      dockerfile: frontend.Dockerfile
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: glacier_frontend
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8000
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
       NODE_ENV: ${NODE_ENV:-development}
-    volumes:
-      - ./pages:/app/pages
-      - ./components:/app/components
-      - ./styles:/app/styles
-      - ./public:/app/public
     ports:
       - "3000:3000"
     depends_on:
       - backend
-    command: npm run dev
+    volumes:
+      - ./frontend:/app
+      - /app/.next
+      - /app/node_modules
 
 volumes:
   postgres_data:
