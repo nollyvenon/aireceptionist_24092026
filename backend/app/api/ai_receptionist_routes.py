@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, WebSocket
 from sqlalchemy.orm import Session
 from uuid import UUID
 from datetime import datetime
-from app.database import get_db
+from database import get_db
 from app.models.ai_conversation import AIConversation, ConversationMessage
 from app.services.ai_service import AIService
 from app.middleware.auth import get_current_user

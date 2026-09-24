@@ -42,6 +42,10 @@ class PaymentIntentResponse(BaseModel):
     amount_cents: int
     currency: str
 
+class PaymentUpdate(BaseModel):
+    status: Optional[str] = None
+    description: Optional[str] = None
+
 class RefundRequest(BaseModel):
     reason: str = Field(..., max_length=500)
     amount_cents: Optional[int] = None  # If not provided, refund full amount

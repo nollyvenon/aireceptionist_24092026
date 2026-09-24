@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
-from app.database import get_db
+from database import get_db
 from app.services.analytics_service import AnalyticsService
 from app.middleware.auth import get_current_user
 

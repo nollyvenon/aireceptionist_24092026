@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from uuid import UUID
-from app.database import get_db
+from database import get_db
 from app.models.integration import Integration, APIKey, Webhook
 from app.middleware.auth import get_current_user
 
