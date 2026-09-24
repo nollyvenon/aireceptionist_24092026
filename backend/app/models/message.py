@@ -153,7 +153,7 @@ class Campaign(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationships
-    organization = relationship("Organization", backref="campaigns")
+    organization = relationship("Organization", back_populates="campaigns")
     template = relationship("MessageTemplate", back_populates="campaigns")
     messages = relationship("Message", back_populates="campaign", cascade="all, delete-orphan")
 

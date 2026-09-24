@@ -70,7 +70,7 @@ class APIKey(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationships
-    organization = relationship("Organization", backref="api_keys")
+    organization = relationship("Organization", back_populates="api_keys")
     integration = relationship("Integration", back_populates="api_keys")
 
     __table_args__ = (
@@ -115,7 +115,7 @@ class Webhook(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationships
-    organization = relationship("Organization", backref="webhooks")
+    organization = relationship("Organization", back_populates="webhooks")
     integration = relationship("Integration", back_populates="webhooks")
 
     __table_args__ = (

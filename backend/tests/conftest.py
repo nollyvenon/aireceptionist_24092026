@@ -94,7 +94,7 @@ def test_organization(db: Session):
         phone="+1234567890",
         website="https://testorg.com",
         timezone="UTC",
-        subscription_plan="professional",
+        plan="professional",
         ai_enabled=True,
         voice_enabled=True,
         whatsapp_enabled=False,
