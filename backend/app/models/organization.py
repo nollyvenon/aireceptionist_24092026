@@ -61,6 +61,7 @@ class Organization(Base):
     payments = relationship("Payment", back_populates="organization", cascade="all, delete-orphan")
     activities = relationship("Activity", back_populates="organization", cascade="all, delete-orphan")
     automations = relationship("Automation", back_populates="organization", cascade="all, delete-orphan")
+    subscription = relationship("Subscription", back_populates="organization", uselist=False, cascade="all, delete-orphan")
 
     __table_args__ = (
         Index("idx_orgs_plan", "plan"),

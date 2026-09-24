@@ -100,8 +100,8 @@ class Appointment(Base):
     organization = relationship("Organization", back_populates="appointments")
     customer = relationship("Customer", back_populates="appointments")
     assigned_to = relationship("User", foreign_keys=[assigned_to_id], back_populates="appointments")
-    created_by = relationship("User", foreign_keys=[created_by_id])
-    payment = relationship("Payment", back_populates="appointment", uselist=False)
+    created_by = relationship("User", foreign_keys=[created_by_id], overlaps="appointments")
+    payment = relationship("Payment", back_populates="appointment", uselist=False, foreign_keys="[Payment.appointment_id]")
     activities = relationship("Activity", foreign_keys="[Activity.appointment_id]", cascade="all, delete-orphan")
 
     __table_args__ = (
