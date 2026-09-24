@@ -168,10 +168,10 @@ OPENAI_API_KEY=xxx
 
 ## 📚 Documentation
 
-- [API Documentation](./docs/api.md)
-- [Deployment Guide](./docs/deployment.md)
-- [Developer Guide](./docs/development.md)
-- [Architecture](./docs/architecture.md)
+- [API Documentation](./API.md)
+- [Deployment Guide](./DEPLOYMENT.md)
+- [Backend Architecture](./backend/README.md)
+- [Frontend Guide](./frontend/README.md)
 
 ## 🤝 Contributing
 
