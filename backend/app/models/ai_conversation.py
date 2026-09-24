@@ -68,8 +68,8 @@ class AIConversation(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationships
-    organization = relationship("Organization", backref="ai_conversations")
-    customer = relationship("Customer", backref="ai_conversations")
+    organization = relationship("Organization", back_populates="ai_conversations")
+    customer = relationship("Customer", back_populates="ai_conversations")
     messages = relationship("ConversationMessage", back_populates="conversation", cascade="all, delete-orphan")
 
     __table_args__ = (

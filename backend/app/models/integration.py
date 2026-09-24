@@ -33,7 +33,7 @@ class Integration(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationships
-    organization = relationship("Organization", backref="integrations")
+    organization = relationship("Organization", back_populates="integrations")
     api_keys = relationship("APIKey", back_populates="integration", cascade="all, delete-orphan")
     webhooks = relationship("Webhook", back_populates="integration", cascade="all, delete-orphan")
 

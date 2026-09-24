@@ -77,7 +77,7 @@ class Payment(Base):
     # Relationships
     organization = relationship("Organization", back_populates="payments")
     customer = relationship("Customer", back_populates="payments")
-    appointment = relationship("Appointment", back_populates="payment", uselist=False)
+    appointment = relationship("Appointment", back_populates="payment", uselist=False, foreign_keys=[appointment_id])
 
     __table_args__ = (
         Index("idx_payments_org_status", "organization_id", "status"),

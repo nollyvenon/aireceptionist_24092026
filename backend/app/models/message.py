@@ -64,8 +64,8 @@ class Message(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationships
-    organization = relationship("Organization", backref="messages")
-    customer = relationship("Customer", backref="messages")
+    organization = relationship("Organization", back_populates="messages")
+    customer = relationship("Customer", back_populates="messages")
     campaign = relationship("Campaign", back_populates="messages")
 
     __table_args__ = (
@@ -103,7 +103,7 @@ class MessageTemplate(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationships
-    organization = relationship("Organization", backref="message_templates")
+    organization = relationship("Organization", back_populates="message_templates")
     campaigns = relationship("Campaign", back_populates="template")
 
     __table_args__ = (
