@@ -1,5 +1,6 @@
 """Rate limiting middleware"""
 
+from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi import Request, status
 from fastapi.responses import JSONResponse
 from datetime import datetime, timedelta
@@ -7,13 +8,13 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-class RateLimitMiddleware:
+class RateLimitMiddleware(BaseHTTPMiddleware):
     def __init__(self, app, requests_per_minute: int = 60):
-        self.app = app
+        super().__init__(app)
         self.requests_per_minute = requests_per_minute
         self.requests = {}
 
-    async def __call__(self, request: Request, call_next):
+    async def dispatch(self, request: Request, call_next):
         client_ip = request.client.host if request.client else "unknown"
 
         if client_ip not in self.requests:

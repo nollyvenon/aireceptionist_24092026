@@ -4,14 +4,13 @@ from fastapi import APIRouter, Depends, HTTPException, WebSocket
 from sqlalchemy.orm import Session
 from uuid import UUID
 from datetime import datetime
-from app.database import get_db
+from database import get_db
 from app.models.ai_conversation import AIConversation, ConversationMessage
 from app.services.ai_service import AIService
 from app.middleware.auth import get_current_user
 import json
 
 router = APIRouter(prefix="/api/v1/ai", tags=["ai-receptionist"])
-ai_service = AIService()
 
 # Chat endpoint
 @router.post("/chat")
@@ -22,13 +21,14 @@ async def chat_with_ai(
 ):
     """Chat with AI receptionist"""
     try:
-        response = await ai_service.process_message(
-            organization_id=current_user.get("organization_id"),
-            customer_id=current_user.get("customer_id"),
-            message_text=message.get("text"),
-            conversation_id=message.get("conversation_id"),
-            context=message.get("context"),
+        ai_service = AIService(
+            organization_id=current_user.organization_id,
             db=db
+        )
+        response = ai_service.process_customer_message(
+            message=message.get("text"),
+            customer_id=current_user.id,
+            conversation_history=message.get("history")
         )
         return {
             "response": response.get("text"),

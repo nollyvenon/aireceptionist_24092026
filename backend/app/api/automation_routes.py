@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from uuid import UUID
-from app.database import get_db
+from database import get_db
 from app.models.automation import Automation, AutomationTrigger, AutomationAction
 from app.schemas.automation import AutomationCreate, AutomationUpdate
 from app.services.automation_service import AutomationService

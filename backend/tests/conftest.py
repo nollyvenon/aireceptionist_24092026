@@ -1,11 +1,34 @@
 """Test configuration and fixtures"""
 
 import pytest
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event, String, TypeDecorator
 from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.pool import StaticPool
 from fastapi.testclient import TestClient
 from uuid import uuid4
 from datetime import datetime, timedelta
+import sqlalchemy.dialects.postgresql as pg_dialect
+
+# Monkey-patch PostgreSQL UUID to use String for SQLite testing BEFORE importing models
+class TestUUID(TypeDecorator):
+    """UUID type that works with SQLite"""
+    impl = String(36)
+    cache_ok = True
+
+    def __init__(self, *args, as_uuid=False, **kwargs):
+        # Ignore as_uuid parameter from PostgreSQL UUID
+        super().__init__(*args, **kwargs)
+
+    def process_bind_param(self, value, dialect):
+        if value is None:
+            return None
+        return str(value)
+
+    def process_result_value(self, value, dialect):
+        return value
+
+# Replace UUID type before importing models
+pg_dialect.UUID = TestUUID
 
 from main import app
 from database import get_db, Base
@@ -19,8 +42,19 @@ from app.services.auth_service import AuthService
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+    SQLALCHEMY_DATABASE_URL,
+    connect_args={"check_same_thread": False},
+    poolclass=StaticPool,
+    echo=False
 )
+
+# Enable foreign keys for SQLite
+@event.listens_for(engine, "connect")
+def set_sqlite_pragma(dbapi_conn, connection_record):
+    cursor = dbapi_conn.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
+
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base.metadata.create_all(bind=engine)
@@ -60,7 +94,7 @@ def test_organization(db: Session):
         phone="+1234567890",
         website="https://testorg.com",
         timezone="UTC",
-        subscription_plan="professional",
+        plan="professional",
         ai_enabled=True,
         voice_enabled=True,
         whatsapp_enabled=False,

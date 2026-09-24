@@ -172,3 +172,7 @@ Always be:
             available_slots.extend(slots)
 
         return available_slots[:10]  # Return next 10 available slots
+
+
+# Alias for backwards compatibility
+AIService = AIReceptionistService

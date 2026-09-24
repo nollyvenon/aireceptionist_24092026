@@ -80,6 +80,8 @@ class Customer(Base):
     appointments = relationship("Appointment", back_populates="customer", cascade="all, delete-orphan")
     activities = relationship("Activity", foreign_keys="[Activity.customer_id]", cascade="all, delete-orphan")
     payments = relationship("Payment", back_populates="customer", cascade="all, delete-orphan")
+    messages = relationship("Message", back_populates="customer", cascade="all, delete-orphan")
+    ai_conversations = relationship("AIConversation", back_populates="customer", cascade="all, delete-orphan")
 
     __table_args__ = (
         Index("idx_customers_org_email", "organization_id", "email"),

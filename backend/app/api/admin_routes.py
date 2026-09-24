@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from uuid import UUID
-from app.database import get_db
+from database import get_db
 from app.models.organization import Organization
 from app.models.user import User
 from app.models.subscription import Subscription

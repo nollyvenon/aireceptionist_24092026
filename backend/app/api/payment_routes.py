@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from uuid import UUID
 from datetime import datetime
-from app.database import get_db
+from database import get_db
 from app.models.payment import Payment, PaymentStatus, PaymentMethod
 from app.models.organization import Organization
 from app.schemas.payment import PaymentCreate, PaymentUpdate, PaymentResponse

@@ -1,5 +1,6 @@
 """Global error handling middleware"""
 
+from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi import Request, status
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import HTTPException
@@ -9,11 +10,8 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
-class ErrorHandlerMiddleware:
-    def __init__(self, app):
-        self.app = app
-
-    async def __call__(self, request: Request, call_next):
+class ErrorHandlerMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
         try:
             response = await call_next(request)
             return response
