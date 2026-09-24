@@ -1,179 +1,208 @@
-"""Automation API routes"""
+"""Automation/Workflow routes"""
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from uuid import UUID
-from pydantic import BaseModel
-from typing import List, Optional
-
-from database import get_db
-from app.services.auth_service import AuthService
-from app.models.automation import Automation
+from app.database import get_db
+from app.models.automation import Automation, AutomationTrigger, AutomationAction
+from app.schemas.automation import AutomationCreate, AutomationUpdate
+from app.services.automation_service import AutomationService
+from app.middleware.auth import get_current_user
 
 router = APIRouter(prefix="/api/v1/automations", tags=["automations"])
+automation_service = AutomationService()
 
-class AutomationCreate(BaseModel):
-    name: str
-    description: Optional[str] = None
-    trigger: str
-    trigger_conditions: dict
-    actions: List[dict]
-    is_active: bool = True
-
-class AutomationUpdate(BaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
-    trigger_conditions: Optional[dict] = None
-    actions: Optional[List[dict]] = None
-    is_active: Optional[bool] = None
-
-class AutomationResponse(BaseModel):
-    id: UUID
-    name: str
-    description: Optional[str]
-    trigger: str
-    is_active: bool
-    execution_count: int
-    success_count: int
-    failure_count: int
-    created_at: str
-
-    class Config:
-        from_attributes = True
-
-def get_current_user(token: str = Query(...), db: Session = Depends(get_db)):
-    """Get current user"""
-    token_data = AuthService.verify_token(token)
-    if not token_data:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-
-    from app.services.user_service import UserService
-    user = UserService.get_user(token_data.user_id, db)
-    if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
-
-    return user
-
-@router.post("", response_model=AutomationResponse)
+# Create automation workflow
+@router.post("/", response_model=dict)
 async def create_automation(
-    auto_data: AutomationCreate,
-    user = Depends(get_current_user),
+    automation_data: AutomationCreate,
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Create new automation"""
-    automation = Automation(
-        organization_id=user.organization_id,
-        name=auto_data.name,
-        description=auto_data.description,
-        trigger=auto_data.trigger,
-        trigger_conditions=auto_data.trigger_conditions,
-        actions=auto_data.actions,
-        is_active=auto_data.is_active
-    )
-    db.add(automation)
-    db.commit()
-    db.refresh(automation)
-    return automation
+    """Create automation workflow"""
+    try:
+        automation = Automation(
+            organization_id=current_user.get("organization_id"),
+            name=automation_data.name,
+            description=automation_data.description,
+            trigger_type=automation_data.trigger_type,
+            trigger_config=automation_data.trigger_config,
+            conditions=automation_data.conditions,
+            actions=automation_data.actions,
+            is_active=True
+        )
+        db.add(automation)
+        db.commit()
+        db.refresh(automation)
+        return automation
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-@router.get("", response_model=dict)
+# List automations
+@router.get("/")
 async def list_automations(
-    skip: int = Query(0, ge=0),
-    limit: int = Query(50, ge=1, le=100),
-    user = Depends(get_current_user),
+    skip: int = 0,
+    limit: int = 50,
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """List automations"""
-    query = db.query(Automation).filter(Automation.organization_id == user.organization_id)
-    total = query.count()
-    automations = query.offset(skip).limit(limit).all()
+    """List all automations"""
+    return db.query(Automation).filter(
+        Automation.organization_id == current_user.get("organization_id")
+    ).offset(skip).limit(limit).all()
 
-    return {
-        "items": automations,
-        "total": total,
-        "skip": skip,
-        "limit": limit
-    }
-
-@router.get("/{automation_id}", response_model=AutomationResponse)
+# Get automation
+@router.get("/{automation_id}")
 async def get_automation(
     automation_id: UUID,
-    user = Depends(get_current_user),
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get automation by ID"""
+    """Get automation details"""
     automation = db.query(Automation).filter(
         Automation.id == automation_id,
-        Automation.organization_id == user.organization_id
+        Automation.organization_id == current_user.get("organization_id")
     ).first()
-
     if not automation:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Automation not found")
-
+        raise HTTPException(status_code=404, detail="Automation not found")
     return automation
 
-@router.put("/{automation_id}", response_model=AutomationResponse)
+# Update automation
+@router.put("/{automation_id}")
 async def update_automation(
     automation_id: UUID,
-    auto_data: AutomationUpdate,
-    user = Depends(get_current_user),
+    automation_data: AutomationUpdate,
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Update automation"""
     automation = db.query(Automation).filter(
         Automation.id == automation_id,
-        Automation.organization_id == user.organization_id
+        Automation.organization_id == current_user.get("organization_id")
     ).first()
-
     if not automation:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Automation not found")
-
-    update_data = auto_data.dict(exclude_unset=True)
-    for key, value in update_data.items():
-        if value is not None:
-            setattr(automation, key, value)
-
-    db.add(automation)
+        raise HTTPException(status_code=404, detail="Automation not found")
+    
+    automation.name = automation_data.name or automation.name
+    automation.description = automation_data.description or automation.description
+    automation.actions = automation_data.actions or automation.actions
     db.commit()
     db.refresh(automation)
     return automation
 
+# Delete automation
 @router.delete("/{automation_id}")
 async def delete_automation(
     automation_id: UUID,
-    user = Depends(get_current_user),
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Delete automation"""
     automation = db.query(Automation).filter(
         Automation.id == automation_id,
-        Automation.organization_id == user.organization_id
+        Automation.organization_id == current_user.get("organization_id")
     ).first()
-
     if not automation:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Automation not found")
-
+        raise HTTPException(status_code=404, detail="Automation not found")
+    
     db.delete(automation)
     db.commit()
-    return {"message": "Automation deleted successfully"}
+    return {"status": "deleted"}
 
+# Toggle automation
 @router.post("/{automation_id}/toggle")
 async def toggle_automation(
     automation_id: UUID,
-    user = Depends(get_current_user),
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Toggle automation active status"""
+    """Enable/disable automation"""
     automation = db.query(Automation).filter(
         Automation.id == automation_id,
-        Automation.organization_id == user.organization_id
+        Automation.organization_id == current_user.get("organization_id")
     ).first()
-
     if not automation:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Automation not found")
-
+        raise HTTPException(status_code=404, detail="Automation not found")
+    
     automation.is_active = not automation.is_active
-    db.add(automation)
     db.commit()
     db.refresh(automation)
+    return {"is_active": automation.is_active}
 
-    return {"message": f"Automation {'activated' if automation.is_active else 'deactivated'}", "automation": automation}
+# Trigger automation manually
+@router.post("/{automation_id}/trigger")
+async def trigger_automation_manual(
+    automation_id: UUID,
+    trigger_data: dict,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Manually trigger automation"""
+    try:
+        automation = db.query(Automation).filter(
+            Automation.id == automation_id,
+            Automation.organization_id == current_user.get("organization_id")
+        ).first()
+        if not automation:
+            raise HTTPException(status_code=404, detail="Automation not found")
+        
+        result = await automation_service.execute_automation(
+            automation=automation,
+            trigger_data=trigger_data,
+            db=db
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+# Automation templates
+@router.get("/templates/list")
+async def get_automation_templates():
+    """Get automation templates"""
+    return [
+        {
+            "name": "Send reminder before appointment",
+            "trigger": "appointment_24h_before",
+            "actions": ["send_sms", "send_email"]
+        },
+        {
+            "name": "Follow-up after appointment",
+            "trigger": "appointment_completed",
+            "actions": ["send_email", "request_review"]
+        },
+        {
+            "name": "Upsell after payment",
+            "trigger": "payment_received",
+            "actions": ["send_email", "update_crm"]
+        },
+        {
+            "name": "Cancel reminder for no-show",
+            "trigger": "no_show",
+            "actions": ["send_sms", "cancel_recurring"]
+        }
+    ]
+
+# Test automation
+@router.post("/{automation_id}/test")
+async def test_automation(
+    automation_id: UUID,
+    test_data: dict,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Test automation with sample data"""
+    try:
+        automation = db.query(Automation).filter(
+            Automation.id == automation_id,
+            Automation.organization_id == current_user.get("organization_id")
+        ).first()
+        if not automation:
+            raise HTTPException(status_code=404, detail="Automation not found")
+        
+        result = await automation_service.test_automation(
+            automation=automation,
+            test_data=test_data
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))

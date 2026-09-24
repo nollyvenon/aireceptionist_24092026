@@ -10,7 +10,11 @@ from app.api import (
     settings_routes,
     automation_routes,
     activity_routes,
-    analytics_routes
+    analytics_routes,
+    messaging_routes,
+    ai_receptionist_routes,
+    marketplace_routes,
+    admin_routes
 )
 
 __all__ = [
@@ -23,5 +27,9 @@ __all__ = [
     "settings_routes",
     "automation_routes",
     "activity_routes",
-    "analytics_routes"
+    "analytics_routes",
+    "messaging_routes",
+    "ai_receptionist_routes",
+    "marketplace_routes",
+    "admin_routes"
 ]

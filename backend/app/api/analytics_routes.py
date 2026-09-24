@@ -1,190 +1,201 @@
-"""Analytics API routes"""
+"""Analytics and reporting routes"""
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from sqlalchemy import func
-from uuid import UUID
 from datetime import datetime, timedelta
-from typing import Optional
-
-from database import get_db
-from app.services.auth_service import AuthService
-from app.models.appointment import Appointment
-from app.models.customer import Customer
-from app.models.payment import Payment
-from app.models.activity import Activity
+from app.database import get_db
+from app.services.analytics_service import AnalyticsService
+from app.middleware.auth import get_current_user
 
 router = APIRouter(prefix="/api/v1/analytics", tags=["analytics"])
+analytics_service = AnalyticsService()
 
-def get_current_user(token: str = Query(...), db: Session = Depends(get_db)):
-    """Get current user"""
-    token_data = AuthService.verify_token(token)
-    if not token_data:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-
-    from app.services.user_service import UserService
-    user = UserService.get_user(token_data.user_id, db)
-    if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
-
-    return user
-
-@router.get("/dashboard/summary")
-async def get_dashboard_summary(
-    user = Depends(get_current_user),
+# Dashboard metrics
+@router.get("/dashboard")
+async def get_dashboard_metrics(
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get dashboard summary metrics"""
-    org_id = user.organization_id
+    """Get dashboard overview metrics"""
+    try:
+        metrics = await analytics_service.get_dashboard_metrics(
+            organization_id=current_user.get("organization_id"),
+            db=db
+        )
+        return metrics
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    total_customers = db.query(func.count(Customer.id)).filter(
-        Customer.organization_id == org_id
-    ).scalar()
-
-    total_appointments = db.query(func.count(Appointment.id)).filter(
-        Appointment.organization_id == org_id
-    ).scalar()
-
-    completed_appointments = db.query(func.count(Appointment.id)).filter(
-        Appointment.organization_id == org_id,
-        Appointment.status == "completed"
-    ).scalar()
-
-    total_revenue = db.query(func.sum(Payment.amount_cents)).filter(
-        Payment.organization_id == org_id,
-        Payment.status == "succeeded"
-    ).scalar() or 0
-
-    return {
-        "total_customers": total_customers,
-        "total_appointments": total_appointments,
-        "completed_appointments": completed_appointments,
-        "total_revenue_cents": int(total_revenue),
-        "average_revenue_per_appointment": int(total_revenue / completed_appointments) if completed_appointments > 0 else 0
-    }
-
-@router.get("/appointments/by-status")
-async def get_appointments_by_status(
-    user = Depends(get_current_user),
+# Revenue analytics
+@router.get("/revenue")
+async def get_revenue_analytics(
+    period: str = "month",
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get appointment count by status"""
-    results = db.query(
-        Appointment.status,
-        func.count(Appointment.id).label("count")
-    ).filter(
-        Appointment.organization_id == user.organization_id
-    ).group_by(Appointment.status).all()
+    """Get revenue metrics"""
+    try:
+        revenue = await analytics_service.get_revenue_analytics(
+            organization_id=current_user.get("organization_id"),
+            period=period,
+            db=db
+        )
+        return revenue
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    return {
-        "data": [{"status": r[0], "count": r[1]} for r in results]
-    }
-
-@router.get("/customers/by-status")
-async def get_customers_by_status(
-    user = Depends(get_current_user),
+# Appointment analytics
+@router.get("/appointments")
+async def get_appointment_analytics(
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get customer count by status"""
-    results = db.query(
-        Customer.status,
-        func.count(Customer.id).label("count")
-    ).filter(
-        Customer.organization_id == user.organization_id
-    ).group_by(Customer.status).all()
+    """Get appointment statistics"""
+    try:
+        stats = await analytics_service.get_appointment_analytics(
+            organization_id=current_user.get("organization_id"),
+            db=db
+        )
+        return stats
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    return {
-        "data": [{"status": r[0], "count": r[1]} for r in results]
-    }
-
-@router.get("/revenue/daily")
-async def get_daily_revenue(
-    days: int = Query(30, ge=1, le=365),
-    user = Depends(get_current_user),
+# Customer analytics
+@router.get("/customers")
+async def get_customer_analytics(
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get daily revenue for last N days"""
-    start_date = datetime.utcnow() - timedelta(days=days)
+    """Get customer insights"""
+    try:
+        analytics = await analytics_service.get_customer_analytics(
+            organization_id=current_user.get("organization_id"),
+            db=db
+        )
+        return analytics
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    results = db.query(
-        func.date(Payment.created_at).label("date"),
-        func.sum(Payment.amount_cents).label("revenue")
-    ).filter(
-        Payment.organization_id == user.organization_id,
-        Payment.status == "succeeded",
-        Payment.created_at >= start_date
-    ).group_by(func.date(Payment.created_at)).all()
-
-    return {
-        "period_days": days,
-        "data": [{"date": str(r[0]), "revenue_cents": int(r[1])} for r in results]
-    }
-
-@router.get("/appointments/daily")
-async def get_daily_appointments(
-    days: int = Query(30, ge=1, le=365),
-    user = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    """Get daily appointment count for last N days"""
-    start_date = datetime.utcnow() - timedelta(days=days)
-
-    results = db.query(
-        func.date(Appointment.start_time).label("date"),
-        func.count(Appointment.id).label("count")
-    ).filter(
-        Appointment.organization_id == user.organization_id,
-        Appointment.start_time >= start_date
-    ).group_by(func.date(Appointment.start_time)).all()
-
-    return {
-        "period_days": days,
-        "data": [{"date": str(r[0]), "count": int(r[1])} for r in results]
-    }
-
+# Top customers
 @router.get("/top-customers")
 async def get_top_customers(
-    limit: int = Query(10, ge=1, le=100),
-    user = Depends(get_current_user),
+    limit: int = 10,
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get top customers by lifetime value"""
-    customers = db.query(Customer).filter(
-        Customer.organization_id == user.organization_id
-    ).order_by(
-        Customer.lifetime_value_cents.desc()
-    ).limit(limit).all()
+    """Get top customers by revenue"""
+    try:
+        customers = await analytics_service.get_top_customers(
+            organization_id=current_user.get("organization_id"),
+            limit=limit,
+            db=db
+        )
+        return customers
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    return {
-        "data": [
-            {
-                "id": str(c.id),
-                "name": f"{c.first_name} {c.last_name}",
-                "lifetime_value_cents": c.lifetime_value_cents,
-                "total_appointments": c.total_appointments
-            }
-            for c in customers
-        ]
-    }
-
-@router.get("/activity/by-type")
-async def get_activity_by_type(
-    days: int = Query(30, ge=1, le=365),
-    user = Depends(get_current_user),
+# Staff utilization
+@router.get("/staff-utilization")
+async def get_staff_utilization(
+    current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get activity count by type"""
-    start_date = datetime.utcnow() - timedelta(days=days)
+    """Get staff utilization rates"""
+    try:
+        utilization = await analytics_service.get_staff_utilization(
+            organization_id=current_user.get("organization_id"),
+            db=db
+        )
+        return utilization
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    results = db.query(
-        Activity.activity_type,
-        func.count(Activity.id).label("count")
-    ).filter(
-        Activity.organization_id == user.organization_id,
-        Activity.created_at >= start_date
-    ).group_by(Activity.activity_type).all()
+# Conversion funnel
+@router.get("/funnel")
+async def get_conversion_funnel(
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get conversion funnel metrics"""
+    try:
+        funnel = await analytics_service.get_conversion_funnel(
+            organization_id=current_user.get("organization_id"),
+            db=db
+        )
+        return funnel
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    return {
-        "period_days": days,
-        "data": [{"type": r[0], "count": r[1]} for r in results]
-    }
+# Forecasting
+@router.get("/forecast/{months}")
+async def get_forecast(
+    months: int = 3,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Forecast future metrics"""
+    try:
+        forecast = await analytics_service.forecast_metrics(
+            organization_id=current_user.get("organization_id"),
+            months=months,
+            db=db
+        )
+        return forecast
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+# Export report
+@router.post("/export")
+async def export_report(
+    report_config: dict,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Export analytics report to CSV/PDF"""
+    try:
+        report_url = await analytics_service.export_report(
+            organization_id=current_user.get("organization_id"),
+            format=report_config.get("format", "csv"),
+            metrics=report_config.get("metrics"),
+            db=db
+        )
+        return {"url": report_url}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+# Custom report
+@router.post("/custom")
+async def create_custom_report(
+    report_data: dict,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Create custom analytics report"""
+    try:
+        report = await analytics_service.create_custom_report(
+            organization_id=current_user.get("organization_id"),
+            name=report_data.get("name"),
+            metrics=report_data.get("metrics"),
+            dimensions=report_data.get("dimensions"),
+            filters=report_data.get("filters"),
+            db=db
+        )
+        return report
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+# AI performance
+@router.get("/ai-performance")
+async def get_ai_performance(
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get AI receptionist performance metrics"""
+    try:
+        performance = await analytics_service.get_ai_performance(
+            organization_id=current_user.get("organization_id"),
+            db=db
+        )
+        return performance
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))

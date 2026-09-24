@@ -15,8 +15,11 @@ from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.logging import LoggingMiddleware
 
 # Import route routers
-from app.api import auth_routes, customer_routes, appointment_routes, payment_routes, ai_routes
-from app.api import organization_routes, settings_routes, automation_routes, activity_routes, analytics_routes
+from app.api import (
+    auth_routes, customer_routes, appointment_routes, payment_routes, ai_routes,
+    organization_routes, settings_routes, automation_routes, activity_routes, analytics_routes,
+    messaging_routes, ai_receptionist_routes, marketplace_routes, admin_routes
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -93,6 +96,10 @@ app.include_router(settings_routes.router)
 app.include_router(automation_routes.router)
 app.include_router(activity_routes.router)
 app.include_router(analytics_routes.router)
+app.include_router(messaging_routes.router)
+app.include_router(ai_receptionist_routes.router)
+app.include_router(marketplace_routes.router)
+app.include_router(admin_routes.router)
 
 # Error handlers
 @app.exception_handler(HTTPException)
