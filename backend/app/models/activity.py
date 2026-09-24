@@ -40,7 +40,7 @@ class Activity(Base):
     recording_url = Column(String(500), nullable=True)
 
     # Metadata
-    metadata = Column(String(1000), nullable=True)
+    custom_metadata = Column(String(1000), nullable=True)
 
     # Timestamps
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)

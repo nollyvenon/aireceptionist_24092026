@@ -90,7 +90,7 @@ class Appointment(Base):
     apple_event_id = Column(String(255), nullable=True)
 
     # Metadata
-    metadata = Column(String(1000), nullable=True)
+    custom_metadata = Column(String(1000), nullable=True)
 
     # Timestamps
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)

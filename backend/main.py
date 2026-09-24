@@ -6,7 +6,6 @@ Main entry point for the backend API
 from fastapi import FastAPI, status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.middleware.gzip import GZIPMiddleware
 from fastapi.responses import JSONResponse
 import logging
 from contextlib import asynccontextmanager
@@ -42,7 +41,6 @@ app = FastAPI(
 )
 
 # Add middleware (order matters - first added is last executed)
-app.add_middleware(GZIPMiddleware, minimum_size=1000)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=["*"])
 app.add_middleware(LoggingMiddleware)
 app.add_middleware(RateLimitMiddleware, requests_per_minute=120)
