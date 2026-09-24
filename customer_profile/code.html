@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Profile - Cognitive Concierge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#000000",
+                    "primary-container": "#131b2e",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-secondary-fixed-variant": "#004395",
+                    "surface-container-low": "#f2f4f6",
+                    "on-primary-fixed": "#131b2e",
+                    "primary": "#000000",
+                    "on-secondary-fixed": "#001a42",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#d8dadc",
+                    "background": "#f7f9fb",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "inverse-surface": "#2d3133",
+                    "surface-bright": "#f7f9fb",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#191c1e",
+                    "on-surface-variant": "#45464d",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#dae2fd",
+                    "surface-variant": "#e0e3e5",
+                    "tertiary-fixed-dim": "#c0c1ff",
+                    "tertiary-container": "#07006c",
+                    "surface": "#f7f9fb",
+                    "inverse-primary": "#bec6e0",
+                    "surface-container": "#eceef0",
+                    "on-tertiary-fixed-variant": "#2f2ebe",
+                    "surface-tint": "#565e74",
+                    "on-background": "#191c1e",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-tertiary-fixed": "#07006c",
+                    "secondary": "#0058be",
+                    "on-primary-container": "#7c839b",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-secondary-container": "#fefcff",
+                    "secondary-fixed": "#d8e2ff",
+                    "secondary-container": "#2170e4",
+                    "tertiary-fixed": "#e1e0ff",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-container": "#7073ff",
+                    "on-primary": "#ffffff",
+                    "outline": "#76777d",
+                    "outline-variant": "#c6c6cd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "element-gap": "16px",
+                    "base": "8px",
+                    "max-width": "600px",
+                    "section-margin": "32px",
+                    "container-padding": "24px"
+            },
+            "fontFamily": {
+                    "caption": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "display-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            },
+            "boxShadow": {
+                'level-1': '0 4px 16px -4px rgba(0, 0, 0, 0.04)',
+                'level-2': '0 12px 32px -8px rgba(0, 0, 0, 0.04)',
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { background-color: #f7f9fb; }
+        .glass-header {
+            background: rgba(247, 249, 251, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background min-h-screen font-body-md bg-background pb-24 md:pb-0 pt-16">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 glass-header shadow-[0_4px_16px_rgba(19,27,46,0.02)] h-16 flex justify-between items-center px-container-padding transition-all duration-300">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-container-high/50 p-2 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="font-headline-md text-headline-md font-bold text-tertiary flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="bubble_chart">bubble_chart</span>
+                Cognitive Concierge
+            </div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-surface-variant bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="person">person</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-[1200px] mx-auto px-container-padding pt-section-margin md:grid md:grid-cols-12 md:gap-8">
+<!-- Left Column: Profile & Actions -->
+<div class="md:col-span-4 lg:col-span-3 space-y-element-gap">
+<!-- Profile Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 p-6 flex flex-col items-center text-center relative overflow-hidden">
+<div class="absolute top-0 w-full h-24 bg-gradient-to-br from-primary-fixed to-surface-container-lowest opacity-50 z-0"></div>
+<div class="w-24 h-24 rounded-full bg-surface-container-high border-4 border-surface-container-lowest z-10 overflow-hidden mb-4 relative shadow-sm">
+<img alt="Customer Profile" class="object-cover w-full h-full" data-alt="A professional headshot of a modern corporate lead. The lighting is soft and high-key, conveying a bright, approachable, yet highly competent tone. The background is a minimalist, airy office setting in subtle grays and whites, matching the high-tech, clean corporate aesthetic of the app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOhKTPFItyEUTsWRB9V5F8sWfoDHFmcyDSwjumHa_d5zeEQyphIEfqfeM8mfHmOYOcivbnTY0qpYRH5s3L8ENRSg3NTSzAgXcSRX-wsl6yMYVziuapWZ7vMx6RWvn2kYSZGbPLV7lOdoX2p-dZSFWtBn-Rlbt0317i2fpDff7PMIksf_8PzSda8RWwTtOHoXdSdVInnXkYyQ8RkYPiqj3Umq7ggvdmZoBph3pimyxtAw__PXXJIJ_Fjg"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface z-10">Sarah Jenkins</h1>
+<p class="font-body-md text-body-md text-on-surface-variant z-10 mb-4">Enterprise Lead</p>
+<div class="flex gap-2 z-10">
+<span class="inline-flex items-center gap-1 bg-surface-container px-3 py-1 rounded-full font-label-md text-label-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="star">star</span> VIP
+                    </span>
+<span class="inline-flex items-center gap-1 bg-tertiary-fixed px-3 py-1 rounded-full font-label-md text-label-md text-tertiary-container">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle">check_circle</span> Active
+                    </span>
+</div>
+</div>
+<!-- Contact Info -->
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 p-6">
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-4">Contact</h2>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline mt-0.5" data-icon="mail">mail</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">sarah.j@example.com</p>
+<p class="font-caption text-caption text-on-surface-variant">Primary Email</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline mt-0.5" data-icon="phone_iphone">phone_iphone</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">+1 (555) 019-2834</p>
+<p class="font-caption text-caption text-on-surface-variant">WhatsApp Available</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline mt-0.5" data-icon="alternate_email">alternate_email</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">@sarahj_exec</p>
+<p class="font-caption text-caption text-on-surface-variant">Instagram</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- Quick Actions -->
+<div class="space-y-3 pt-4">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md rounded-[24px] py-3 px-4 flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors shadow-sm active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]" data-icon="receipt_long">receipt_long</span>
+                    Send Invoice
+                </button>
+<button class="w-full bg-surface-container-lowest border border-outline-variant text-primary font-label-md text-label-md rounded-[24px] py-3 px-4 flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]" data-icon="pause_circle">pause_circle</span>
+                    Pause AI Automation
+                </button>
+</div>
+</div>
+<!-- Right Column: Details & Insights -->
+<div class="md:col-span-8 lg:col-span-9 space-y-section-margin mt-section-margin md:mt-0">
+<!-- Bento Grid: AI Insights & Summary -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-element-gap">
+<!-- AI Summary -->
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 p-6 border-l-2 border-secondary relative overflow-hidden group">
+<div class="absolute top-4 right-4 text-secondary/20 group-hover:text-secondary/40 transition-colors">
+<span class="material-symbols-outlined text-[48px]" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div class="flex items-center gap-2 mb-4 relative z-10">
+<span class="material-symbols-outlined text-secondary" data-icon="psychology">psychology</span>
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">AI Insight</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface relative z-10">
+                        Sarah shows high engagement with scheduling automation but frequently asks clarification questions regarding pricing tiers. Recommends sending the updated 'Q3 Enterprise Pricing Guide' via WhatsApp to preempt queries.
+                    </p>
+</div>
+<!-- Metrics -->
+<div class="grid grid-cols-2 gap-element-gap">
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 p-6 flex flex-col justify-center">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Total Bookings</p>
+<p class="font-display-lg text-display-lg text-on-surface">14</p>
+<p class="font-caption text-caption text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span> +2 this month
+                        </p>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 p-6 flex flex-col justify-center">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Response Time</p>
+<p class="font-display-lg text-display-lg text-on-surface">2m</p>
+<p class="font-caption text-caption text-on-surface-variant mt-2">Avg. AI handling</p>
+</div>
+</div>
+</div>
+<!-- Booking History -->
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 overflow-hidden">
+<div class="px-6 py-4 border-b border-surface-variant flex justify-between items-center bg-surface-container-low/50">
+<h2 class="font-headline-md text-headline-md text-on-surface">Recent Interactions</h2>
+<button class="font-label-md text-label-md text-secondary hover:underline">View All</button>
+</div>
+<div class="divide-y divide-surface-variant">
+<!-- Item 1 -->
+<div class="p-4 px-6 hover:bg-surface-container-lowest/50 transition-colors flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed flex-shrink-0">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-body-md text-body-md font-medium text-on-surface">WhatsApp Inquiry Handled</h3>
+<span class="font-caption text-caption text-on-surface-variant">Today, 10:42 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">AI agent successfully resolved a question regarding meeting room capacities and tentatively reserved Room A for next Tuesday.</p>
+<div class="mt-2 inline-flex items-center gap-1 bg-surface-variant/50 px-2 py-0.5 rounded-full font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[12px]" data-icon="robot_2">robot_2</span> Auto-resolved
+                            </div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-4 px-6 hover:bg-surface-container-lowest/50 transition-colors flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant flex-shrink-0">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-body-md text-body-md font-medium text-on-surface">Strategy Consultation</h3>
+<span class="font-caption text-caption text-on-surface-variant">Oct 12, 2023</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Completed 1hr consultation. Next steps sent via automated follow-up sequence.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Internal Notes -->
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 p-6">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4">Internal Notes</h2>
+<div class="space-y-4 mb-6">
+<div class="bg-surface-container-low p-4 rounded-lg">
+<div class="flex justify-between items-center mb-2">
+<span class="font-caption text-caption font-semibold text-on-surface">Alex (Admin)</span>
+<span class="font-caption text-caption text-on-surface-variant">Oct 10</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface text-sm">Prefers morning meetings. Ensure the AI scheduler defaults to pre-noon slots when offering times.</p>
+</div>
+</div>
+<div class="relative">
+<textarea class="w-full bg-surface-bright border border-surface-variant rounded-lg p-3 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-shadow resize-none h-24 placeholder:text-outline" placeholder="Add a note..."></textarea>
+<div class="absolute bottom-3 right-3 flex gap-2">
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="attach_file">attach_file</span>
+</button>
+<button class="bg-primary text-on-primary px-4 py-1.5 rounded-full font-label-md text-label-md hover:bg-primary/90 transition-colors">Save</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Hidden on md and up, visible on mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 glass-header rounded-t-xl shadow-[0_-4px_16px_rgba(19,27,46,0.04)] flex justify-around items-center px-base pb-safe pt-2 h-20 transition-all duration-300">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:text-primary transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-[10px] mt-1">Hub</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 hover:text-primary transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-[10px] mt-1">Leads</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:text-primary transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-[10px] mt-1">Invoices</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:text-primary transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-[10px] mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

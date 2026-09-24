@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configure Custom Plan | AI Automation Agency</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#d8e2ff",
+                        "secondary-container": "#2170e4",
+                        "inverse-primary": "#bec6e0",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#07006c",
+                        "surface-dim": "#d8dadc",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "outline": "#76777d",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-secondary-container": "#fefcff",
+                        "primary": "#000000",
+                        "primary-fixed": "#dae2fd",
+                        "outline-variant": "#c6c6cd",
+                        "on-tertiary-fixed": "#07006c",
+                        "on-secondary-fixed": "#001a42",
+                        "tertiary-fixed": "#e1e0ff",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-on-surface": "#eff1f3",
+                        "primary-fixed-dim": "#bec6e0",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f7f9fb",
+                        "error": "#ba1a1a",
+                        "tertiary": "#000000",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-tint": "#565e74",
+                        "on-primary": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "primary-container": "#131b2e",
+                        "on-surface-variant": "#45464d",
+                        "inverse-surface": "#2d3133",
+                        "background": "#f7f9fb",
+                        "on-tertiary-container": "#7073ff",
+                        "on-primary-container": "#7c839b",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-primary-fixed": "#131b2e",
+                        "secondary": "#0058be",
+                        "surface-container-high": "#e6e8ea",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "on-background": "#191c1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max-width": "1200px",
+                        "container-padding": "24px",
+                        "element-gap": "16px",
+                        "base": "8px",
+                        "section-margin": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #f7f9fb; }
+        .glass-header { backdrop-filter: blur(20px); background-color: rgba(247, 249, 251, 0.7); }
+        .level-1-shadow { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04); }
+        .level-2-shadow { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08); }
+        
+        /* Custom Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #0058be;
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #e0e3e5;
+            border-radius: 2px;
+        }
+        input[type=range]:focus { outline: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface antialiased min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar (Transactional - Hidden Navigation Links, Just Brand Identity for focus) -->
+<header class="fixed top-0 w-full z-50 glass-header border-b border-surface-variant/50">
+<div class="flex items-center justify-between px-container-padding h-16 w-full max-w-[1200px] mx-auto z-50">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined font-variation-settings-'FILL'-1 text-2xl" style="font-variation-settings: 'FILL' 1;">bubble_chart</span>
+<span class="font-headline-md text-headline-md font-bold tracking-tight">AI Automation Agency</span>
+</div>
+<a class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-lg">close</span> Cancel
+            </a>
+</div>
+</header>
+<main class="pt-24 pb-section-margin px-container-padding max-w-[800px] mx-auto w-full">
+<!-- Header Section -->
+<div class="mb-section-margin">
+<h1 class="font-display-lg text-display-lg text-primary mb-4 hidden md:block">Configure Custom Plan</h1>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2 md:hidden">Configure Custom Plan</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                Tailor an AI solution specifically for your enterprise infrastructure. Provide details below to receive a comprehensive technical proposal.
+            </p>
+</div>
+<form class="space-y-section-margin">
+<!-- 1. Business Scale (Bento-style layout) -->
+<section class="bg-surface-container-lowest rounded-[24px] p-container-padding level-1-shadow border border-surface-container-low relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<h2 class="font-headline-md text-headline-md text-primary mb-element-gap flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">domain</span>
+                    Business Scale
+                </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-element-gap">
+<!-- Industry Dropdown -->
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant" for="industry">Primary Industry</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low border border-outline-variant text-on-surface rounded-[16px] px-4 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent font-body-md text-body-md transition-shadow" id="industry">
+<option disabled="" selected="" value="">Select your industry</option>
+<option value="retail">Retail &amp; E-commerce</option>
+<option value="real_estate">Real Estate</option>
+<option value="healthcare">Healthcare &amp; Life Sciences</option>
+<option value="finance">Financial Services</option>
+<option value="technology">Technology &amp; SaaS</option>
+<option value="other">Other</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Interactions Slider -->
+<div class="flex flex-col gap-2 justify-center">
+<div class="flex justify-between items-end">
+<label class="font-label-md text-label-md text-on-surface-variant" for="interactions">Est. Monthly Interactions</label>
+<span class="font-label-md text-label-md text-primary bg-secondary-fixed px-2 py-1 rounded-md" id="interaction-value">250k</span>
+</div>
+<div class="py-3">
+<input class="w-full" id="interactions" max="4" min="0" step="1" type="range" value="2"/>
+</div>
+<div class="flex justify-between text-caption text-outline px-1">
+<span>50k</span>
+<span>100k</span>
+<span>250k</span>
+<span>500k</span>
+<span>1M+</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Required Capabilities (Selectable Cards) -->
+<section class="bg-surface-container-lowest rounded-[24px] p-container-padding level-1-shadow border border-surface-container-low">
+<h2 class="font-headline-md text-headline-md text-primary mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">extension</span>
+                    Required Capabilities
+                </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-element-gap">Select the specialized integrations and services required for your deployment.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Capability Card 1 -->
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="capabilities" type="checkbox" value="crm_sync"/>
+<div class="h-full p-4 rounded-[16px] border border-outline-variant bg-surface-bright peer-checked:border-secondary peer-checked:bg-secondary-fixed/30 peer-checked:shadow-sm transition-all flex items-start gap-4 hover:border-secondary/50">
+<div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full border-2 border-outline-variant peer-checked:border-secondary flex items-center justify-center group-hover:border-secondary/50 transition-colors">
+<span class="material-symbols-outlined text-sm text-secondary opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1 text-[16px]">Multi-channel CRM Sync</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px]">Bi-directional syncing with Salesforce, HubSpot, or custom proprietary databases.</p>
+</div>
+</div>
+</label>
+<!-- Capability Card 2 -->
+<label class="cursor-pointer group">
+<input checked="" class="peer sr-only" name="capabilities" type="checkbox" value="custom_model"/>
+<div class="h-full p-4 rounded-[16px] border border-outline-variant bg-surface-bright peer-checked:border-secondary peer-checked:bg-secondary-fixed/30 peer-checked:shadow-sm transition-all flex items-start gap-4 hover:border-secondary/50 relative overflow-hidden">
+<div class="absolute left-0 top-0 w-1 h-full bg-secondary hidden peer-checked:block"></div>
+<div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full border-2 border-outline-variant peer-checked:border-secondary flex items-center justify-center group-hover:border-secondary/50 transition-colors">
+<span class="material-symbols-outlined text-sm text-secondary opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1 text-[16px]">Custom Model Training</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px]">Fine-tuning on your specific historical data, glossaries, and brand voice guidelines.</p>
+</div>
+</div>
+</label>
+<!-- Capability Card 3 -->
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="capabilities" type="checkbox" value="support_247"/>
+<div class="h-full p-4 rounded-[16px] border border-outline-variant bg-surface-bright peer-checked:border-secondary peer-checked:bg-secondary-fixed/30 peer-checked:shadow-sm transition-all flex items-start gap-4 hover:border-secondary/50">
+<div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full border-2 border-outline-variant peer-checked:border-secondary flex items-center justify-center group-hover:border-secondary/50 transition-colors">
+<span class="material-symbols-outlined text-sm text-secondary opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1 text-[16px]">24/7 Dedicated Support</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px]">Direct slack channel access to a dedicated ML engineer and account manager.</p>
+</div>
+</div>
+</label>
+<!-- Capability Card 4 -->
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="capabilities" type="checkbox" value="sla"/>
+<div class="h-full p-4 rounded-[16px] border border-outline-variant bg-surface-bright peer-checked:border-secondary peer-checked:bg-secondary-fixed/30 peer-checked:shadow-sm transition-all flex items-start gap-4 hover:border-secondary/50">
+<div class="mt-1 flex-shrink-0 w-6 h-6 rounded-full border-2 border-outline-variant peer-checked:border-secondary flex items-center justify-center group-hover:border-secondary/50 transition-colors">
+<span class="material-symbols-outlined text-sm text-secondary opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1 text-[16px]">SLA Guarantees</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px]">Contractual 99.99% uptime guarantees with latency thresholds for real-time APIs.</p>
+</div>
+</div>
+</label>
+</div>
+</section>
+<!-- 3. Additional Details -->
+<section class="bg-surface-container-lowest rounded-[24px] p-container-padding level-1-shadow border border-surface-container-low">
+<h2 class="font-headline-md text-headline-md text-primary mb-element-gap flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">edit_note</span>
+                    Additional Details
+                </h2>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant sr-only" for="details">Specific Requirements</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant text-on-surface rounded-[16px] p-4 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent font-body-md text-body-md resize-y transition-shadow" id="details" placeholder="Briefly describe your main use cases, current tech stack, or any compliance requirements (e.g., HIPAA, SOC2)..." rows="4"></textarea>
+</div>
+</section>
+<!-- 4. Contact Information -->
+<section class="bg-surface-container-lowest rounded-[24px] p-container-padding level-1-shadow border border-surface-container-low">
+<h2 class="font-headline-md text-headline-md text-primary mb-element-gap flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">contact_mail</span>
+                    Contact Information
+                </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-element-gap">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant" for="name">Full Name</label>
+<input class="w-full bg-surface-container-low border border-outline-variant text-on-surface rounded-[16px] px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent font-body-md text-body-md transition-shadow" id="name" placeholder="Jane Doe" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant" for="email">Company Email</label>
+<input class="w-full bg-surface-container-low border border-outline-variant text-on-surface rounded-[16px] px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent font-body-md text-body-md transition-shadow" id="email" placeholder="jane@enterprise.com" type="email"/>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="font-label-md text-label-md text-on-surface-variant" for="phone">Phone Number (Optional)</label>
+<input class="w-full bg-surface-container-low border border-outline-variant text-on-surface rounded-[16px] px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent font-body-md text-body-md transition-shadow" id="phone" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+</div>
+</section>
+<!-- 5. Submit Action -->
+<div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+<p class="font-caption text-caption text-outline text-center sm:text-left max-w-sm">
+                    By submitting this request, you agree to our <a class="text-secondary hover:underline" href="#">Terms of Service</a> and <a class="text-secondary hover:underline" href="#">Privacy Policy</a>.
+                </p>
+<button class="w-full sm:w-auto bg-primary text-on-primary rounded-[24px] px-8 py-4 font-headline-md text-headline-md flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] active:scale-[0.98]" type="button">
+                    Submit Request for Quote
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</form>
+</main>
+<script>
+        // Simple script to update the interactions slider label
+        const slider = document.getElementById('interactions');
+        const display = document.getElementById('interaction-value');
+        const values = ['50k', '100k', '250k', '500k', '1M+'];
+
+        slider.addEventListener('input', function() {
+            display.textContent = values[this.value];
+        });
+    </script>
+</body></html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Invoice Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "tertiary-fixed": "#e1e0ff",
+                    "on-error": "#ffffff",
+                    "on-background": "#191c1e",
+                    "error": "#ba1a1a",
+                    "surface": "#f7f9fb",
+                    "on-secondary-container": "#fefcff",
+                    "inverse-surface": "#2d3133",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#000000",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-tint": "#565e74",
+                    "on-primary-fixed": "#131b2e",
+                    "primary-container": "#131b2e",
+                    "tertiary-container": "#07006c",
+                    "primary-fixed-dim": "#bec6e0",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "outline": "#76777d",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary-container": "#7073ff",
+                    "surface-bright": "#f7f9fb",
+                    "primary": "#000000",
+                    "surface-container-low": "#f2f4f6",
+                    "on-secondary": "#ffffff",
+                    "on-primary-container": "#7c839b",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#c6c6cd",
+                    "background": "#f7f9fb",
+                    "on-surface-variant": "#45464d",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#c0c1ff",
+                    "on-surface": "#191c1e",
+                    "surface-container": "#eceef0",
+                    "on-secondary-fixed-variant": "#004395",
+                    "on-tertiary-fixed": "#07006c",
+                    "secondary-fixed": "#d8e2ff",
+                    "on-tertiary-fixed-variant": "#2f2ebe",
+                    "surface-container-highest": "#e0e3e5",
+                    "inverse-primary": "#bec6e0",
+                    "on-secondary-fixed": "#001a42",
+                    "secondary": "#0058be",
+                    "primary-fixed": "#dae2fd",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#2170e4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "24px",
+                    "base": "8px",
+                    "max-width": "600px",
+                    "section-margin": "32px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "caption": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { background-color: #f7f9fb; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .glow-shadow { box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.04); }
+        /* Timeline styling */
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 24px;
+            bottom: -24px;
+            width: 2px;
+            background-color: #e0e3e5;
+        }
+        .timeline-item:last-child .timeline-line::before { display: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen pb-32">
+<!-- Top App Bar (Modified for sub-page/Task focus - No global nav icons) -->
+<header class="fixed top-0 w-full backdrop-blur-xl bg-white/70 shadow-[0_4px_16px_rgba(0,26,66,0.04)] z-50 transition-all duration-200 ease-in-out px-container-padding h-16 flex justify-between items-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 -ml-2 rounded-full active:bg-surface-container">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary truncate px-4">Invoice #INV-2023-08A</h1>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 -mr-2 rounded-full active:bg-surface-container">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</header>
+<main class="pt-24 px-container-padding max-w-max-width mx-auto flex flex-col gap-section-margin">
+<!-- Header / Summary Card -->
+<section class="glass-panel rounded-3xl p-6 glow-shadow flex flex-col gap-element-gap relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+<div class="flex justify-between items-start z-10">
+<div class="flex flex-col">
+<span class="font-caption text-caption text-on-surface-variant mb-1">Status</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-label-md text-label-md text-secondary-container">Awaiting Payment</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-caption text-caption text-on-surface-variant mb-1">Due Date</span>
+<span class="font-body-md text-body-md font-medium">Nov 15, 2023</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 mt-4 z-10">
+<h2 class="font-display-lg text-display-lg tracking-tight text-primary">$4,250.00</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Billed to: Acme Corp</p>
+</div>
+<button class="mt-4 w-full bg-primary text-on-primary rounded-full py-4 px-6 font-label-md text-label-md flex justify-center items-center gap-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] hover:opacity-90 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+                Download PDF
+            </button>
+</section>
+<!-- Itemized Breakdown -->
+<section class="flex flex-col gap-4">
+<h3 class="font-headline-md text-headline-md text-primary pl-2">Services</h3>
+<div class="bg-surface-container-lowest rounded-3xl glow-shadow p-2 flex flex-col gap-1">
+<!-- Item 1 -->
+<div class="flex justify-between items-center p-4 hover:bg-surface rounded-2xl transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">WhatsApp AI Response Pack</span>
+<span class="font-caption text-caption text-on-surface-variant">Qty: 1 • Tier 2</span>
+</div>
+</div>
+<span class="font-label-md text-label-md">$1,500.00</span>
+</div>
+<!-- Item 2 -->
+<div class="flex justify-between items-center p-4 hover:bg-surface rounded-2xl transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Instagram Lead Capture</span>
+<span class="font-caption text-caption text-on-surface-variant">Qty: 1 • Campaign B</span>
+</div>
+</div>
+<span class="font-label-md text-label-md">$2,000.00</span>
+</div>
+<!-- Item 3 -->
+<div class="flex justify-between items-center p-4 hover:bg-surface rounded-2xl transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="manage_accounts">manage_accounts</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Agency Management Fee</span>
+<span class="font-caption text-caption text-on-surface-variant">Standard Retainer</span>
+</div>
+</div>
+<span class="font-label-md text-label-md">$750.00</span>
+</div>
+</div>
+<!-- Totals Footer inside Breakdown section -->
+<div class="px-6 py-4 flex flex-col gap-2 border-t border-outline-variant/30 mt-2">
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>Subtotal</span>
+<span>$4,250.00</span>
+</div>
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>Tax (0%)</span>
+<span>$0.00</span>
+</div>
+<div class="flex justify-between font-body-lg text-body-lg font-semibold mt-2">
+<span>Total</span>
+<span>$4,250.00</span>
+</div>
+</div>
+</section>
+<!-- Activity Timeline -->
+<section class="flex flex-col gap-4 mb-8">
+<h3 class="font-headline-md text-headline-md text-primary pl-2">Activity</h3>
+<div class="bg-surface-container-lowest rounded-3xl glow-shadow p-6 flex flex-col relative">
+<!-- Timeline Item 1 -->
+<div class="timeline-item relative flex gap-6 pb-6">
+<div class="timeline-line flex-shrink-0 flex flex-col items-center z-10">
+<div class="w-6 h-6 rounded-full bg-surface-container-high border-2 border-white flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-on-surface-variant"></span>
+</div>
+</div>
+<div class="flex flex-col pb-2">
+<span class="font-body-md text-body-md font-medium">Viewed by client</span>
+<span class="font-caption text-caption text-on-surface-variant mt-1">Nov 2, 2023 at 10:45 AM</span>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="timeline-item relative flex gap-6 pb-6">
+<div class="timeline-line flex-shrink-0 flex flex-col items-center z-10">
+<div class="w-6 h-6 rounded-full bg-surface-container-high border-2 border-white flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-on-surface-variant"></span>
+</div>
+</div>
+<div class="flex flex-col pb-2">
+<span class="font-body-md text-body-md font-medium">Invoice sent</span>
+<span class="font-caption text-caption text-on-surface-variant mt-1">Nov 1, 2023 at 9:00 AM via Email</span>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="timeline-item relative flex gap-6">
+<div class="timeline-line flex-shrink-0 flex flex-col items-center z-10">
+<div class="w-6 h-6 rounded-full bg-surface-container-high border-2 border-white flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-on-surface-variant"></span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium">Invoice generated</span>
+<span class="font-caption text-caption text-on-surface-variant mt-1">Nov 1, 2023 at 8:55 AM by System</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Suppressed Bottom Navigation: This is a sub-page/Task focus view. The user would return back to the main list. -->
+</body></html>

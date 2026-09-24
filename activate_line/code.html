@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Line Activation - AI Assistant</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline-variant": "#c6c6cd",
+                      "primary-container": "#131b2e",
+                      "inverse-surface": "#2d3133",
+                      "surface-container-highest": "#e0e3e5",
+                      "error": "#ba1a1a",
+                      "background": "#f7f9fb",
+                      "on-error": "#ffffff",
+                      "primary-fixed-dim": "#bec6e0",
+                      "on-primary-fixed": "#131b2e",
+                      "tertiary": "#000000",
+                      "tertiary-fixed-dim": "#c0c1ff",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "surface-tint": "#565e74",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-primary": "#bec6e0",
+                      "outline": "#76777d",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "secondary": "#0058be",
+                      "secondary-container": "#2170e4",
+                      "primary-fixed": "#dae2fd",
+                      "surface-variant": "#e0e3e5",
+                      "on-background": "#191c1e",
+                      "on-secondary-fixed-variant": "#004395",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "tertiary-fixed": "#e1e0ff",
+                      "on-surface": "#191c1e",
+                      "surface-container-high": "#e6e8ea",
+                      "primary": "#000000",
+                      "inverse-on-surface": "#eff1f3",
+                      "on-secondary-fixed": "#001a42",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed": "#07006c",
+                      "on-tertiary-container": "#7073ff",
+                      "surface-container": "#eceef0",
+                      "on-secondary-container": "#fefcff",
+                      "on-primary": "#ffffff",
+                      "on-primary-container": "#7c839b",
+                      "surface-bright": "#f7f9fb",
+                      "on-surface-variant": "#45464d",
+                      "surface-dim": "#d8dadc",
+                      "on-tertiary-fixed-variant": "#2f2ebe",
+                      "tertiary-container": "#07006c",
+                      "surface-container-low": "#f2f4f6",
+                      "secondary-fixed": "#d8e2ff",
+                      "surface": "#f7f9fb"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "container-padding": "24px",
+                      "max-width": "600px",
+                      "section-margin": "32px",
+                      "element-gap": "16px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "JetBrains Mono"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Ambient shadows */
+        .shadow-level-1 {
+            box-shadow: 0px 4px 16px rgba(19, 27, 46, 0.04);
+        }
+        .shadow-level-2 {
+            box-shadow: 0px 12px 32px rgba(19, 27, 46, 0.06);
+        }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col justify-center items-center p-container-padding font-body-md antialiased relative overflow-hidden">
+<!-- Subtle Background Elements -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+<div class="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-secondary-fixed/30 blur-[80px]"></div>
+<div class="absolute bottom-[-10%] left-[-5%] w-[50vw] h-[50vw] rounded-full bg-primary-fixed/20 blur-[100px]"></div>
+</div>
+<main class="w-full max-w-max-width mx-auto z-10 flex flex-col gap-section-margin">
+<!-- Header / Progress -->
+<header class="text-center space-y-element-gap">
+<div class="inline-flex items-center gap-2 bg-surface-container-high rounded-full px-4 py-2">
+<span class="material-symbols-outlined fill text-secondary text-sm">check_circle</span>
+<span class="font-label-md text-label-md text-on-surface-variant">STEP 3 OF 3</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-primary md:font-display-lg md:text-display-lg font-headline-lg-mobile text-headline-lg-mobile tracking-tight">Line Activated</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto">Your AI assistant is provisioned and ready to handle incoming calls.</p>
+</header>
+<!-- Activation Card -->
+<section class="bg-surface-container-lowest rounded-[24px] p-8 shadow-level-1 border-l-2 border-secondary relative overflow-hidden group">
+<!-- Success Visual / Background Pattern -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary-fixed opacity-20 rounded-bl-[100px] transition-transform duration-500 group-hover:scale-110"></div>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined fill text-primary text-2xl">celebration</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Your Dedicated Number</h2>
+<p class="font-caption text-caption text-on-surface-variant">Active in region: US-West</p>
+</div>
+</div>
+<!-- Provisioned Number -->
+<div class="bg-surface-container p-6 rounded-xl flex items-center justify-between mb-8 border border-outline-variant/30">
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant mb-1">BUSINESS LINE</div>
+<div class="font-headline-lg text-headline-lg text-primary tracking-wider font-mono">+1 (555) 019-8234</div>
+</div>
+<button aria-label="Copy number" class="w-10 h-10 rounded-full hover:bg-surface-variant flex items-center justify-center transition-colors text-on-surface-variant" title="Copy">
+<span class="material-symbols-outlined">content_copy</span>
+</button>
+</div>
+<!-- Instructions -->
+<div class="space-y-4">
+<h3 class="font-body-md text-body-md font-semibold text-on-surface">Next Steps: Call Forwarding</h3>
+<ol class="space-y-4 relative before:absolute before:inset-y-0 before:left-[11px] before:w-[2px] before:bg-surface-variant pl-8">
+<li class="relative">
+<div class="absolute -left-8 w-6 h-6 rounded-full bg-surface-container-lowest border-2 border-secondary flex items-center justify-center z-10">
+<span class="text-[10px] font-bold text-secondary">1</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Open your current phone provider's settings (e.g., Verizon, AT&amp;T, RingCentral).</p>
+</li>
+<li class="relative">
+<div class="absolute -left-8 w-6 h-6 rounded-full bg-surface-container-lowest border-2 border-secondary flex items-center justify-center z-10">
+<span class="text-[10px] font-bold text-secondary">2</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Locate the <span class="font-semibold text-on-surface">Call Forwarding</span> or <span class="font-semibold text-on-surface">Routing</span> options.</p>
+</li>
+<li class="relative">
+<div class="absolute -left-8 w-6 h-6 rounded-full bg-surface-container-lowest border-2 border-secondary flex items-center justify-center z-10">
+<span class="text-[10px] font-bold text-secondary">3</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Set unconditional forwarding to your new dedicated AI number.</p>
+</li>
+</ol>
+<div class="mt-4 pt-4 border-t border-surface-variant">
+<a class="inline-flex items-center gap-2 text-secondary font-label-md text-label-md hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined text-sm">help</span>
+                        Need detailed instructions for your provider?
+                    </a>
+</div>
+</div>
+</section>
+<!-- Actions -->
+<div class="flex flex-col gap-4 mt-4">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md rounded-[24px] py-4 px-6 flex items-center justify-center gap-2 hover:bg-primary/90 transition-all active:scale-[0.98] shadow-sm relative overflow-hidden group">
+<div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                Go to Dashboard
+                <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="w-full bg-surface-container-lowest text-primary border border-outline-variant/50 font-label-md text-label-md rounded-[24px] py-4 px-6 flex items-center justify-center gap-2 hover:bg-surface-container transition-colors">
+                Send Test Call
+            </button>
+</div>
+</main>
+</body></html>

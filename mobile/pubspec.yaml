@@ -1,0 +1,90 @@
+name: glacier_ai
+description: GLACIER AI Receptionist - Flutter Mobile App
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.13.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  provider: ^6.0.0
+  riverpod: ^2.4.0
+  riverpod_generator: ^2.3.0
+
+  # Networking
+  http: ^1.1.0
+  dio: ^5.3.0
+
+  # Storage
+  shared_preferences: ^2.2.0
+  hive: ^2.2.0
+  hive_flutter: ^1.1.0
+
+  # Database
+  sqflite: ^2.3.0
+  path: ^1.8.3
+
+  # UI
+  flutter_screenutil: ^5.9.0
+  google_fonts: ^6.1.0
+  cached_network_image: ^3.3.0
+  smooth_page_indicator: ^1.1.0
+
+  # Forms & Validation
+  formz: ^0.6.0
+
+  # Navigation
+  go_router: ^12.0.0
+
+  # Utilities
+  intl: ^0.19.0
+  uuid: ^4.0.0
+  logger: ^2.0.0
+
+  # Analytics
+  firebase_core: ^2.24.0
+  firebase_analytics: ^10.7.0
+  firebase_messaging: ^14.7.0
+
+  # Authentication
+  firebase_auth: ^4.14.0
+  google_sign_in: ^6.1.0
+
+  # Calendar
+  table_calendar: ^3.0.0
+
+  # Payment
+  stripe_flutter: ^9.4.0
+
+  # Permissions
+  permission_handler: ^11.4.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.0
+  riverpod_generator: ^2.3.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/fonts/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600

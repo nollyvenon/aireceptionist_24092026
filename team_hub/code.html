@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Team Collaboration - Cognitive Concierge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "outline": "#76777d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#7c839b",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-bright": "#f7f9fb",
+                        "on-tertiary-fixed": "#07006c",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-container": "#2170e4",
+                        "surface": "#f7f9fb",
+                        "on-surface-variant": "#45464d",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#e1e0ff",
+                        "tertiary-container": "#07006c",
+                        "on-secondary-container": "#fefcff",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "on-primary-fixed": "#131b2e",
+                        "on-secondary-fixed-variant": "#004395",
+                        "primary-fixed-dim": "#bec6e0",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-surface": "#191c1e",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#000000",
+                        "primary-fixed": "#dae2fd",
+                        "surface-variant": "#e0e3e5",
+                        "surface-dim": "#d8dadc",
+                        "surface-tint": "#565e74",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-background": "#191c1e",
+                        "surface-container": "#eceef0",
+                        "outline-variant": "#c6c6cd",
+                        "primary-container": "#131b2e",
+                        "inverse-primary": "#bec6e0",
+                        "on-secondary-fixed": "#001a42",
+                        "background": "#f7f9fb",
+                        "primary": "#000000",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary-container": "#7073ff",
+                        "secondary": "#0058be",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "inverse-on-surface": "#eff1f3",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "element-gap": "16px",
+                        "max-width": "600px",
+                        "base": "8px",
+                        "section-margin": "32px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "caption": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pt-16 pb-20 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-xl bg-surface/70 shadow-sm shadow-primary/5 flex justify-between items-center px-container-padding h-16 w-full">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-primary font-headline-md text-headline-md" data-icon="smart_toy">smart_toy</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Cognitive Concierge</h1>
+</div>
+<div>
+<div aria-label="AI Assistant Logo" class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold font-caption text-caption">AI</div>
+</div>
+</header>
+<main class="max-w-[1200px] mx-auto px-container-padding py-section-margin flex flex-col gap-section-margin">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-element-gap">
+<div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-base">Team Collaboration Hub</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage your team and collaborate on AI-generated leads.</p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-full font-label-md text-label-md flex items-center gap-base hover:bg-primary/90 transition-colors shadow-[0_4px_16px_rgba(0,0,0,0.04)] active:scale-95 duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+                Invite Member
+            </button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-element-gap">
+<!-- Team Members List -->
+<section class="lg:col-span-2 bg-surface-container-lowest rounded-[24px] shadow-[0_4px_16px_rgba(0,0,0,0.04)] overflow-hidden">
+<div class="px-container-padding py-element-gap border-b border-surface-container-highest flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Team Members</h3>
+<span class="font-label-md text-label-md text-on-surface-variant bg-surface-container-low px-3 py-1 rounded-full">3 Active</span>
+</div>
+<div class="flex flex-col divide-y divide-surface-container-highest">
+<!-- Member 1 -->
+<div class="p-container-padding flex items-center justify-between hover:bg-surface-container-lowest/50 transition-colors group">
+<div class="flex items-center gap-element-gap">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover shadow-sm" data-alt="A professional headshot of a business owner, modern lighting, clear focus, neutral background, realistic photography, light corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWX0eDFhmTCf6Sc-48oll0xSbVu5u_faI2wdqNSSvNMjs078YCLcBD7pQPKFDL9M8mI_AkO8trpJPh3-m6s8EoFrTN2wBkiYsoH8kE3ZUlwmtS6ddsUAOeSrxPYh-oJe7MTRr-LJdc-01qh4yOzdU2pvgm5xMc0URcS9cLVyCWjs4EeQbseYoEMdpHuH8fsbWBHG7iYoyNJqTA2wxfNVKgzOQAJWHDWxzAqXTPMNAs9FdLEfj5qKTNyA"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-secondary rounded-full border-2 border-surface-container-lowest"></div>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface text-[16px]">Sarah Jenkins</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px]">Owner &amp; Admin</p>
+</div>
+</div>
+<div class="flex items-center gap-base opacity-0 group-hover:opacity-100 transition-opacity">
+<button aria-label="Edit member" class="p-2 text-on-surface-variant hover:text-secondary transition-colors rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+</div>
+</div>
+<!-- Member 2 -->
+<div class="p-container-padding flex items-center justify-between hover:bg-surface-container-lowest/50 transition-colors group">
+<div class="flex items-center gap-element-gap">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold font-headline-md text-headline-md shadow-sm">MR</div>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-secondary rounded-full border-2 border-surface-container-lowest"></div>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface text-[16px]">Michael Ross</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px]">Lead Manager (Staff)</p>
+</div>
+</div>
+<div class="flex items-center gap-base opacity-0 group-hover:opacity-100 transition-opacity">
+<button aria-label="Edit member" class="p-2 text-on-surface-variant hover:text-secondary transition-colors rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+</div>
+</div>
+<!-- Member 3 -->
+<div class="p-container-padding flex items-center justify-between hover:bg-surface-container-lowest/50 transition-colors group">
+<div class="flex items-center gap-element-gap">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover shadow-sm grayscale opacity-70" data-alt="A professional headshot of a young administrative assistant, warm natural lighting, modern office background slightly blurred, realistic photography, clean corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkfpFWtnzHPgHaZNxXwm6Cvj5WWqgSr6--iSvhGU3qV8HvlA9Stc8r3dJua77k60mGu4GbiscouIA7tDb-_kqZlzMztqL48AbnSqspgsBgXxKI8eLtGCHwkNFusuiLwNRQzTVznmQYbZgU8Om8K6LAhNX1Z5-vV9beP2Jo4eDjDAnJvVg_5tmjZwhLBDY1tBrZ-Vvy_lZNe56hjc7yBskhU0AW284u3g-D1Smsne3JOCQc_msTzmOCvw"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-outline-variant rounded-full border-2 border-surface-container-lowest"></div>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface text-[16px]">Emily Chen</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px]">Analyst (Viewer) • Last active 2h ago</p>
+</div>
+</div>
+<div class="flex items-center gap-base opacity-0 group-hover:opacity-100 transition-opacity">
+<button aria-label="Edit member" class="p-2 text-on-surface-variant hover:text-secondary transition-colors rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Shared Inbox Preview -->
+<aside class="bg-surface-container-lowest rounded-[24px] shadow-[0_4px_16px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col">
+<div class="px-container-padding py-element-gap border-b border-surface-container-highest border-l-2 border-l-secondary-container">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-base">
+<span class="material-symbols-outlined text-secondary" data-icon="forum">forum</span>
+                        Recent Collaborative Notes
+                    </h3>
+</div>
+<div class="flex-1 p-container-padding flex flex-col gap-element-gap overflow-y-auto">
+<!-- Note 1 -->
+<div class="bg-surface rounded-xl p-4 shadow-sm shadow-primary/5">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-md text-label-md text-on-surface-variant text-[12px]">Lead: TechCorp Expansion</span>
+<span class="font-label-md text-label-md text-outline text-[12px]">10m ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface text-[14px] mb-3">AI identified high intent. I've sent the follow-up proposal. Need Sarah to review the pricing tier.</p>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-[10px]">MR</div>
+<span class="font-body-md text-body-md text-on-surface-variant text-[12px]">Michael Ross</span>
+</div>
+</div>
+<!-- Note 2 -->
+<div class="bg-surface rounded-xl p-4 shadow-sm shadow-primary/5 border-l-2 border-l-secondary-container">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-md text-label-md text-on-surface-variant text-[12px]">Lead: Local Bakery Promo</span>
+<span class="font-label-md text-label-md text-outline text-[12px]">1h ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface text-[14px] mb-3"><em>AI Summary: Customer requested callback regarding seasonal package options.</em> I will take this one tomorrow morning.</p>
+<div class="flex items-center gap-2">
+<img class="w-6 h-6 rounded-full object-cover" data-alt="Small headshot thumbnail of business owner, clear corporate lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzr90pN8Z_utU0qHPy9L4hfAFKtCBUlfT02Df0_mdyT7YToji9PVdDj7ozP_ImINmlGsleHaZtWiRYudbFOZC63-98MT81xCQjl3lr7tqOVoJG3nA6Pu21w_5ik-lu9abG1HrpfsLnFDaKwOvBvw8dQE0h1FJZLnlRnDDtZOxdPgoWudAwTYhwH32hv9Bg9SM9MBUe3fC9wGDVr2ie8X64UMPHDDEkme_iXl8ETYt06iOkErvmXGt81A"/>
+<span class="font-body-md text-body-md text-on-surface-variant text-[12px]">Sarah Jenkins</span>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-surface-container-highest">
+<button class="w-full py-2 bg-surface text-secondary font-label-md text-label-md rounded-xl hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2">
+                        View Shared Inbox
+                        <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 backdrop-blur-xl rounded-t-xl bg-surface/70 shadow-[0_-4px_16px_rgba(0,88,190,0.04)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-all active:scale-90 duration-200 p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md text-[10px] mt-1">Hub</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-all active:scale-90 duration-200 p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+<span class="font-label-md text-label-md text-[10px] mt-1">Leads</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-all active:scale-90 duration-200 p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md text-[10px] mt-1">Invoices</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md text-[10px] mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

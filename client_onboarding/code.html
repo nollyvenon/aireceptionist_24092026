@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Client Onboarding - Connect Socials</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#bec6e0",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#c0c1ff",
+                    "surface-container-low": "#f2f4f6",
+                    "secondary-container": "#2170e4",
+                    "on-surface-variant": "#45464d",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#d8e2ff",
+                    "surface-bright": "#f7f9fb",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#d8dadc",
+                    "secondary": "#0058be",
+                    "primary": "#000000",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#001a42",
+                    "primary-fixed-dim": "#bec6e0",
+                    "primary-fixed": "#dae2fd",
+                    "primary-container": "#131b2e",
+                    "on-primary-fixed": "#131b2e",
+                    "on-primary-container": "#7c839b",
+                    "outline-variant": "#c6c6cd",
+                    "on-secondary-fixed-variant": "#004395",
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "tertiary-fixed": "#e1e0ff",
+                    "background": "#f7f9fb",
+                    "tertiary": "#000000",
+                    "on-background": "#191c1e",
+                    "on-surface": "#191c1e",
+                    "outline": "#76777d",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#07006c",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "inverse-on-surface": "#eff1f3",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#f7f9fb",
+                    "surface-container": "#eceef0",
+                    "on-tertiary-container": "#7073ff",
+                    "on-secondary-container": "#fefcff",
+                    "surface-tint": "#565e74",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container-high": "#e6e8ea",
+                    "tertiary-container": "#07006c",
+                    "on-tertiary-fixed-variant": "#2f2ebe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "element-gap": "16px",
+                    "base": "8px",
+                    "section-margin": "32px",
+                    "container-padding": "24px",
+                    "max-width": "600px"
+            },
+            "fontFamily": {
+                    "caption": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #F1F5F9; } /* Level 0 Base */
+        .glass-header {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .card-elevation-1 {
+            background-color: #ffffff;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            border-radius: 1.5rem; /* 24px */
+        }
+        .btn-primary {
+            background-color: #000000;
+            color: #ffffff;
+            border-radius: 1.5rem; /* 24px */
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+        }
+        .btn-secondary {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+            border-radius: 1.5rem;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface antialiased min-h-screen flex flex-col items-center py-section-margin px-container-padding">
+<!-- Main Onboarding Container -->
+<main class="w-full max-w-max-width flex flex-col gap-section-margin">
+<!-- Header & Progress -->
+<header class="flex flex-col gap-element-gap items-center text-center">
+<!-- Brand Icon -->
+<div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined text-on-primary" data-icon="bubble_chart" style="font-variation-settings: 'FILL' 1;">bubble_chart</span>
+</div>
+<div class="flex flex-col gap-base">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary">Connect Your Socials</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Link your accounts so Cognitive Concierge can begin managing your inbound leads.</p>
+</div>
+<!-- Progress Bar -->
+<div class="w-full max-w-sm mt-4">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-xs">Step 1 of 4</span>
+<span class="font-label-md text-label-md text-primary font-bold">25%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container rounded-full w-1/4 transition-all duration-500 ease-out"></div>
+</div>
+</div>
+</header>
+<!-- Connectivity Cards -->
+<div class="flex flex-col gap-element-gap">
+<!-- WhatsApp Business Card -->
+<div class="card-elevation-1 p-container-padding flex flex-col sm:flex-row items-center gap-container-padding transition-transform hover:scale-[1.01] duration-200 cursor-pointer">
+<div class="w-16 h-16 rounded-2xl bg-[#25D366]/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#25D366] text-3xl" data-icon="chat" style="font-variation-settings: 'FILL' 1;">chat</span>
+</div>
+<div class="flex-grow text-center sm:text-left flex flex-col gap-base">
+<h3 class="font-headline-md text-headline-md text-primary">WhatsApp Business</h3>
+<p class="font-caption text-caption text-on-surface-variant">Sync your business number to automate replies and capture leads directly from chat.</p>
+</div>
+<button class="btn-primary px-6 py-3 font-label-md text-label-md whitespace-nowrap active:scale-95 transition-transform">
+                    Connect
+                </button>
+</div>
+<!-- Instagram Card -->
+<div class="card-elevation-1 p-container-padding flex flex-col sm:flex-row items-center gap-container-padding transition-transform hover:scale-[1.01] duration-200 cursor-pointer relative overflow-hidden">
+<!-- AI Insight Border -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container rounded-l-xl"></div>
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] p-[2px] shrink-0">
+<div class="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#bc1888] text-3xl" data-icon="photo_camera" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+</div>
+</div>
+<div class="flex-grow text-center sm:text-left flex flex-col gap-base">
+<div class="flex items-center gap-2 justify-center sm:justify-start">
+<h3 class="font-headline-md text-headline-md text-primary">Instagram</h3>
+<span class="font-label-md text-[10px] bg-secondary-container/10 text-secondary-container px-2 py-0.5 rounded-full uppercase tracking-widest">Recommended</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant">Enable DM automation to handle customer inquiries and book appointments 24/7.</p>
+</div>
+<button class="btn-primary px-6 py-3 font-label-md text-label-md whitespace-nowrap active:scale-95 transition-transform">
+                    Connect
+                </button>
+</div>
+<!-- Facebook Messenger (Disabled/Coming Soon State) -->
+<div class="card-elevation-1 p-container-padding flex flex-col sm:flex-row items-center gap-container-padding opacity-60 grayscale">
+<div class="w-16 h-16 rounded-2xl bg-[#0084FF]/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#0084FF] text-3xl" data-icon="forum" style="font-variation-settings: 'FILL' 1;">forum</span>
+</div>
+<div class="flex-grow text-center sm:text-left flex flex-col gap-base">
+<h3 class="font-headline-md text-headline-md text-primary">Messenger</h3>
+<p class="font-caption text-caption text-on-surface-variant">Facebook Page integration.</p>
+</div>
+<button class="btn-secondary px-6 py-3 font-label-md text-label-md whitespace-nowrap cursor-not-allowed border-outline text-outline">
+                    Coming Soon
+                </button>
+</div>
+</div>
+<!-- Footer Actions -->
+<footer class="flex flex-col sm:flex-row justify-between items-center gap-element-gap mt-8 pt-8 border-t border-surface-container-high">
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2 px-4">
+                Skip for now
+            </button>
+<button class="btn-primary px-8 py-3 font-label-md text-label-md flex items-center gap-2 active:scale-95 transition-transform opacity-50 cursor-not-allowed" disabled="">
+                Next Step
+                <span class="material-symbols-outlined text-lg" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</footer>
+</main>
+</body></html>

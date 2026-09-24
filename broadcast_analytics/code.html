@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Broadcast Analytics</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f7f9fb",
+                        "tertiary-fixed": "#e1e0ff",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-primary-container": "#7c839b",
+                        "on-secondary-fixed": "#001a42",
+                        "tertiary": "#000000",
+                        "surface-tint": "#565e74",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#2170e4",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-bright": "#f7f9fb",
+                        "inverse-surface": "#2d3133",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-surface-variant": "#45464d",
+                        "outline": "#76777d",
+                        "on-tertiary-container": "#7073ff",
+                        "primary": "#000000",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#07006c",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e6e8ea",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-container": "#07006c",
+                        "outline-variant": "#c6c6cd",
+                        "on-surface": "#191c1e",
+                        "inverse-primary": "#bec6e0",
+                        "primary-container": "#131b2e",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary-container": "#fefcff",
+                        "on-background": "#191c1e",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#d8dadc",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-primary-fixed": "#131b2e",
+                        "secondary": "#0058be",
+                        "primary-fixed": "#dae2fd",
+                        "background": "#f7f9fb",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "max-width": "600px",
+                        "container-padding": "24px",
+                        "section-margin": "32px",
+                        "element-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "caption": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Base styles */
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Ambient Shadows */
+        .shadow-level-1 {
+            box-shadow: 0px 4px 16px rgba(19, 27, 46, 0.04);
+        }
+        .shadow-level-2 {
+            box-shadow: 0px 12px 32px rgba(19, 27, 46, 0.08);
+        }
+
+        /* Glassmorphism */
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background-color: rgba(247, 249, 251, 0.7);
+        }
+
+        /* Material Icon overrides */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.surface-variant');
+            border-radius: theme('borderRadius.full');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md pb-[88px] pt-16">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 glass-nav shadow-[0px_4px_16px_rgba(19,27,46,0.02)]">
+<div class="flex items-center justify-between px-container-padding h-16 w-full max-w-max-width mx-auto">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 transition-transform p-2 -ml-2 rounded-full">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-variant border border-outline-variant/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">rocket_launch</span>
+</div>
+<h1 class="font-headline-md-mobile text-headline-md-mobile font-bold text-on-surface tracking-tight">Spring Promo</h1>
+</div>
+</div>
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 transition-transform p-2 -mr-2 rounded-full">
+<span class="material-symbols-outlined text-[24px]">more_vert</span>
+</button>
+</div>
+</header>
+<main class="w-full max-w-max-width mx-auto px-container-padding flex flex-col gap-section-margin mt-6">
+<!-- Summary & Conversion -->
+<section class="flex flex-col gap-element-gap">
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-1 p-6 relative overflow-hidden border border-outline-variant/20">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-secondary/5 rounded-full blur-2xl pointer-events-none"></div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">Total Conversion</p>
+<div class="flex items-end gap-3 mb-6">
+<h2 class="font-display-lg text-display-lg text-primary">12.4%</h2>
+<span class="font-caption text-caption text-secondary bg-secondary/10 px-2 py-1 rounded-full mb-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                        +2.1%
+                    </span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="font-caption text-caption text-on-surface-variant mb-1">Booked Services</p>
+<p class="font-headline-md text-headline-md text-on-surface">48</p>
+</div>
+<div>
+<p class="font-caption text-caption text-on-surface-variant mb-1">Revenue Est.</p>
+<p class="font-headline-md text-headline-md text-on-surface">$4,250</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Funnel Stats Bento Grid -->
+<section>
+<h3 class="font-headline-md-mobile text-headline-md-mobile text-on-surface mb-4">Broadcast Funnel</h3>
+<div class="grid grid-cols-2 gap-4">
+<!-- Sent -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-1 p-5 border border-outline-variant/20 flex flex-col justify-between">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">send</span>
+</div>
+<div>
+<p class="font-caption text-caption text-on-surface-variant mb-1">Sent</p>
+<p class="font-headline-md text-headline-md text-on-surface">1,250</p>
+</div>
+</div>
+<!-- Delivered -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-1 p-5 border border-outline-variant/20 flex flex-col justify-between">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">mark_email_read</span>
+</div>
+<div>
+<p class="font-caption text-caption text-on-surface-variant mb-1">Delivered</p>
+<p class="font-headline-md text-headline-md text-on-surface">1,215</p>
+<p class="font-caption text-caption text-secondary mt-1">97.2%</p>
+</div>
+</div>
+<!-- Opened -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-1 p-5 border border-outline-variant/20 flex flex-col justify-between">
+<div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[16px] text-secondary">visibility</span>
+</div>
+<div>
+<p class="font-caption text-caption text-on-surface-variant mb-1">Opened</p>
+<p class="font-headline-md text-headline-md text-on-surface">842</p>
+<p class="font-caption text-caption text-secondary mt-1">69.3%</p>
+</div>
+</div>
+<!-- Replied -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-1 p-5 border-l-2 border-l-[#0058be] flex flex-col justify-between relative overflow-hidden">
+<div class="absolute right-0 bottom-0 w-24 h-24 bg-[#0058be]/5 rounded-tl-full pointer-events-none"></div>
+<div class="w-8 h-8 rounded-full bg-[#0058be]/10 flex items-center justify-center mb-4 relative z-10">
+<span class="material-symbols-outlined text-[16px] text-[#0058be]" style="font-variation-settings: 'FILL' 1;">forum</span>
+</div>
+<div class="relative z-10">
+<p class="font-caption text-caption text-on-surface-variant mb-1">Replied</p>
+<p class="font-headline-md text-headline-md text-on-surface">156</p>
+<p class="font-caption text-caption text-[#0058be] mt-1">18.5%</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Performance Chart -->
+<section class="flex flex-col gap-element-gap">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md-mobile text-headline-md-mobile text-on-surface">Engagement over time</h3>
+<span class="font-caption text-caption text-on-surface-variant bg-surface-variant px-3 py-1 rounded-full">Last 7 Days</span>
+</div>
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-1 p-6 border border-outline-variant/20 h-48 flex items-end justify-between gap-2 relative">
+<!-- Mock Chart Bars -->
+<div class="w-full flex items-end justify-between gap-1 h-32 mt-auto">
+<div class="w-full bg-secondary/20 rounded-t-sm h-[40%] hover:bg-secondary/40 transition-colors relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface font-caption text-caption px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">24</div>
+</div>
+<div class="w-full bg-secondary/20 rounded-t-sm h-[65%] hover:bg-secondary/40 transition-colors relative group"></div>
+<div class="w-full bg-secondary/60 rounded-t-sm h-[100%] hover:bg-secondary/80 transition-colors relative group"></div>
+<div class="w-full bg-secondary/20 rounded-t-sm h-[45%] hover:bg-secondary/40 transition-colors relative group"></div>
+<div class="w-full bg-secondary/20 rounded-t-sm h-[30%] hover:bg-secondary/40 transition-colors relative group"></div>
+<div class="w-full bg-secondary/20 rounded-t-sm h-[15%] hover:bg-secondary/40 transition-colors relative group"></div>
+<div class="w-full bg-secondary/20 rounded-t-sm h-[5%] hover:bg-secondary/40 transition-colors relative group"></div>
+</div>
+<!-- X Axis Labels -->
+<div class="absolute bottom-2 left-6 right-6 flex justify-between">
+<span class="font-caption text-caption text-on-surface-variant text-[10px]">Mon</span>
+<span class="font-caption text-caption text-on-surface-variant text-[10px]">Wed</span>
+<span class="font-caption text-caption text-on-surface-variant text-[10px]">Fri</span>
+<span class="font-caption text-caption text-on-surface-variant text-[10px]">Sun</span>
+</div>
+</div>
+</section>
+<!-- Engaged Leads List -->
+<section class="flex flex-col gap-element-gap pb-6">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md-mobile text-headline-md-mobile text-on-surface">Recent Replies</h3>
+<button class="font-label-md text-label-md text-secondary hover:opacity-80 transition-opacity">View All</button>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Lead Item 1 -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-1 p-4 border border-outline-variant/20 flex items-center justify-between group cursor-pointer hover:border-outline-variant/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant relative">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a smiling woman with dark hair in a well-lit corporate office environment. The lighting is bright and modern, creating a clean, high-end professional aesthetic that fits a minimalist corporate UI. The background is slightly blurred." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOSUGxTSubALVvLHpdv-osyRVwUx-WEXiLVVNTtAo3wya99B9c0hOuznhTDdIxepO2Q2nD8MB4IdJCWVW9tMqsRYHrrgsbqsOVbGFyqnmC2a9Kz7gdGfGvzklH2IDh2CQXPZ2x3iDJrPVbIiYUTDHnE2fkJVk-3U8EJ5ne_VWOK5RvWvc1wltKScQqq6JoPRqiuDfnMxwGP3jCtMVTyw-cwuji8g8-YtKo7Hx76m5uvzOcoGfiEYeXeA"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-surface-container-lowest rounded-full"></div>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Sarah Jenkins</p>
+<p class="font-caption text-caption text-on-surface-variant truncate w-40">"I'm interested in booking..."</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<span class="font-caption text-caption text-on-surface-variant text-[10px]">2m ago</span>
+<button class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center hover:opacity-90 active:scale-95 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">chat</span>
+</button>
+</div>
+</div>
+<!-- Lead Item 2 -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-1 p-4 border border-outline-variant/20 flex items-center justify-between group cursor-pointer hover:border-outline-variant/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center font-headline-md-mobile text-headline-md-mobile font-bold">
+                            M
+                        </div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Michael Chen</p>
+<p class="font-caption text-caption text-on-surface-variant truncate w-40">"Can we schedule a call?"</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<span class="font-caption text-caption text-on-surface-variant text-[10px]">1h ago</span>
+<button class="w-8 h-8 rounded-full bg-surface-variant text-on-surface flex items-center justify-center hover:bg-surface-dim active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[16px]">chat</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface/70 shadow-[0px_-4px_16px_rgba(19,27,46,0.02)] backdrop-blur-md md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-variant rounded-full transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label-md text-[10px] leading-tight">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-6 py-1.5 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">cloud_download</span>
+<span class="font-label-md text-[10px] leading-tight font-bold">Live</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-variant rounded-full transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1">contact_phone</span>
+<span class="font-label-md text-[10px] leading-tight">Contacts</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-variant rounded-full transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1">tune</span>
+<span class="font-label-md text-[10px] leading-tight">Settings</span>
+</button>
+</nav>
+</body></html>

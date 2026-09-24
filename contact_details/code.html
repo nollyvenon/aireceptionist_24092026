@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact Details - AI Assistant</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#131b2e",
+                        "primary-fixed": "#dae2fd",
+                        "surface": "#f7f9fb",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eceef0",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#07006c",
+                        "on-primary-fixed": "#131b2e",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-secondary-fixed": "#001a42",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-fixed-variant": "#004395",
+                        "outline-variant": "#c6c6cd",
+                        "on-surface-variant": "#45464d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "primary-fixed-dim": "#bec6e0",
+                        "surface-tint": "#565e74",
+                        "primary": "#000000",
+                        "secondary": "#0058be",
+                        "background": "#f7f9fb",
+                        "surface-container-high": "#e6e8ea",
+                        "on-background": "#191c1e",
+                        "on-tertiary-container": "#7073ff",
+                        "outline": "#76777d",
+                        "inverse-primary": "#bec6e0",
+                        "surface-container-low": "#f2f4f6",
+                        "tertiary-fixed": "#e1e0ff",
+                        "secondary-container": "#2170e4",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-surface": "#191c1e",
+                        "on-secondary-container": "#fefcff",
+                        "on-primary-container": "#7c839b",
+                        "surface-bright": "#f7f9fb",
+                        "surface-dim": "#d8dadc",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "on-tertiary-fixed": "#07006c",
+                        "surface-variant": "#e0e3e5",
+                        "tertiary": "#000000",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "inverse-on-surface": "#eff1f3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1.5rem"
+                    },
+                    "spacing": {
+                        "section-margin": "32px",
+                        "max-width": "600px",
+                        "base": "8px",
+                        "container-padding": "24px",
+                        "element-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "caption": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 16px rgba(19, 27, 46, 0.04);
+        }
+        .ai-border-accent {
+            border-left: 2px solid #0058be;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased min-h-screen pb-24 md:pb-8">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-md bg-surface/70 dark:bg-surface-dim/70 shadow-[0px_4px_16px_rgba(19,27,46,0.02)] shadow-sm">
+<div class="flex items-center justify-between px-container-padding h-16 w-full max-w-max-width mx-auto md:max-w-4xl lg:max-w-6xl">
+<!-- Back Action for Details Screen -->
+<button aria-label="Go back" class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 transition-transform flex items-center justify-center p-2 rounded-full">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md-mobile text-headline-md-mobile md:font-headline-md md:text-headline-md font-bold text-on-surface">Contact Details</h1>
+<button aria-label="Edit Contact" class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 transition-transform flex items-center justify-center p-2 rounded-full">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-[88px] px-container-padding max-w-max-width mx-auto md:max-w-4xl lg:max-w-6xl flex flex-col gap-section-margin">
+<!-- Profile Header Area - Bento Style -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-element-gap">
+<!-- Main Profile Card -->
+<div class="md:col-span-2 glass-panel rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-start md:items-center relative overflow-hidden">
+<div class="w-24 h-24 rounded-full overflow-hidden shrink-0 border-4 border-surface shadow-sm relative z-10">
+<img alt="Profile Picture" class="w-full h-full object-cover" data-alt="A highly professional corporate headshot of a middle-aged executive. The portrait is brightly lit with a clean, modern white background, embodying a high-end corporate modernism aesthetic. Deep navy suit, soft lighting, calm expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADxzHm5SeQOFnU0dmRGIwg1xm4N34Hirb8lNNuoTQvlIbUmt_K3qWt8rhZUPXfH-ayTd8xMHDAuin7c1yCVydsK3UYUx5sVGpChmFv6EYERwRr64uX_u6iIEklxwtQ8Vs4VQL4Hlm8vRtXOCEl-Kmcsj2Qwk_JCD9rgcgPoyiG_SpmBKs-qE4jrxUh50hOmxSpEG8LyUHkfi73ILkMYVlbwTNlKWWmRPK2VV9C1rL2e4auTo8a16m6qA"/>
+</div>
+<div class="flex-1 relative z-10">
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-background">Eleanor Vance</h2>
+<span class="bg-secondary-fixed text-on-secondary-fixed-variant font-label-md text-label-md px-3 py-1 rounded-full whitespace-nowrap">VIP Client</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-4">VP of Operations at Acme Corp</p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary-container text-on-tertiary px-6 py-3 rounded-full font-label-md text-label-md flex items-center gap-2 hover:opacity-90 transition-opacity shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]">
+<span class="material-symbols-outlined text-[18px]">call</span>
+                            Call Now
+                        </button>
+<button class="bg-surface-container-lowest text-primary-container border border-primary-container px-6 py-3 rounded-full font-label-md text-label-md flex items-center gap-2 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                            Email
+                        </button>
+</div>
+</div>
+<!-- Subtle background decoration -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-fixed/20 rounded-full blur-3xl -z-0 translate-x-1/2 -translate-y-1/4 pointer-events-none"></div>
+</div>
+<!-- Quick Stats Card -->
+<div class="md:col-span-1 glass-panel rounded-2xl p-6 flex flex-col justify-between">
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase mb-4">Interaction Summary</h3>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="font-display-lg text-display-lg text-primary-container">14</p>
+<p class="font-caption text-caption text-on-surface-variant">Total Calls</p>
+</div>
+<div>
+<p class="font-display-lg text-display-lg text-primary-container">42<span class="text-body-md">m</span></p>
+<p class="font-caption text-caption text-on-surface-variant">Avg. Duration</p>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/30 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">schedule</span>
+<span class="font-caption text-caption text-on-surface-variant">Last active: 2 days ago</span>
+</div>
+</div>
+</section>
+<!-- Contact Details & Tags -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-element-gap">
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-[0_4px_16px_rgba(19,27,46,0.02)] border border-outline-variant/20">
+<h3 class="font-headline-md-mobile text-headline-md-mobile text-on-background mb-4">Contact Information</h3>
+<ul class="flex flex-col gap-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5">phone_iphone</span>
+<div>
+<p class="font-body-md text-body-md text-on-background">+1 (555) 019-8372</p>
+<p class="font-caption text-caption text-on-surface-variant">Mobile - Primary</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5">work</span>
+<div>
+<p class="font-body-md text-body-md text-on-background">+1 (555) 902-1144 ext 201</p>
+<p class="font-caption text-caption text-on-surface-variant">Office</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5">email</span>
+<div>
+<p class="font-body-md text-body-md text-on-background">e.vance@acmecorp.com</p>
+<p class="font-caption text-caption text-on-surface-variant">Work Email</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-[0_4px_16px_rgba(19,27,46,0.02)] border border-outline-variant/20">
+<h3 class="font-headline-md-mobile text-headline-md-mobile text-on-background mb-4">AI Inferred Tags</h3>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="bg-surface-container-highest text-on-surface font-label-md text-label-md px-4 py-1.5 rounded-full">Decision Maker</span>
+<span class="bg-surface-container-highest text-on-surface font-label-md text-label-md px-4 py-1.5 rounded-full">Urgent Inquiries</span>
+<span class="bg-surface-container-highest text-on-surface font-label-md text-label-md px-4 py-1.5 rounded-full">Q3 Contract</span>
+<span class="bg-surface-container-highest text-on-surface font-label-md text-label-md px-4 py-1.5 rounded-full border border-dashed border-outline-variant bg-transparent cursor-pointer hover:bg-surface-container-low">+ Add Tag</span>
+</div>
+<div class="ai-border-accent pl-4 bg-surface-container-low/50 py-3 pr-3 rounded-r-lg">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-secondary text-[16px]">auto_awesome</span>
+<span class="font-label-md text-label-md text-secondary">AI Insight</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Prefers morning calls. Usually focused on operational efficiency and compliance metrics.</p>
+</div>
+</div>
+</section>
+<!-- Chronological Feed -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-md md:font-headline-lg text-headline-md md:text-headline-lg text-on-background">Interaction History</h3>
+<button class="text-secondary font-label-md text-label-md flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                    Filter
+                </button>
+</div>
+<div class="relative border-l-2 border-surface-container-high ml-4 md:ml-6 flex flex-col gap-8 pb-8">
+<!-- Feed Item 1 (Call) -->
+<div class="relative pl-6 md:pl-8">
+<div class="absolute -left-[11px] top-1 w-5 h-5 bg-secondary rounded-full border-4 border-background flex items-center justify-center shadow-sm"></div>
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-[0_4px_16px_rgba(19,27,46,0.02)] border border-outline-variant/10 ai-border-accent">
+<div class="flex flex-wrap justify-between items-start mb-3 gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary bg-secondary-fixed/50 p-1.5 rounded-full text-[16px]">phone_in_talk</span>
+<span class="font-label-md text-label-md text-on-background">Inbound Call</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Oct 12, 10:30 AM • 14m 20s</span>
+</div>
+<h4 class="font-headline-md-mobile text-headline-md-mobile text-on-background mb-2">Discussed Q4 Compliance Audit</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 line-clamp-2">Eleanor called to verify that all documentation for the upcoming Q4 compliance audit has been uploaded to the secure portal. Confirmed receipt of form 104-B.</p>
+<div class="bg-surface-container p-3 rounded-lg flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">summarize</span>
+<div>
+<p class="font-label-md text-label-md text-on-background text-xs uppercase mb-1">AI Generated Summary &amp; Notes</p>
+<p class="font-body-md text-body-md text-sm text-on-surface-variant">Action Item: Send confirmation email regarding form 104-B by end of day. Client seemed anxious about the timeline.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feed Item 2 (Note) -->
+<div class="relative pl-6 md:pl-8">
+<div class="absolute -left-[11px] top-1 w-5 h-5 bg-surface-variant rounded-full border-4 border-background flex items-center justify-center"></div>
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-[0_4px_16px_rgba(19,27,46,0.02)] border border-outline-variant/10">
+<div class="flex flex-wrap justify-between items-start mb-3 gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant bg-surface-variant/50 p-1.5 rounded-full text-[16px]">edit_note</span>
+<span class="font-label-md text-label-md text-on-background">Manual Note</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Oct 10, 4:15 PM</span>
+</div>
+<p class="font-body-md text-body-md text-on-background">Followed up with procurement team regarding Acme Corp's vendor status. Still waiting on final signatures from their legal department before we can proceed with the integration phase.</p>
+</div>
+</div>
+<!-- Feed Item 3 (Missed Call) -->
+<div class="relative pl-6 md:pl-8">
+<div class="absolute -left-[11px] top-1 w-5 h-5 bg-error/80 rounded-full border-4 border-background flex items-center justify-center"></div>
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-[0_4px_16px_rgba(19,27,46,0.02)] border border-outline-variant/10 opacity-75">
+<div class="flex flex-wrap justify-between items-start gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error bg-error-container/50 p-1.5 rounded-full text-[16px]">phone_missed</span>
+<span class="font-label-md text-label-md text-on-background">Missed Call</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Oct 08, 9:02 AM</span>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full py-4 text-secondary font-label-md text-label-md hover:bg-secondary-fixed/20 rounded-lg transition-colors mt-2">
+                Load Older Interactions
+            </button>
+</section>
+</main>
+<!-- Suppressed Nav Shell elements (BottomNavBar/SideNav) per Semantic Shell Mandate: Details/Transactional Screen -->
+</body></html>
