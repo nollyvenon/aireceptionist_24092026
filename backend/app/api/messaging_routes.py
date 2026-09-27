@@ -26,7 +26,7 @@ async def send_sms(
         result = await sms_service.send_sms(
             phone=message_data.recipient,
             message=message_data.body,
-            organization_id=current_user.get("organization_id")
+            organization_id=current_user.organization_id
         )
         return {"status": "sent", "message_id": result.get("sid")}
     except Exception as e:
@@ -44,7 +44,7 @@ async def send_whatsapp(
         result = await sms_service.send_whatsapp(
             phone=message_data.recipient,
             message=message_data.body,
-            organization_id=current_user.get("organization_id")
+            organization_id=current_user.organization_id
         )
         return {"status": "sent", "message_id": result.get("sid")}
     except Exception as e:
@@ -63,7 +63,7 @@ async def send_email(
             to=message_data.recipient,
             subject=message_data.subject,
             body=message_data.body,
-            organization_id=current_user.get("organization_id")
+            organization_id=current_user.organization_id
         )
         return {"status": "sent", "message_id": result.get("id")}
     except Exception as e:
@@ -78,7 +78,7 @@ async def create_campaign(
 ):
     """Create messaging campaign"""
     campaign = Campaign(
-        organization_id=current_user.get("organization_id"),
+        organization_id=current_user.organization_id,
         name=campaign_data.name,
         description=campaign_data.description,
         campaign_type=campaign_data.campaign_type,
@@ -103,7 +103,7 @@ async def list_campaigns(
 ):
     """List all campaigns"""
     return db.query(Campaign).filter(
-        Campaign.organization_id == current_user.get("organization_id")
+        Campaign.organization_id == current_user.organization_id
     ).offset(skip).limit(limit).all()
 
 # Create message template
@@ -115,7 +115,7 @@ async def create_template(
 ):
     """Create message template"""
     template = MessageTemplate(
-        organization_id=current_user.get("organization_id"),
+        organization_id=current_user.organization_id,
         name=template_data.name,
         channel=template_data.channel,
         subject=template_data.subject,
@@ -136,7 +136,7 @@ async def list_templates(
 ):
     """List message templates"""
     query = db.query(MessageTemplate).filter(
-        MessageTemplate.organization_id == current_user.get("organization_id")
+        MessageTemplate.organization_id == current_user.organization_id
     )
     if channel:
         query = query.filter(MessageTemplate.channel == channel)
@@ -152,7 +152,7 @@ async def get_message_history(
     """Get customer message history"""
     return db.query(Message).filter(
         Message.customer_id == customer_id,
-        Message.organization_id == current_user.get("organization_id")
+        Message.organization_id == current_user.organization_id
     ).order_by(Message.created_at.desc()).limit(100).all()
 
 # Drip campaign
@@ -165,7 +165,7 @@ async def create_drip_campaign(
     """Create drip email/SMS sequence"""
     try:
         drip = await sms_service.create_drip_sequence(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             name=drip_data.get("name"),
             steps=drip_data.get("steps"),
             trigger=drip_data.get("trigger"),
@@ -185,7 +185,7 @@ async def send_broadcast(
     """Send broadcast message to segment"""
     try:
         result = await sms_service.send_broadcast(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             segment=broadcast_data.get("segment"),
             channel=broadcast_data.get("channel"),
             message=broadcast_data.get("message"),
@@ -203,6 +203,6 @@ async def get_inbox(
 ):
     """Get conversation inbox"""
     return db.query(Message).filter(
-        Message.organization_id == current_user.get("organization_id"),
+        Message.organization_id == current_user.organization_id,
         Message.direction == "inbound"
     ).order_by(Message.created_at.desc()).limit(50).all()

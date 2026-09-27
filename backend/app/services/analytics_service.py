@@ -12,7 +12,11 @@ import uuid
 
 class AnalyticsService:
     @staticmethod
-    def get_revenue_analytics(org_id: UUID, db: Session, days: int = 30) -> dict:
+    def get_revenue_analytics(organization_id: UUID = None, org_id: UUID = None, db: Session = None, period: str = "month", days: int = None) -> dict:
+        if org_id is None:
+            org_id = organization_id
+        if days is None:
+            days = 30 if period == "month" else (7 if period == "week" else 1)
         """Get detailed revenue analytics"""
         start_date = datetime.utcnow() - timedelta(days=days)
         payments = db.query(Payment).filter(
@@ -66,7 +70,9 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def get_appointment_analytics(org_id: UUID, db: Session, days: int = 30) -> dict:
+    def get_appointment_analytics(organization_id: UUID = None, org_id: UUID = None, db: Session = None, days: int = 30) -> dict:
+        if org_id is None:
+            org_id = organization_id
         """Get detailed appointment analytics"""
         start_date = datetime.utcnow() - timedelta(days=days)
         appointments = db.query(Appointment).filter(
@@ -311,7 +317,9 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def get_dashboard_metrics(org_id: UUID, db: Session):
+    def get_dashboard_metrics(organization_id: UUID = None, org_id: UUID = None, db: Session = None):
+        if org_id is None:
+            org_id = organization_id
         summary = AnalyticsService.get_business_summary(org_id, db)
         return {
             "total_appointments": summary["appointments"]["total_30d"],
@@ -321,8 +329,10 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def get_customer_analytics(org_id: UUID, db: Session) -> dict:
+    def get_customer_analytics(organization_id: UUID = None, org_id: UUID = None, db: Session = None) -> dict:
         """Get customer analytics"""
+        if org_id is None:
+            org_id = organization_id
         from app.models.customer import Customer
         customers = db.query(Customer).filter(Customer.organization_id == org_id).all()
         return {
@@ -333,8 +343,10 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def get_ai_performance(org_id: UUID, db: Session) -> dict:
+    def get_ai_performance(organization_id: UUID = None, org_id: UUID = None, db: Session = None) -> dict:
         """Get AI performance metrics"""
+        if org_id is None:
+            org_id = organization_id
         return {
             "total_interactions": 0,
             "success_rate": 0,
@@ -343,8 +355,10 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def get_staff_utilization(org_id: UUID, db: Session) -> dict:
+    def get_staff_utilization(organization_id: UUID = None, org_id: UUID = None, db: Session = None) -> dict:
         """Get staff utilization metrics"""
+        if org_id is None:
+            org_id = organization_id
         return {
             "total_staff": 0,
             "busy_staff": 0,
@@ -353,8 +367,10 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def get_conversion_funnel(org_id: UUID, db: Session) -> dict:
+    def get_conversion_funnel(organization_id: UUID = None, org_id: UUID = None, db: Session = None) -> dict:
         """Get conversion funnel analytics"""
+        if org_id is None:
+            org_id = organization_id
         return {
             "leads": 0,
             "prospects": 0,
@@ -363,13 +379,17 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def export_report(org_id: UUID, db: Session, format: str = "csv", metrics: list = None) -> str:
+    def export_report(organization_id: UUID = None, org_id: UUID = None, db: Session = None, format: str = "csv", metrics: list = None) -> str:
         """Export analytics report"""
+        if org_id is None:
+            org_id = organization_id
         return f"/reports/{org_id}/export.{format}"
 
     @staticmethod
-    def get_top_customers(org_id: UUID, db: Session, limit: int = 10) -> list:
+    def get_top_customers(organization_id: UUID = None, org_id: UUID = None, db: Session = None, limit: int = 10) -> list:
         """Get top customers by revenue"""
+        if org_id is None:
+            org_id = organization_id
         from app.models.customer import Customer
         customers = db.query(Customer).filter(
             Customer.organization_id == org_id
@@ -386,8 +406,10 @@ class AnalyticsService:
         ]
 
     @staticmethod
-    def forecast_metrics(org_id: UUID, db: Session, months: int = 3) -> dict:
+    def forecast_metrics(organization_id: UUID = None, org_id: UUID = None, db: Session = None, months: int = 3) -> dict:
         """Forecast future metrics"""
+        if org_id is None:
+            org_id = organization_id
         return {
             "period_months": months,
             "projected_revenue": 0,
@@ -396,8 +418,10 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def create_custom_report(org_id: UUID, db: Session, name: str, metrics: list = None, dimensions: list = None, filters: dict = None) -> dict:
+    def create_custom_report(organization_id: UUID = None, org_id: UUID = None, db: Session = None, name: str = None, metrics: list = None, dimensions: list = None, filters: dict = None) -> dict:
         """Create custom analytics report"""
+        if org_id is None:
+            org_id = organization_id
         return {
             "id": "report_" + str(uuid.uuid4())[:8],
             "name": name,

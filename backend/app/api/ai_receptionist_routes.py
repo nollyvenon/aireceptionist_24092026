@@ -49,8 +49,12 @@ async def initiate_voice_call(
 ):
     """Initiate voice call with AI"""
     try:
+        ai_service = AIService(
+            organization_id=current_user.organization_id,
+            db=db
+        )
         call = await ai_service.initiate_voice_call(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             phone_number=call_data.get("phone_number"),
             customer_name=call_data.get("customer_name"),
             db=db
@@ -71,6 +75,7 @@ async def voice_call_webhook(
 ):
     """Handle voice call events (Twilio/Vonage webhook)"""
     try:
+        ai_service = AIService(db=db)
         await ai_service.handle_voice_webhook(payload, db=db)
         return {"status": "processed"}
     except Exception as e:
@@ -86,7 +91,7 @@ async def get_conversation(
     """Get conversation history"""
     conversation = db.query(AIConversation).filter(
         AIConversation.id == conversation_id,
-        AIConversation.organization_id == current_user.get("organization_id")
+        AIConversation.organization_id == current_user.organization_id
     ).first()
     if not conversation:
         raise HTTPException(status_code=404, detail="Conversation not found")
@@ -115,7 +120,7 @@ async def process_booking_intent(
     """Process booking intent from AI conversation"""
     try:
         booking = await ai_service.process_booking_intent(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             customer_id=booking_data.get("customer_id"),
             customer_name=booking_data.get("customer_name"),
             customer_phone=booking_data.get("customer_phone"),
@@ -139,7 +144,7 @@ async def process_reschedule(
     """Process reschedule request from AI"""
     try:
         result = await ai_service.process_reschedule(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             appointment_id=reschedule_data.get("appointment_id"),
             new_date=reschedule_data.get("new_date"),
             new_time=reschedule_data.get("new_time"),
@@ -160,7 +165,7 @@ async def process_cancellation(
     """Process cancellation request from AI"""
     try:
         result = await ai_service.process_cancellation(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             appointment_id=cancel_data.get("appointment_id"),
             reason=cancel_data.get("reason"),
             db=db
@@ -179,7 +184,7 @@ async def escalate_to_human(
     """Escalate conversation to human agent"""
     try:
         result = await ai_service.escalate_to_human(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             conversation_id=escalate_data.get("conversation_id"),
             reason=escalate_data.get("reason"),
             db=db
@@ -199,8 +204,8 @@ async def chat_multilingual(
     """Chat with AI in different language"""
     try:
         response = await ai_service.process_message(
-            organization_id=current_user.get("organization_id"),
-            customer_id=current_user.get("customer_id"),
+            organization_id=current_user.organization_id,
+            customer_id=current_user.id,
             message_text=message.get("text"),
             language=language,
             db=db
@@ -235,7 +240,7 @@ async def add_knowledge(
     """Add knowledge to AI knowledge base"""
     try:
         result = await ai_service.add_knowledge(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             title=knowledge_data.get("title"),
             content=knowledge_data.get("content"),
             category=knowledge_data.get("category"),
@@ -272,7 +277,7 @@ async def score_lead(
     """Score lead based on conversation"""
     try:
         score = await ai_service.score_lead(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             conversation_text=lead_data.get("conversation_text"),
             customer_data=lead_data.get("customer_data"),
             db=db

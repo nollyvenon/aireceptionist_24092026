@@ -39,7 +39,7 @@ async def install_integration(
     """Install marketplace integration"""
     try:
         integration = Integration(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             name=integration_name,
             config=config,
             is_active=True
@@ -59,7 +59,7 @@ async def list_installed_integrations(
 ):
     """List installed integrations"""
     return db.query(Integration).filter(
-        Integration.organization_id == current_user.get("organization_id")
+        Integration.organization_id == current_user.organization_id
     ).all()
 
 # Create API key
@@ -72,7 +72,7 @@ async def create_api_key(
     """Create API key for developers"""
     try:
         api_key = APIKey(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             name=key_data.get("name"),
             key=APIKey.generate_key(),
             scopes=key_data.get("scopes", [])
@@ -92,7 +92,7 @@ async def list_api_keys(
 ):
     """List API keys"""
     return db.query(APIKey).filter(
-        APIKey.organization_id == current_user.get("organization_id")
+        APIKey.organization_id == current_user.organization_id
     ).all()
 
 # Create webhook
@@ -105,7 +105,7 @@ async def create_webhook(
     """Create webhook endpoint"""
     try:
         webhook = Webhook(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             url=webhook_data.get("url"),
             event_types=webhook_data.get("event_types", []),
             is_active=True
@@ -125,7 +125,7 @@ async def list_webhooks(
 ):
     """List webhooks"""
     return db.query(Webhook).filter(
-        Webhook.organization_id == current_user.get("organization_id")
+        Webhook.organization_id == current_user.organization_id
     ).all()
 
 # Public API documentation

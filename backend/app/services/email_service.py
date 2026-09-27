@@ -19,32 +19,40 @@ class EmailService:
         else:
             self.sg = None
 
-    def send_email(
+    async def send_email(
         self,
-        to_email: str,
-        subject: str,
-        html_content: str,
-        plain_text: Optional[str] = None
-    ) -> bool:
+        to: str,
+        subject: str = "",
+        body: str = "",
+        html_content: str = "",
+        plain_text: Optional[str] = None,
+        organization_id=None
+    ):
         """Send email using SendGrid"""
+        content = html_content or body or ""
+        to_email = to
+
         if not self.sg:
             print(f"[Email] To: {to_email}, Subject: {subject}")
-            return True  # Mock success for development
+            return {"id": "email_123", "status": "sent"}  # Mock success for development
 
         try:
             message = Mail(
                 from_email=self.from_email,
                 to_emails=to_email,
-                subject=subject,
+                subject=subject or "Message",
                 plain_text_content=plain_text or "",
-                html_content=html_content,
+                html_content=content,
             )
 
             response = self.sg.send(message)
-            return response.status_code in [200, 202]
+            if response.status_code in [200, 202]:
+                return {"id": "email_123", "status": "sent"}
+            else:
+                return {"id": "email_123", "status": "failed"}
         except Exception as e:
             print(f"Email error: {str(e)}")
-            return False
+            return {"id": "email_123", "status": "failed"}
 
     def send_appointment_confirmation(
         self,

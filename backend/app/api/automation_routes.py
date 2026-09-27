@@ -22,7 +22,7 @@ async def create_automation(
     """Create automation workflow"""
     try:
         automation = Automation(
-            organization_id=current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             name=automation_data.name,
             description=automation_data.description,
             trigger_type=automation_data.trigger_type,
@@ -48,7 +48,7 @@ async def list_automations(
 ):
     """List all automations"""
     return db.query(Automation).filter(
-        Automation.organization_id == current_user.get("organization_id")
+        Automation.organization_id == current_user.organization_id
     ).offset(skip).limit(limit).all()
 
 # Get automation
@@ -61,7 +61,7 @@ async def get_automation(
     """Get automation details"""
     automation = db.query(Automation).filter(
         Automation.id == automation_id,
-        Automation.organization_id == current_user.get("organization_id")
+        Automation.organization_id == current_user.organization_id
     ).first()
     if not automation:
         raise HTTPException(status_code=404, detail="Automation not found")
@@ -78,7 +78,7 @@ async def update_automation(
     """Update automation"""
     automation = db.query(Automation).filter(
         Automation.id == automation_id,
-        Automation.organization_id == current_user.get("organization_id")
+        Automation.organization_id == current_user.organization_id
     ).first()
     if not automation:
         raise HTTPException(status_code=404, detail="Automation not found")
@@ -100,11 +100,11 @@ async def delete_automation(
     """Delete automation"""
     automation = db.query(Automation).filter(
         Automation.id == automation_id,
-        Automation.organization_id == current_user.get("organization_id")
+        Automation.organization_id == current_user.organization_id
     ).first()
     if not automation:
         raise HTTPException(status_code=404, detail="Automation not found")
-    
+
     db.delete(automation)
     db.commit()
     return {"status": "deleted"}
@@ -119,7 +119,7 @@ async def toggle_automation(
     """Enable/disable automation"""
     automation = db.query(Automation).filter(
         Automation.id == automation_id,
-        Automation.organization_id == current_user.get("organization_id")
+        Automation.organization_id == current_user.organization_id
     ).first()
     if not automation:
         raise HTTPException(status_code=404, detail="Automation not found")
@@ -141,11 +141,11 @@ async def trigger_automation_manual(
     try:
         automation = db.query(Automation).filter(
             Automation.id == automation_id,
-            Automation.organization_id == current_user.get("organization_id")
+            Automation.organization_id == current_user.organization_id
         ).first()
         if not automation:
             raise HTTPException(status_code=404, detail="Automation not found")
-        
+
         result = await automation_service.execute_automation(
             automation=automation,
             trigger_data=trigger_data,
@@ -194,7 +194,7 @@ async def test_automation(
     try:
         automation = db.query(Automation).filter(
             Automation.id == automation_id,
-            Automation.organization_id == current_user.get("organization_id")
+            Automation.organization_id == current_user.organization_id
         ).first()
         if not automation:
             raise HTTPException(status_code=404, detail="Automation not found")

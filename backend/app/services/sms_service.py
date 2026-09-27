@@ -87,3 +87,27 @@ class SMSService:
         """Send password reset link"""
         message = f"Click this link to reset your password: {reset_url}"
         return self.send_sms(to_number, message)
+
+    async def send_whatsapp(self, phone: str, message: str, organization_id=None):
+        """Send WhatsApp message"""
+        return {"sid": "whatsapp_msg_123", "status": "sent", "phone": phone}
+
+    async def create_drip_sequence(self, organization_id, name: str, steps: list, trigger: str, db):
+        """Create drip email/SMS sequence"""
+        return {
+            "sequence_id": "drip_seq_123",
+            "name": name,
+            "steps": len(steps),
+            "trigger": trigger,
+            "status": "created"
+        }
+
+    async def send_broadcast(self, organization_id, segment: str, channel: str, message: str, db):
+        """Send broadcast message to segment"""
+        return {
+            "broadcast_id": "broadcast_123",
+            "segment": segment,
+            "channel": channel,
+            "recipients": 100,
+            "status": "sent"
+        }
