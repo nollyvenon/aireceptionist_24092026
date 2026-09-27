@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 
 class AnalyticsService:
     @staticmethod
-    def get_revenue_analytics(org_id: UUID, days: int = 30, db: Session) -> dict:
+    def get_revenue_analytics(org_id: UUID, db: Session, days: int = 30) -> dict:
         """Get detailed revenue analytics"""
         start_date = datetime.utcnow() - timedelta(days=days)
         payments = db.query(Payment).filter(
@@ -65,7 +65,7 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def get_appointment_analytics(org_id: UUID, days: int = 30, db: Session) -> dict:
+    def get_appointment_analytics(org_id: UUID, db: Session, days: int = 30) -> dict:
         """Get detailed appointment analytics"""
         start_date = datetime.utcnow() - timedelta(days=days)
         appointments = db.query(Appointment).filter(
@@ -116,7 +116,7 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def get_call_analytics(org_id: UUID, days: int = 30, db: Session) -> dict:
+    def get_call_analytics(org_id: UUID, db: Session, days: int = 30) -> dict:
         """Get detailed call analytics"""
         start_date = datetime.utcnow() - timedelta(days=days)
         calls = db.query(Call).filter(
@@ -274,9 +274,9 @@ class AnalyticsService:
     @staticmethod
     def get_business_summary(org_id: UUID, db: Session) -> dict:
         """Get comprehensive business summary"""
-        revenue = AnalyticsService.get_revenue_analytics(org_id, 30, db)
-        appointments = AnalyticsService.get_appointment_analytics(org_id, 30, db)
-        calls = AnalyticsService.get_call_analytics(org_id, 30, db)
+        revenue = AnalyticsService.get_revenue_analytics(org_id, db, 30)
+        appointments = AnalyticsService.get_appointment_analytics(org_id, db, 30)
+        calls = AnalyticsService.get_call_analytics(org_id, db, 30)
         leads = AnalyticsService.get_lead_analytics(org_id, db)
         deals = AnalyticsService.get_deal_analytics(org_id, db)
 

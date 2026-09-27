@@ -4,13 +4,12 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 from uuid import UUID
-from decimal import Decimal
 
 
 class DealBase(BaseModel):
     name: str = Field(..., min_length=1, max_length=255)
     customer_id: Optional[UUID] = None
-    value: Decimal = Field(..., ge=0, decimal_places=2)
+    value: float = Field(..., ge=0)
     probability: Optional[int] = Field(None, ge=0, le=100)
     status: str = Field(default="prospect", description="Deal status")
     expected_close_date: Optional[datetime] = None
@@ -24,7 +23,7 @@ class DealCreate(DealBase):
 class DealUpdate(BaseModel):
     name: Optional[str] = Field(None, min_length=1, max_length=255)
     customer_id: Optional[UUID] = None
-    value: Optional[Decimal] = Field(None, ge=0, decimal_places=2)
+    value: Optional[float] = Field(None, ge=0)
     probability: Optional[int] = Field(None, ge=0, le=100)
     status: Optional[str] = None
     expected_close_date: Optional[datetime] = None

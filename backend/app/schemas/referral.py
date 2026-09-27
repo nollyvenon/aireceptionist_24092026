@@ -4,13 +4,12 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 from uuid import UUID
-from decimal import Decimal
 
 
 class ReferralBase(BaseModel):
     referrer_id: UUID
     referred_customer_id: UUID
-    reward_amount: Decimal = Field(default=0, ge=0, decimal_places=2)
+    reward_amount: float = Field(default=0, ge=0)
     reward_type: Optional[str] = Field(None, max_length=50)
     status: str = Field(default="pending", description="Status: pending, completed, rejected")
 
@@ -21,7 +20,7 @@ class ReferralCreate(ReferralBase):
 
 class ReferralUpdate(BaseModel):
     status: Optional[str] = None
-    reward_amount: Optional[Decimal] = Field(None, ge=0, decimal_places=2)
+    reward_amount: Optional[float] = Field(None, ge=0)
 
 
 class ReferralResponse(ReferralBase):
@@ -47,5 +46,5 @@ class ReferralSummaryResponse(BaseModel):
     completed: int
     pending: int
     rejected: int
-    total_rewards_given: Decimal
+    total_rewards_given: float
     completion_rate: float
