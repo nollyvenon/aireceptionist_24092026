@@ -42,7 +42,7 @@ async def list_leads(
     leads = query.offset(skip).limit(limit).all()
 
     return {
-        "data": [
+        "items": [
             {
                 "id": str(lead.id),
                 "first_name": lead.first_name,

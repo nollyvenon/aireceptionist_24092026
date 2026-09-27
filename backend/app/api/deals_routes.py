@@ -39,7 +39,7 @@ async def list_deals(
     deals = query.offset(skip).limit(limit).all()
 
     return {
-        "data": [
+        "items": [
             {
                 "id": str(d.id),
                 "name": d.name,
@@ -50,6 +50,8 @@ async def list_deals(
             for d in deals
         ],
         "total": total,
+        "skip": skip,
+        "limit": limit,
     }
 
 @router.post("")

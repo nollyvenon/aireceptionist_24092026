@@ -102,7 +102,7 @@ class TestLeadsEndpoints:
             headers=auth_headers,
             params={
                 "token": test_auth_token,
-                "status": test_lead.status
+                "status": test_lead.status.value
             }
         )
         assert response.status_code == 200

@@ -115,7 +115,7 @@ class TestDealsEndpoints:
             headers=auth_headers,
             params={
                 "token": test_auth_token,
-                "status": test_deal.status
+                "status": test_deal.status.value
             }
         )
         assert response.status_code == 200

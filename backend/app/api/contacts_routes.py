@@ -39,7 +39,7 @@ async def list_contacts(
     contacts = query.offset(skip).limit(limit).all()
 
     return {
-        "data": [
+        "items": [
             {
                 "id": str(c.id),
                 "first_name": c.first_name,
@@ -52,6 +52,8 @@ async def list_contacts(
             for c in contacts
         ],
         "total": total,
+        "skip": skip,
+        "limit": limit,
     }
 
 @router.post("")
