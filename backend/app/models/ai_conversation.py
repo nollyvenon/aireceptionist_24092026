@@ -1,6 +1,6 @@
-"""AI Conversation and related models"""
+"""AI Conversation and ConversationMessage models"""
 
-from sqlalchemy import Column, String, DateTime, Boolean, JSON, ForeignKey, Index, Text, Enum
+from sqlalchemy import Column, String, DateTime, Integer, JSON, Enum, ForeignKey, Index, Text, Float, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
@@ -13,20 +13,22 @@ from database import Base
 class ConversationStatus(str, enum.Enum):
     ACTIVE = "active"
     COMPLETED = "completed"
-    ARCHIVED = "archived"
+    ABANDONED = "abandoned"
+    PAUSED = "paused"
 
 
 class MessageType(str, enum.Enum):
     USER = "user"
-    ASSISTANT = "assistant"
+    AI = "ai"
     SYSTEM = "system"
 
 
 class IntentType(str, enum.Enum):
     BOOKING = "booking"
     RESCHEDULE = "reschedule"
-    CANCEL = "cancel"
+    CANCELLATION = "cancellation"
     INQUIRY = "inquiry"
+    FEEDBACK = "feedback"
     OTHER = "other"
 
 
@@ -38,22 +40,26 @@ class AIConversation(Base):
     customer_id = Column(UUID(as_uuid=True), ForeignKey("customers.id"), nullable=True)
 
     # Conversation metadata
-    channel = Column(String(50), nullable=False)  # 'chat', 'voice', 'whatsapp', etc.
+    channel = Column(String(50), default="chat", nullable=False)  # chat, voice, whatsapp, etc.
     status = Column(Enum(ConversationStatus), default=ConversationStatus.ACTIVE, nullable=False)
+
+    # AI context
+    ai_model = Column(String(100), nullable=True)  # e.g., "gpt-4", "claude-3", "gemini"
     language = Column(String(10), default="en", nullable=False)
 
-    # Intent detection
-    detected_intent = Column(Enum(IntentType), nullable=True)
-    intent_confidence = Column(JSON, default=dict, nullable=False)  # {intent: score, ...}
+    # Metrics
+    message_count = Column(Integer, default=0, nullable=False)
+    duration_seconds = Column(Integer, nullable=True)
+    sentiment_score = Column(Float, nullable=True)
 
-    # Sentiment analysis
-    sentiment = Column(String(50), nullable=True)  # 'positive', 'negative', 'neutral'
-    sentiment_score = Column(JSON, default=dict, nullable=False)  # {positive: score, ...}
+    # Intent tracking
+    primary_intent = Column(Enum(IntentType), nullable=True)
+    intent_confidence = Column(Float, nullable=True)
 
-    # Context and metadata
-    extra_data = Column(JSON, default=dict, nullable=False)
-    session_id = Column(String(255), nullable=True)
-    external_conversation_id = Column(String(255), nullable=True)
+    # Resolution
+    was_resolved = Column(Boolean, default=False, nullable=False)
+    resolution_type = Column(String(100), nullable=True)
+    escalated_to_human = Column(Boolean, default=False, nullable=False)
 
     # Timestamps
     started_at = Column(DateTime, default=datetime.utcnow, nullable=False)
@@ -67,13 +73,19 @@ class AIConversation(Base):
     messages = relationship("ConversationMessage", back_populates="conversation", cascade="all, delete-orphan")
 
     __table_args__ = (
-        Index("idx_ai_conv_org_status", "organization_id", "status"),
-        Index("idx_ai_conv_customer", "customer_id"),
-        Index("idx_ai_conv_created", "created_at"),
+        Index("idx_conversations_org_status", "organization_id", "status"),
+        Index("idx_conversations_customer", "customer_id"),
+        Index("idx_conversations_created", "created_at"),
     )
 
+    def get_duration(self) -> int:
+        """Calculate conversation duration in seconds"""
+        if self.ended_at:
+            return int((self.ended_at - self.started_at).total_seconds())
+        return int((datetime.utcnow() - self.started_at).total_seconds())
+
     def __repr__(self) -> str:
-        return f"<AIConversation {self.id}>"
+        return f"<AIConversation {self.id} - {self.status}>"
 
 
 class ConversationMessage(Base):
@@ -84,16 +96,24 @@ class ConversationMessage(Base):
 
     # Message content
     message_type = Column(Enum(MessageType), nullable=False)
-    content = Column(Text, nullable=False)
-    role = Column(String(50), nullable=False)  # 'user', 'assistant', 'system'
+    text = Column(Text, nullable=False)
 
-    # Metadata
+    # AI processing
+    intent = Column(Enum(IntentType), nullable=True)
+    intent_confidence = Column(Float, nullable=True)
+    entities = Column(JSON, default=list, nullable=False)  # Extracted entities
+    sentiment = Column(String(50), nullable=True)  # positive, negative, neutral
+    sentiment_score = Column(Float, nullable=True)
+
+    # Response metadata
+    response_time_ms = Column(Integer, nullable=True)
+    token_count = Column(Integer, nullable=True)
+
+    # Context
     extra_data = Column(JSON, default=dict, nullable=False)
-    tokens_used = Column(JSON, default=dict, nullable=False)  # {input_tokens: x, output_tokens: y}
 
     # Timestamps
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationships
     conversation = relationship("AIConversation", back_populates="messages")
@@ -105,4 +125,4 @@ class ConversationMessage(Base):
     )
 
     def __repr__(self) -> str:
-        return f"<ConversationMessage {self.id}>"
+        return f"<ConversationMessage {self.message_type}>"

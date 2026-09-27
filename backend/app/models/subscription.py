@@ -1,6 +1,6 @@
 """Subscription model"""
 
-from sqlalchemy import Column, String, DateTime, Boolean, JSON, ForeignKey, Index, Enum, Integer
+from sqlalchemy import Column, String, DateTime, Boolean, Integer, Enum, ForeignKey, Index, Text, Float, JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
@@ -11,17 +11,18 @@ from database import Base
 
 
 class SubscriptionPlan(str, enum.Enum):
-    FREE = "free"
     STARTER = "starter"
+    GROWTH = "growth"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
 
 
 class SubscriptionStatus(str, enum.Enum):
     ACTIVE = "active"
-    PAUSED = "paused"
+    INACTIVE = "inactive"
+    TRIAL = "trial"
+    SUSPENDED = "suspended"
     CANCELLED = "cancelled"
-    EXPIRED = "expired"
 
 
 class BillingCycle(str, enum.Enum):
@@ -37,35 +38,40 @@ class Subscription(Base):
     organization_id = Column(UUID(as_uuid=True), ForeignKey("organizations.id"), nullable=False)
 
     # Plan information
-    plan = Column(Enum(SubscriptionPlan), default=SubscriptionPlan.FREE, nullable=False)
-    status = Column(Enum(SubscriptionStatus), default=SubscriptionStatus.ACTIVE, nullable=False)
+    plan = Column(Enum(SubscriptionPlan), nullable=False)
     billing_cycle = Column(Enum(BillingCycle), default=BillingCycle.MONTHLY, nullable=False)
 
     # Pricing
-    amount_cents = Column(Integer, default=0, nullable=False)
+    price_cents = Column(Integer, nullable=False)
     currency = Column(String(3), default="USD", nullable=False)
 
-    # Trial information
-    trial_started_at = Column(DateTime, nullable=True)
-    trial_ended_at = Column(DateTime, nullable=True)
-    trial_active = Column(Boolean, default=False, nullable=False)
+    # Status
+    status = Column(Enum(SubscriptionStatus), default=SubscriptionStatus.ACTIVE, nullable=False)
 
-    # Billing dates
-    current_period_start = Column(DateTime, nullable=True)
-    current_period_end = Column(DateTime, nullable=True)
-    next_billing_date = Column(DateTime, nullable=True)
+    # Limits (from plan)
+    max_users = Column(Integer, nullable=False)
+    max_customers = Column(Integer, nullable=False)
+    max_appointments_per_month = Column(Integer, nullable=True)
+    max_api_calls_per_month = Column(Integer, nullable=True)
+    storage_gb = Column(Float, default=10.0, nullable=False)
 
-    # Cancellation
-    cancelled_at = Column(DateTime, nullable=True)
-    cancellation_reason = Column(String(500), nullable=True)
+    # Features
+    features = Column(JSON, default=list, nullable=False)  # List of enabled features
 
-    # Features and limits
-    features = Column(JSON, default=dict, nullable=False)  # Feature flags and limits
-    usage_data = Column(JSON, default=dict, nullable=False)  # Current usage metrics
-
-    # Payment information
+    # Billing information
+    stripe_subscription_id = Column(String(255), nullable=True)
+    auto_renew = Column(Boolean, default=True, nullable=False)
     payment_method = Column(String(50), nullable=True)
-    external_subscription_id = Column(String(255), nullable=True)  # Stripe/PayPal subscription ID
+
+    # Trial information
+    trial_ends_at = Column(DateTime, nullable=True)
+    is_trial = Column(Boolean, default=False, nullable=False)
+
+    # Dates
+    started_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    current_period_start = Column(DateTime, default=datetime.utcnow, nullable=False)
+    current_period_end = Column(DateTime, nullable=False)
+    cancelled_at = Column(DateTime, nullable=True)
 
     # Timestamps
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
@@ -80,5 +86,21 @@ class Subscription(Base):
         Index("idx_subscriptions_plan", "plan"),
     )
 
+    def is_active(self) -> bool:
+        """Check if subscription is active"""
+        return self.status == SubscriptionStatus.ACTIVE and datetime.utcnow() < self.current_period_end
+
+    def is_trial_active(self) -> bool:
+        """Check if trial is still active"""
+        if not self.is_trial or not self.trial_ends_at:
+            return False
+        return datetime.utcnow() < self.trial_ends_at
+
+    def days_until_renewal(self) -> int:
+        """Days until subscription renewal"""
+        if not self.current_period_end:
+            return 0
+        return (self.current_period_end - datetime.utcnow()).days
+
     def __repr__(self) -> str:
-        return f"<Subscription {self.plan} for {self.organization_id}>"
+        return f"<Subscription {self.plan} - {self.status}>"

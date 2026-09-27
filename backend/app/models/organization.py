@@ -61,6 +61,7 @@ class Organization(Base):
     payments = relationship("Payment", back_populates="organization", cascade="all, delete-orphan")
     activities = relationship("Activity", back_populates="organization", cascade="all, delete-orphan")
     automations = relationship("Automation", back_populates="organization", cascade="all, delete-orphan")
+    subscription = relationship("Subscription", back_populates="organization", uselist=False, cascade="all, delete-orphan")
     messages = relationship("Message", back_populates="organization", cascade="all, delete-orphan")
     message_templates = relationship("MessageTemplate", back_populates="organization", cascade="all, delete-orphan")
     campaigns = relationship("Campaign", back_populates="organization", cascade="all, delete-orphan")
@@ -68,7 +69,6 @@ class Organization(Base):
     integrations = relationship("Integration", back_populates="organization", cascade="all, delete-orphan")
     api_keys = relationship("APIKey", back_populates="organization", cascade="all, delete-orphan")
     webhooks = relationship("Webhook", back_populates="organization", cascade="all, delete-orphan")
-    subscription = relationship("Subscription", back_populates="organization", uselist=False, cascade="all, delete-orphan")
 
     __table_args__ = (
         Index("idx_orgs_plan", "plan"),
