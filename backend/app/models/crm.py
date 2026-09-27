@@ -40,7 +40,7 @@ class Lead(Base):
     assigned_to_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
     notes = Column(Text, nullable=True)
     source = Column(String(50), nullable=True)
-    metadata = Column(JSON, nullable=True)
+    custom_data = Column(JSON, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
@@ -63,7 +63,7 @@ class Contact(Base):
     title = Column(String(100), nullable=True)
     department = Column(String(100), nullable=True)
     is_primary = Column(Boolean, default=False, nullable=False)
-    metadata = Column(JSON, nullable=True)
+    custom_data = Column(JSON, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
@@ -87,7 +87,7 @@ class Deal(Base):
     close_date = Column(DateTime, nullable=True)
     probability = Column(Float, default=0.0, nullable=False)
     notes = Column(Text, nullable=True)
-    metadata = Column(JSON, nullable=True)
+    custom_data = Column(JSON, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
