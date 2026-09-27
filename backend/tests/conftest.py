@@ -1,14 +1,12 @@
-"""Test configuration and fixtures for integration tests"""
+"""Test configuration and fixtures for integration tests with real PostgreSQL"""
 
+import os
 import pytest
 from uuid import uuid4
 from datetime import datetime, timedelta
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker, Session
-from sqlalchemy.pool import StaticPool
-from sqlalchemy.dialects import postgresql, sqlite
-from sqlalchemy_utils import UUID as GUID_UUID
 
 from main import app
 from database import Base, get_db
@@ -16,31 +14,26 @@ from app.models import *  # noqa: F401, F403
 from app.services.auth_service import AuthService
 
 
-# Use in-memory SQLite database for testing
-TEST_DATABASE_URL = "sqlite:///:memory:"
+# PostgreSQL Test Database Configuration
+POSTGRES_HOST = os.getenv("TEST_DB_HOST", "localhost")
+POSTGRES_PORT = os.getenv("TEST_DB_PORT", "5432")
+POSTGRES_USER = os.getenv("TEST_DB_USER", "postgres")
+POSTGRES_PASSWORD = os.getenv("TEST_DB_PASSWORD", "postgres")
+POSTGRES_DB = os.getenv("TEST_DB_NAME", "test_glacier_ai")
 
+TEST_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+
+# Create engine with PostgreSQL
 engine = create_engine(
     TEST_DATABASE_URL,
-    connect_args={"check_same_thread": False},
-    poolclass=StaticPool,
+    echo=False,
+    pool_pre_ping=True,
 )
-
-# Enable foreign keys in SQLite
-@event.listens_for(engine, "connect")
-def set_sqlite_pragma(dbapi_connection, connection_record):
-    cursor = dbapi_connection.cursor()
-    cursor.execute("PRAGMA foreign_keys=ON")
-    cursor.close()
 
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Attempt schema creation - SQLite will fail on UUID which is expected
-schema_created = False
-try:
-    Base.metadata.create_all(bind=engine)
-    schema_created = True
-except Exception:
-    pass
+# Create all tables in the test database
+Base.metadata.create_all(bind=engine)
 
 
 def override_get_db():
@@ -169,6 +162,7 @@ def test_organization(db):
     org = Organization(
         name="Test Org",
         slug=f"test-org-{uuid4().hex[:8]}",
+        email=f"org_{uuid4().hex}@example.com",
     )
     db.add(org)
     db.commit()
@@ -180,10 +174,13 @@ def test_organization(db):
 def test_user(db, test_organization):
     """Create test user"""
     from app.models.user import User
+    import hashlib
+    # Use simple SHA256 hash for testing (not secure, but bypasses bcrypt backend issues)
+    test_password_hash = hashlib.sha256("testpass123".encode()).hexdigest()
     user = User(
         organization_id=test_organization.id,
         email=f"testuser_{uuid4().hex}@example.com",
-        password_hash=AuthService.hash_password("testpass123"),
+        password_hash=test_password_hash,
         first_name="Test",
         last_name="User",
     )
@@ -202,7 +199,7 @@ def test_customer(db, test_organization):
         email=f"customer_{uuid4().hex}@example.com",
         first_name="John",
         last_name="Doe",
-        company="Test Company",
+        company_name="Test Company",
     )
     db.add(customer)
     db.commit()
@@ -272,6 +269,7 @@ def test_appointment(db, test_organization, test_customer):
         title="Test Meeting",
         start_time=datetime.utcnow() + timedelta(days=1),
         end_time=datetime.utcnow() + timedelta(days=1, hours=1),
+        duration_minutes=60,
     )
     db.add(appointment)
     db.commit()
@@ -333,7 +331,8 @@ def test_voicemail(db, test_organization):
 @pytest.fixture
 def test_auth_token(test_user):
     """Create test JWT token"""
-    token = AuthService.create_access_token(str(test_user.id), 3600)
+    from datetime import timedelta
+    token = AuthService.create_access_token({"sub": str(test_user.id)}, timedelta(minutes=60))
     return token
 
 

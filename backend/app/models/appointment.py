@@ -82,7 +82,7 @@ class Appointment(Base):
 
     # Payment
     price_cents = Column(Integer, nullable=True)
-    payment_id = Column(UUID(as_uuid=True), ForeignKey("payments.id"), nullable=True)
+    payment_id = Column(UUID(as_uuid=True), ForeignKey("payments.id", use_alter=True, name="fk_appointments_payment_id"), nullable=True)
 
     # External calendar sync
     google_event_id = Column(String(255), nullable=True)
