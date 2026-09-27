@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#000000",
+                      "surface-container-high": "#e6e8ea",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#eceef0",
+                      "primary-fixed": "#dae2fd",
+                      "secondary-fixed": "#d8e2ff",
+                      "surface-container-low": "#f2f4f6",
+                      "on-primary-container": "#7c839b",
+                      "inverse-surface": "#2d3133",
+                      "surface-variant": "#e0e3e5",
+                      "on-surface": "#191c1e",
+                      "on-background": "#191c1e",
+                      "surface-container-lowest": "#ffffff",
+                      "primary": "#000000",
+                      "inverse-primary": "#bec6e0",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "on-secondary-fixed": "#001a42",
+                      "inverse-on-surface": "#eff1f3",
+                      "secondary-container": "#2170e4",
+                      "error": "#ba1a1a",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed": "#131b2e",
+                      "on-surface-variant": "#45464d",
+                      "surface": "#f7f9fb",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed-dim": "#c0c1ff",
+                      "on-tertiary-container": "#7073ff",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed": "#07006c",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "surface-bright": "#f7f9fb",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-tertiary-fixed-variant": "#2f2ebe",
+                      "primary-fixed-dim": "#bec6e0",
+                      "on-secondary-fixed-variant": "#004395",
+                      "secondary": "#0058be",
+                      "surface-tint": "#565e74",
+                      "on-secondary-container": "#fefcff",
+                      "outline-variant": "#c6c6cd",
+                      "surface-dim": "#d8dadc",
+                      "on-secondary": "#ffffff",
+                      "primary-container": "#131b2e",
+                      "tertiary-container": "#07006c",
+                      "background": "#f7f9fb",
+                      "error-container": "#ffdad6",
+                      "outline": "#76777d",
+                      "tertiary-fixed": "#e1e0ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "24px",
+                      "base": "8px",
+                      "element-gap": "16px",
+                      "max-width": "600px",
+                      "section-margin": "32px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "JetBrains Mono"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #F1F5F9; /* Base surface */
+        }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background min-h-screen pb-24 md:pb-0 pt-16 font-body-md text-body-md antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-md bg-surface/70 dark:bg-surface-dim/70 shadow-[0px_4px_16px_rgba(19,27,46,0.02)] shadow-sm">
+<div class="flex items-center justify-between px-container-padding h-16 w-full max-w-max-width mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-fixed overflow-hidden flex items-center justify-center text-on-primary-fixed font-label-md">
+                    AI
+                </div>
+<h1 class="font-headline-md-mobile text-headline-md-mobile font-bold text-on-surface dark:text-inverse-on-surface">AI Assistant</h1>
+</div>
+<button class="text-on-surface-variant dark:text-surface-variant hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="settings_input_component">settings_input_component</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="max-w-max-width mx-auto px-container-padding pt-section-margin">
+<!-- Search & Filter Area -->
+<section class="mb-section-margin">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full bg-[#E2E8F0] border-none rounded-xl py-3 pl-12 pr-4 text-on-surface placeholder:text-outline focus:ring-2 focus:ring-secondary-container transition-shadow" placeholder="Search contacts..." type="text"/>
+</div>
+<!-- Category Chips -->
+<div class="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md whitespace-nowrap active:scale-95 transition-transform">All Contacts</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-variant active:scale-95 transition-transform">Frequent</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-variant active:scale-95 transition-transform">New</button>
+</div>
+</section>
+<!-- Bento Grid Layout for Contacts -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-element-gap">
+<!-- Contact Card 1 -->
+<div class="bg-surface-container-lowest rounded-[24px] p-5 shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-shadow cursor-pointer flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-full object-cover border border-surface-variant" data-alt="A professional headshot of a corporate executive in a well-lit modern office space, shallow depth of field, neutral high-end aesthetics, light mode styling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG9WAbAOJAFL-faQ1XQ_V7KsYPJ9yjm7lgppqdqTSBMK4UK8uajaxYsM_LEs1LFNc7hu4dectW2WYJglzeLSSpo5TXkvyXkRVzFQxBmUGBWfBFqUTrjlDhomgKnPX0bWz1soqZnQ8rFOdXs6ttIIVJXkgxzP_OLcJe-RW718ZEcNSQxfgE5rNeJLlb6vX9DouZY1kjm7dW7gDaMTTvXfBo5crE1fas2wOvYeo4eVZgdkFzDOH5OpCBZA"/>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Eleanor Vance</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">+1 (555) 019-2834</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md">Frequent</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-2 pt-4 border-t border-surface-variant/50">
+<div>
+<p class="font-caption text-caption text-outline mb-1">Total Calls</p>
+<p class="font-body-lg text-body-lg font-medium">42</p>
+</div>
+<div>
+<p class="font-caption text-caption text-outline mb-1">Last Interaction</p>
+<p class="font-body-lg text-body-lg font-medium">2 hours ago</p>
+</div>
+</div>
+</div>
+<!-- Contact Card 2 - AI Insight Style -->
+<div class="bg-surface-container-lowest rounded-[24px] p-5 shadow-[0_4px_16px_rgba(0,0,0,0.03)] border-l-2 border-secondary-container hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-shadow cursor-pointer flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant font-headline-md">
+                            M
+                        </div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Marcus Thorne</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">+44 7700 900077</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-md text-label-md">New</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-2 pt-4 border-t border-surface-variant/50">
+<div>
+<p class="font-caption text-caption text-outline mb-1">Total Calls</p>
+<p class="font-body-lg text-body-lg font-medium">1</p>
+</div>
+<div>
+<p class="font-caption text-caption text-outline mb-1">Last Interaction</p>
+<p class="font-body-lg text-body-lg font-medium">Yesterday</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-2 rounded-lg mt-2">
+<p class="font-caption text-caption text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[16px]" data-icon="auto_awesome">auto_awesome</span> Follow up required re: Q3 planning.</p>
+</div>
+</div>
+<!-- Contact Card 3 -->
+<div class="bg-surface-container-lowest rounded-[24px] p-5 shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-shadow cursor-pointer flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-full object-cover border border-surface-variant" data-alt="A portrait of a creative professional in a bright studio environment, soft natural lighting, contemporary minimalist style, high resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABoKDMLmK8fRDsCL9V_bLCR1cF5p7ceHVfFM20mQARmpiu_iVwPpIhrhLxBnc96G6DJKyWF9fnvGJGBNTEbATK_n5jxffP63O_BAV-BJd-FTPKPuEXFnlhHyFJR7CASKnLYt95TPj-pwq8SY8gJeE8paDP3eJz4ycUV6_gIaJklPY8QltneOJL3QqZA5trjuVUGAfzuw7Ojrr_npVfbdPOx53B3osbFt0uxAy-efWo4fseMQBdS6iqVw"/>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Sarah Jenkins</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">+1 (555) 982-1133</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-2 pt-4 border-t border-surface-variant/50">
+<div>
+<p class="font-caption text-caption text-outline mb-1">Total Calls</p>
+<p class="font-body-lg text-body-lg font-medium">12</p>
+</div>
+<div>
+<p class="font-caption text-caption text-outline mb-1">Last Interaction</p>
+<p class="font-body-lg text-body-lg font-medium">Oct 12</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB for adding new contact -->
+<button class="fixed bottom-24 right-6 md:bottom-8 md:right-8 w-14 h-14 bg-primary text-on-primary rounded-[20px] shadow-[0_8px_24px_rgba(0,0,0,0.12)] flex items-center justify-center hover:bg-primary/90 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined text-[24px]" data-icon="person_add">person_add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface/70 dark:bg-surface-dim/70 shadow-[0px_-4px_16px_rgba(19,27,46,0.02)] shadow-lg backdrop-blur-md md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-full transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-[10px] tracking-wide">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-full transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="Graphic_Eq" data-weight="fill">cloud_download</span>
+<span class="font-label-md text-[10px] tracking-wide">Live</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-6 py-1.5 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="contact_phone" style="font-variation-settings: 'FILL' 1;">contact_phone</span>
+<span class="font-label-md text-[10px] tracking-wide">Contacts</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-full transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="tune">tune</span>
+<span class="font-label-md text-[10px] tracking-wide">Settings</span>
+</button>
+</nav>
+</body></html>

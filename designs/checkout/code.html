@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout - Cognitive Concierge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "secondary": "#0058be",
+                        "on-secondary": "#ffffff",
+                        "outline": "#76777d",
+                        "on-secondary-container": "#fefcff",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "primary": "#000000",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-primary-fixed": "#131b2e",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container": "#eceef0",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#d8e2ff",
+                        "tertiary-fixed": "#e1e0ff",
+                        "error": "#ba1a1a",
+                        "tertiary": "#000000",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary-container": "#7073ff",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "surface": "#f7f9fb",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-tint": "#565e74",
+                        "background": "#f7f9fb",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "tertiary-container": "#07006c",
+                        "on-secondary-fixed": "#001a42",
+                        "on-background": "#191c1e",
+                        "outline-variant": "#c6c6cd",
+                        "surface-dim": "#d8dadc",
+                        "surface-variant": "#e0e3e5",
+                        "secondary-container": "#2170e4",
+                        "surface-container-highest": "#e0e3e5",
+                        "inverse-primary": "#bec6e0",
+                        "on-surface-variant": "#45464d",
+                        "primary-fixed": "#dae2fd",
+                        "surface-container-high": "#e6e8ea",
+                        "on-tertiary-fixed": "#07006c",
+                        "primary-container": "#131b2e",
+                        "on-primary-container": "#7c839b",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-margin": "32px",
+                        "element-gap": "16px",
+                        "container-padding": "24px",
+                        "base": "8px",
+                        "max-width": "600px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "caption": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md h-screen flex flex-col md:flex-row antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Navigation suppressed per Transactional/Task-Focused rule -->
+<!-- Top App Bar for Context -->
+<header class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-sm shadow-primary/5 flex justify-between items-center px-container-padding h-16 md:hidden">
+<div class="flex items-center gap-element-gap">
+<button class="p-2 hover:bg-surface-container-low transition-colors rounded-full text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<span class="font-headline-md text-headline-md font-bold text-primary">Checkout</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto px-container-padding pt-24 pb-section-margin md:pt-section-margin flex justify-center items-start">
+<div class="w-full max-w-max-width flex flex-col gap-section-margin" id="checkout-flow">
+<!-- Page Header (Web) -->
+<div class="hidden md:flex items-center gap-element-gap mb-element-gap">
+<button aria-label="Go back" class="p-2 hover:bg-surface-container-low transition-colors rounded-full text-on-surface-variant flex items-center justify-center -ml-2">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-lg text-headline-lg text-primary">Secure Checkout</h1>
+</div>
+<!-- Order Summary Card -->
+<div class="bg-surface-container-lowest rounded-xl p-container-padding shadow-md shadow-primary/5 border border-surface-container flex flex-col gap-element-gap relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Order Summary</h2>
+<div class="flex items-start justify-between gap-element-gap border-b border-surface-variant pb-element-gap">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-primary">Pro Plan Upgrade</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Annual Billing • 5 AI Agents</span>
+</div>
+<span class="font-headline-md text-headline-md text-primary">$499.00</span>
+</div>
+<div class="flex flex-col gap-2 pt-2">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Subtotal</span>
+<span class="font-body-md text-body-md text-on-surface">$499.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Taxes &amp; Fees</span>
+<span class="font-body-md text-body-md text-on-surface">$42.41</span>
+</div>
+<div class="flex justify-between items-center mt-4 pt-4 border-t border-surface-variant">
+<span class="font-headline-md text-headline-md text-primary">Total</span>
+<span class="font-headline-md text-headline-md text-primary">$541.41</span>
+</div>
+</div>
+</div>
+<!-- Payment Method Card -->
+<div class="bg-surface-container-lowest rounded-xl p-container-padding shadow-md shadow-primary/5 border border-surface-container flex flex-col gap-element-gap">
+<div class="flex justify-between items-center mb-2">
+<h2 class="font-headline-md text-headline-md text-on-surface">Payment Method</h2>
+<button class="font-label-md text-label-md text-secondary hover:underline px-2 py-1 rounded">Change</button>
+</div>
+<div class="flex items-center gap-element-gap p-4 rounded-lg bg-surface-container-low border border-surface-variant">
+<div class="w-12 h-8 bg-white rounded border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="credit_card">credit_card</span>
+</div>
+<div class="flex flex-col flex-1">
+<span class="font-body-md text-body-md text-on-surface font-semibold">Visa ending in 4242</span>
+<span class="font-caption text-caption text-on-surface-variant">Expires 12/25</span>
+</div>
+</div>
+<p class="font-caption text-caption text-on-surface-variant flex items-start gap-2 mt-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="lock">lock</span>
+                    Payments are secure and encrypted.
+                </p>
+</div>
+<!-- Action Button -->
+<div class="mt-section-margin">
+<button class="w-full bg-primary text-on-primary rounded-[24px] py-4 font-headline-md text-headline-md flex justify-center items-center gap-2 hover:bg-primary-container hover:text-white transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] hover:shadow-lg hover:-translate-y-0.5 relative overflow-hidden" id="confirm-btn">
+<span class="relative z-10">Confirm Payment - $541.41</span>
+<div class="absolute inset-0 bg-primary flex items-center justify-center opacity-0 pointer-events-none transition-opacity" id="btn-loader">
+<span class="material-symbols-outlined animate-spin" data-icon="progress_activity">progress_activity</span>
+</div>
+</button>
+</div>
+<p class="text-center font-caption text-caption text-on-surface-variant mt-2">
+                By confirming, you agree to our <a class="text-secondary hover:underline" href="#">Terms of Service</a> and <a class="text-secondary hover:underline" href="#">Privacy Policy</a>.
+            </p>
+</div>
+<!-- Success State (Hidden by default) -->
+<div class="w-full max-w-max-width flex-col gap-section-margin items-center justify-center h-full hidden opacity-0 transition-opacity duration-500" id="success-flow">
+<div class="w-24 h-24 bg-tertiary-fixed rounded-full flex items-center justify-center mb-8 mx-auto shadow-[0_0_40px_rgba(225,224,255,0.6)]">
+<span class="material-symbols-outlined text-4xl text-on-tertiary-fixed" data-icon="check_circle">check_circle</span>
+</div>
+<div class="text-center mb-section-margin">
+<h1 class="font-display-lg text-display-lg text-primary mb-4">Payment Successful</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto">Your Pro Plan upgrade is complete. Your new AI agents are ready to be deployed.</p>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-container-padding shadow-md shadow-primary/5 border border-surface-container w-full">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6 border-b border-surface-variant pb-4">What's Next</h2>
+<ul class="flex flex-col gap-element-gap">
+<li class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center flex-shrink-0 font-label-md text-label-md">1</div>
+<div>
+<h3 class="font-body-md text-body-md font-semibold text-primary">Configure AI Agents</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Set up specific parameters and knowledge bases for your new agents.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center flex-shrink-0 font-label-md text-label-md">2</div>
+<div>
+<h3 class="font-body-md text-body-md font-semibold text-primary">Review Analytics Dashboard</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Access advanced metrics now unlocked in your workspace.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center flex-shrink-0 font-label-md text-label-md">3</div>
+<div>
+<h3 class="font-body-md text-body-md font-semibold text-primary">Schedule Onboarding Call</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Optional 30-minute setup session with an expert.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="mt-section-margin w-full flex flex-col sm:flex-row gap-element-gap">
+<button class="flex-1 bg-primary text-on-primary rounded-[24px] py-4 font-headline-md text-headline-md flex justify-center items-center hover:bg-primary-container transition-all shadow-sm">
+                    Go to Dashboard
+                </button>
+<button class="flex-1 bg-white border border-primary text-primary rounded-[24px] py-4 font-headline-md text-headline-md flex justify-center items-center hover:bg-surface-container-lowest transition-all">
+                    View Receipt
+                </button>
+</div>
+</div>
+</main>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const confirmBtn = document.getElementById('confirm-btn');
+            const btnLoader = document.getElementById('btn-loader');
+            const checkoutFlow = document.getElementById('checkout-flow');
+            const successFlow = document.getElementById('success-flow');
+
+            confirmBtn.addEventListener('click', () => {
+                // Simulate loading state
+                btnLoader.classList.remove('opacity-0');
+                confirmBtn.classList.add('cursor-not-allowed');
+                
+                setTimeout(() => {
+                    // Transition to success state
+                    checkoutFlow.classList.add('opacity-0', 'pointer-events-none', 'hidden');
+                    successFlow.classList.remove('hidden');
+                    
+                    // Small delay for smooth fade in
+                    setTimeout(() => {
+                        successFlow.classList.remove('opacity-0');
+                        successFlow.classList.add('flex');
+                    }, 50);
+                    
+                }, 1500);
+            });
+        });
+    </script>
+</body></html>

@@ -7,7 +7,7 @@ from uuid import uuid4
 from app.services.auth_service import AuthService
 from app.models.user import User
 
-def test_register_user(client: TestClient, db):
+def test_register_user(client: TestClient, db, test_organization):
     """Test user registration"""
     response = client.post(
         "/api/v1/auth/register",
@@ -16,7 +16,7 @@ def test_register_user(client: TestClient, db):
             "password": "SecurePass123!",
             "first_name": "New",
             "last_name": "User",
-            "organization_id": str(uuid4())
+            "organization_id": str(test_organization.id)
         }
     )
     assert response.status_code == 200

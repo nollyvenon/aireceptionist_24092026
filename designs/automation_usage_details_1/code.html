@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Automation Usage Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            surface: '#f8fafc',
+            primary: '#1d4ed8',
+            'primary-light': '#3b82f6',
+            'primary-bg': '#eff6ff',
+            text: '#0f172a',
+            'text-secondary': '#475569',
+            'text-tertiary': '#64748b',
+            border: '#e2e8f0',
+            success: '#10b981',
+            danger: '#ef4444',
+            'danger-bg': '#fee2e2',
+            warning: '#f59e0b',
+            'warning-bg': '#fef3c7',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-styles">
+    body {
+      background-color: #f7f9fc; /* Matching the surface color from the design */
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.filled {
+      font-variation-settings: 'FILL' 1;
+    }
+  </style>
+</head>
+<body class="font-sans text-text antialiased flex flex-col min-h-screen">
+<!-- BEGIN: Top Navigation -->
+<header class="bg-surface border-b border-border px-4 py-3 flex items-center justify-between sticky top-0 z-10">
+<div class="flex items-center gap-2 text-text">
+<span class="material-symbols-outlined font-medium">smart_toy</span>
+<span class="font-bold text-lg tracking-tight">Cognitive Concierge</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-text-secondary hover:bg-slate-300 transition-colors">
+<span class="material-symbols-outlined text-sm">person</span>
+</button>
+</header>
+<!-- END: Top Navigation -->
+<!-- BEGIN: Main Content -->
+<main class="flex-1 overflow-y-auto px-4 py-6 pb-24 max-w-md mx-auto w-full">
+<!-- Header Section -->
+<section class="mb-8">
+<h1 class="text-2xl font-bold mb-1">Automation Usage Details</h1>
+<p class="text-text-secondary text-sm">Billing Period: Oct 1, 2023 - Oct 31, 2023</p>
+</section>
+<!-- Metrics Cards -->
+<section class="flex flex-col gap-4 mb-8">
+<!-- Total Interactions Card -->
+<div class="bg-white p-5 rounded-xl border border-border shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-semibold text-lg">Total Interactions</h2>
+<span class="material-symbols-outlined text-primary">forum</span>
+</div>
+<div class="text-4xl font-bold mb-2 tracking-tight">12,450</div>
+<div class="flex items-center text-primary-light text-sm font-medium">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span>
+          +15% from last month
+        </div>
+</div>
+<!-- AI Resolved Card -->
+<div class="bg-white p-5 rounded-xl border border-border shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<h2 class="font-semibold text-lg">AI Resolved</h2>
+<span class="material-symbols-outlined text-primary">smart_toy</span>
+</div>
+<div class="text-4xl font-bold mb-2 pl-2 tracking-tight">85%</div>
+<div class="text-text-secondary text-sm pl-2">10,582 interactions</div>
+</div>
+<!-- Human Handoffs Card -->
+<div class="bg-white p-5 rounded-xl border border-border shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-semibold text-lg">Human Handoffs</h2>
+<span class="material-symbols-outlined text-text-secondary">support_agent</span>
+</div>
+<div class="text-4xl font-bold mb-2 tracking-tight">15%</div>
+<div class="text-text-secondary text-sm">1,868 interactions</div>
+</div>
+</section>
+<!-- Usage by Platform -->
+<section class="bg-white p-5 rounded-xl border border-border shadow-sm mb-6">
+<h2 class="font-semibold text-lg mb-4">Usage by Platform</h2>
+<!-- WhatsApp -->
+<div class="mb-5">
+<div class="flex justify-between items-center mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary">chat</span>
+<span class="font-medium">WhatsApp</span>
+</div>
+<div class="text-sm font-mono text-text-secondary">
+<span>8,200</span>
+<span class="ml-2">(66%)</span>
+</div>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 66%"></div>
+</div>
+</div>
+<!-- Instagram -->
+<div>
+<div class="flex justify-between items-center mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary-light">photo_camera</span>
+<span class="font-medium">Instagram</span>
+</div>
+<div class="text-sm font-mono text-text-secondary">
+<span>4,250</span>
+<span class="ml-2">(34%)</span>
+</div>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2">
+<div class="bg-slate-300 h-2 rounded-full" style="width: 34%"></div>
+</div>
+</div>
+</section>
+<!-- Resolution Types -->
+<section class="bg-white p-5 rounded-xl border border-border shadow-sm">
+<h2 class="font-semibold text-lg mb-4">Resolution Types</h2>
+<div class="flex flex-col gap-3">
+<!-- Fully Automated -->
+<div class="bg-surface p-4 rounded-xl flex items-center justify-between border border-transparent">
+<div class="flex items-start gap-3">
+<div class="bg-primary w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-white text-sm">check</span>
+</div>
+<div>
+<div class="font-medium text-sm">Fully Automated</div>
+<div class="text-xs text-text-secondary mt-0.5">Resolved without human input</div>
+</div>
+</div>
+<div class="font-bold text-lg">8,150</div>
+</div>
+<!-- Partial AI / Handoff -->
+<div class="bg-surface p-4 rounded-xl flex items-center justify-between border border-transparent">
+<div class="flex items-start gap-3">
+<div class="bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-text-secondary">
+<span class="material-symbols-outlined text-sm">merge_type</span>
+</div>
+<div>
+<div class="font-medium text-sm">Partial AI / Handoff</div>
+<div class="text-xs text-text-secondary mt-0.5 pr-2">AI collected info, then passed to human</div>
+</div>
+</div>
+<div class="font-bold text-lg shrink-0">2,432</div>
+</div>
+<!-- Immediate Handoff -->
+<div class="bg-surface p-4 rounded-xl flex items-center justify-between border border-transparent">
+<div class="flex items-start gap-3">
+<div class="bg-danger-bg w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-danger">
+<span class="material-symbols-outlined text-sm">warning</span>
+</div>
+<div>
+<div class="font-medium text-sm">Immediate Handoff</div>
+<div class="text-xs text-text-secondary mt-0.5">Complex query escalated immediately</div>
+</div>
+</div>
+<div class="font-bold text-lg shrink-0">1,868</div>
+</div>
+</div>
+</section>
+</main>
+<!-- END: Main Content -->
+<!-- BEGIN: Bottom Navigation -->
+<nav class="fixed bottom-0 w-full bg-white border-t border-border flex justify-around items-center h-16 px-2 z-20 pb-safe">
+<button class="flex flex-col items-center justify-center w-full h-full text-text-secondary hover:text-text transition-colors">
+<span class="material-symbols-outlined text-xl mb-1">dashboard</span>
+<span class="text-[10px] font-medium uppercase tracking-wider">Hub</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full text-text-secondary hover:text-text transition-colors">
+<span class="material-symbols-outlined text-xl mb-1">group</span>
+<span class="text-[10px] font-medium uppercase tracking-wider">Leads</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full text-primary">
+<div class="bg-primary text-white w-16 h-8 rounded-full flex items-center justify-center mb-1">
+<span class="material-symbols-outlined filled text-xl">receipt_long</span>
+</div>
+<span class="text-[10px] font-medium uppercase tracking-wider">Invoices</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full text-text-secondary hover:text-text transition-colors">
+<span class="material-symbols-outlined text-xl mb-1">settings</span>
+<span class="text-[10px] font-medium uppercase tracking-wider">Settings</span>
+</button>
+</nav>
+<!-- END: Bottom Navigation -->
+</body></html>

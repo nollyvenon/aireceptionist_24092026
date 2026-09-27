@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inbox Search - Cognitive Concierge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#bec6e0",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-container": "#2170e4",
+                        "on-surface-variant": "#45464d",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-bright": "#f7f9fb",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "secondary": "#0058be",
+                        "primary": "#000000",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#001a42",
+                        "primary-fixed-dim": "#bec6e0",
+                        "primary-fixed": "#dae2fd",
+                        "primary-container": "#131b2e",
+                        "on-primary-fixed": "#131b2e",
+                        "on-primary-container": "#7c839b",
+                        "outline-variant": "#c6c6cd",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "tertiary-fixed": "#e1e0ff",
+                        "background": "#f7f9fb",
+                        "tertiary": "#000000",
+                        "on-background": "#191c1e",
+                        "on-surface": "#191c1e",
+                        "outline": "#76777d",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#07006c",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "surface-container": "#eceef0",
+                        "on-tertiary-container": "#7073ff",
+                        "on-secondary-container": "#fefcff",
+                        "surface-tint": "#565e74",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary-container": "#07006c",
+                        "on-tertiary-fixed-variant": "#2f2ebe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "element-gap": "16px",
+                        "base": "8px",
+                        "section-margin": "32px",
+                        "container-padding": "24px",
+                        "max-width": "1200px"
+                    },
+                    "fontFamily": {
+                        "caption": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .ai-border-left {
+            border-left: 2px solid #2170e4;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row antialiased">
+<!-- Mobile TopAppBar -->
+<header class="md:hidden flex items-center justify-between px-container-padding h-16 w-full fixed top-0 z-50 glass-panel shadow-sm shadow-primary/5">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-primary" data-icon="bubble_chart">bubble_chart</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Cognitive Concierge</h1>
+</div>
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A small circular avatar of a professional in a minimalist office setting, bright white lighting, clean modern aesthetic, high contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeH7pDrrzWAt8ItVq57j0B8XtOvSLO3Bth2TtDmuZlJriGULKl2_nmFzEFGTkaU_MlAOK6zznHDpfNXi1FoajgXjQ4uDdadsn90x_Na0XkaqnHGXtwOOrx46tY4wjq4jhW5dgDK3IMDGuygh9zy39zsC2x1JP1CLMCfPgRZm_cEO04r-I3Q2aEbbSeRTnZcoUqFmhOhwm_yu3qgeXCLzEA42UMTy4ykJydKPpygV6CUONylfhqYgk1Dw"/>
+</header>
+<!-- Desktop SideNav -->
+<nav class="hidden md:flex flex-col h-screen py-6 w-72 rounded-r-xl bg-surface shadow-xl shadow-primary/2 fixed left-0 top-0 z-40">
+<div class="px-container-padding mb-8">
+<div class="flex items-center gap-element-gap mb-6">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="A professional headshot avatar for an agency manager, set against a clean bright white background, conveying a modern and authoritative tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCPzOxrv-EZMe_FifUIqZpBWPvRMEXc8nN0DRhMZAtgnG-cQf-sGqcqxoZwki7Po2x3YXcnLYaa73DIYUWeMN4JNVwlx8xOCEq3UQ2VHl9uvowwupi_epSziRBqT-op6tbolCIT8HklysE9jrtJZdIKdrauOVf7we-SQH3GsK6aEN2STNMvXL3EZvw5nKlQ8JR3toBQiiHiz94sReeYk6OmoJAUwe7agUegCb5oQjqDabF7Wn42Ge6RA"/>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Agency Workspace</h2>
+<p class="font-caption text-caption text-on-surface-variant">Pro Plan Active</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 flex-grow px-2">
+<a class="flex items-center gap-base px-4 py-3 rounded-lg text-on-surface-variant mx-2 hover:bg-surface-container-high transition-all active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-base px-4 py-3 rounded-lg bg-secondary-container text-on-secondary-container font-bold mx-2 active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-label-md text-label-md">Conversations</span>
+</a>
+<a class="flex items-center gap-base px-4 py-3 rounded-lg text-on-surface-variant mx-2 hover:bg-surface-container-high transition-all active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="contacts">contacts</span>
+<span class="font-label-md text-label-md">CRM</span>
+</a>
+<a class="flex items-center gap-base px-4 py-3 rounded-lg text-on-surface-variant mx-2 hover:bg-surface-container-high transition-all active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-md text-label-md">Automations</span>
+</a>
+<a class="flex items-center gap-base px-4 py-3 rounded-lg text-on-surface-variant mx-2 hover:bg-surface-container-high transition-all active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</div>
+<div class="px-container-padding mt-auto">
+<p class="font-caption text-caption text-outline">v2.4.0</p>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-max-width mx-auto md:ml-72 px-container-padding pt-24 pb-28 md:py-12">
+<!-- Search Header Section -->
+<div class="mb-section-margin">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-6">Inbox Search</h1>
+<div class="relative w-full mb-6 group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary-container transition-colors" data-icon="search">search</span>
+<input class="w-full h-14 pl-12 pr-4 bg-surface-container-low border-none rounded-[16px] font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant focus:ring-2 focus:ring-secondary-container transition-all shadow-[0_4px_16px_rgba(0,0,0,0.02)]" placeholder="Search conversations, contacts, or topics..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-on-primary rounded-lg px-4 py-2 font-label-md text-label-md hover:bg-primary-container transition-colors">
+                    Search
+                </button>
+</div>
+<!-- Filter Chips (Scrollable on mobile) -->
+<div class="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
+<button class="flex-shrink-0 flex items-center gap-2 bg-secondary-fixed text-on-secondary-fixed rounded-full px-4 py-2 font-label-md text-label-md border border-transparent">
+                    Lead Score: High <span class="material-symbols-outlined text-[16px]" data-icon="close">close</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 bg-secondary-fixed text-on-secondary-fixed rounded-full px-4 py-2 font-label-md text-label-md border border-transparent">
+                    Status: Unanswered <span class="material-symbols-outlined text-[16px]" data-icon="close">close</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 bg-secondary-fixed text-on-secondary-fixed rounded-full px-4 py-2 font-label-md text-label-md border border-transparent">
+                    Channel: WhatsApp <span class="material-symbols-outlined text-[16px]" data-icon="close">close</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 bg-secondary-fixed text-on-secondary-fixed rounded-full px-4 py-2 font-label-md text-label-md border border-transparent">
+                    Date: Today <span class="material-symbols-outlined text-[16px]" data-icon="close">close</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 bg-surface-container-low text-on-surface rounded-full px-4 py-2 font-label-md text-label-md border border-outline-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span> Add Filter
+                </button>
+</div>
+</div>
+<!-- Search Results -->
+<div class="flex flex-col gap-element-gap">
+<p class="font-caption text-caption text-on-surface-variant mb-2">Showing 3 results for current filters</p>
+<!-- Result Item 1 (AI Insight Card) -->
+<article class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_16px_rgba(0,0,0,0.03)] ai-border-left hover:shadow-[0_8px_24px_rgba(0,0,0,0.05)] transition-shadow cursor-pointer">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-headline-md text-headline-md">EM</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Elena Martinez</h3>
+<p class="font-caption text-caption text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="chat">chat</span> WhatsApp • 10:42 AM
+                            </p>
+</div>
+</div>
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-md text-label-md text-[12px]">High Intent</span>
+</div>
+<div class="mb-4">
+<p class="font-body-md text-body-md text-on-surface">"Hi, I'm interested in the enterprise tier. We need to deploy this across 5 regional offices by Q3. Can we set up a demo?"</p>
+</div>
+<div class="flex gap-2">
+<span class="bg-surface-container-low text-on-surface-variant px-3 py-1 rounded-full font-label-md text-label-md text-[12px]">Pricing Inquiry</span>
+<span class="bg-surface-container-low text-on-surface-variant px-3 py-1 rounded-full font-label-md text-label-md text-[12px]">Enterprise</span>
+</div>
+</article>
+<!-- Result Item 2 -->
+<article class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.05)] transition-shadow cursor-pointer">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant font-headline-md text-headline-md">TS</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Tom Sterling</h3>
+<p class="font-caption text-caption text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="chat">chat</span> WhatsApp • 09:15 AM
+                            </p>
+</div>
+</div>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full font-label-md text-label-md text-[12px]">Warm Lead</span>
+</div>
+<div class="mb-4">
+<p class="font-body-md text-body-md text-on-surface">"Following up on the proposal sent last week. The team is reviewing it today."</p>
+</div>
+<div class="flex gap-2">
+<span class="bg-surface-container-low text-on-surface-variant px-3 py-1 rounded-full font-label-md text-label-md text-[12px]">Follow-up</span>
+</div>
+</article>
+</div>
+</main>
+<!-- Mobile BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full h-20 flex justify-around items-center px-4 pb-safe glass-panel shadow-lg shadow-primary/5 z-50 border-none">
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed bg-secondary-fixed/30 dark:bg-secondary-container rounded-full px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-md text-label-md text-[12px]">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all rounded-full px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-label-md text-[12px]">Leads</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all rounded-full px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md text-[12px]">Billing</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all rounded-full px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md text-[12px]">Insights</span>
+</a>
+</nav>
+</body></html>

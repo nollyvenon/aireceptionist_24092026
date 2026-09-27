@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Auto-Pay Setup | Billing Suite</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "tertiary-fixed": "#e1e0ff",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c1e",
+                        "error": "#ba1a1a",
+                        "surface": "#f7f9fb",
+                        "on-secondary-container": "#fefcff",
+                        "inverse-surface": "#2d3133",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#000000",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-tint": "#565e74",
+                        "on-primary-fixed": "#131b2e",
+                        "primary-container": "#131b2e",
+                        "tertiary-container": "#07006c",
+                        "primary-fixed-dim": "#bec6e0",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "outline": "#76777d",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary-container": "#7073ff",
+                        "surface-bright": "#f7f9fb",
+                        "primary": "#000000",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#7c839b",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c6c6cd",
+                        "background": "#f7f9fb",
+                        "on-surface-variant": "#45464d",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "on-surface": "#191c1e",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-tertiary-fixed": "#07006c",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "surface-container-highest": "#e0e3e5",
+                        "inverse-primary": "#bec6e0",
+                        "on-secondary-fixed": "#001a42",
+                        "secondary": "#0058be",
+                        "primary-fixed": "#dae2fd",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#2170e4"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "container-padding": "24px",
+                        "base": "8px",
+                        "max-width": "600px",
+                        "section-margin": "32px",
+                        "element-gap": "16px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "label-md": ["JetBrains Mono", "monospace"],
+                        "caption": ["Inter", "sans-serif"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Inter", "sans-serif"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "caption": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+                        "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar Shared Component -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding h-16 backdrop-blur-xl bg-white/70 shadow-[0_4px_16px_rgba(0,26,66,0.04)] transition-all duration-200 ease-in-out">
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity p-2 -ml-2 rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Billing Suite</h1>
+<button class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/30 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a confident agency owner in a bright, modern corporate office setting, lit with soft natural light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNPGbjpkmRGALXqLf-uCU_htMYB6gOoGqYjAK6f2E-w_i1_iSWX0W0FKivXwquSgo80-eGeLD5huXrP4R2_mSW3JvQalCszsU45__WdSuP8sQuaIj8eFb4puA8C1SQVTsIgIIHSyGBeXVNsInVFZjNbWIi2_JxeYeq-yWkhsynkavN2vMa3u-zfYOxsUmGbXVctGyQaBartAkRG-MzFlslXlx9cGFLEsV5afQqJlhZfv3oyylCcP5jgA"/>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-[88px] pb-[104px] px-container-padding max-w-max-width mx-auto min-h-screen flex flex-col gap-section-margin">
+<!-- Screen Title -->
+<header class="flex flex-col gap-base">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Auto-Pay Setup</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Configure automated billing cycles and payment preferences for your clients.</p>
+</header>
+<!-- Configuration Toggles -->
+<section class="flex flex-col gap-element-gap">
+<h3 class="font-headline-md text-headline-md text-on-surface">Rules Engine</h3>
+<!-- Toggle 1: Enable Auto-Charging -->
+<label class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl shadow-[0_4px_16px_rgba(0,26,66,0.04)] border-l-2 border-primary cursor-pointer active:scale-[0.99] transition-transform">
+<div class="flex flex-col pr-4">
+<span class="font-label-md text-label-md text-on-surface">Enable Auto-Charging</span>
+<span class="font-caption text-caption text-on-surface-variant mt-1">Automatically draft funds on invoice due date.</span>
+</div>
+<div class="relative inline-flex items-center flex-shrink-0">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+<!-- Toggle 2: Retry Failed Payments -->
+<label class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl shadow-[0_4px_16px_rgba(0,26,66,0.04)] cursor-pointer active:scale-[0.99] transition-transform">
+<div class="flex flex-col pr-4">
+<span class="font-label-md text-label-md text-on-surface">Retry Failed Payments</span>
+<span class="font-caption text-caption text-on-surface-variant mt-1">Attempt re-charge after 3 and 7 days.</span>
+</div>
+<div class="relative inline-flex items-center flex-shrink-0">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+<!-- Toggle 3: Late Fee Logic -->
+<label class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl shadow-[0_4px_16px_rgba(0,26,66,0.04)] cursor-pointer active:scale-[0.99] transition-transform">
+<div class="flex flex-col pr-4">
+<span class="font-label-md text-label-md text-on-surface">Late Fee Logic</span>
+<span class="font-caption text-caption text-on-surface-variant mt-1">Apply 5% fee after 5 days past due.</span>
+</div>
+<div class="relative inline-flex items-center flex-shrink-0">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+</section>
+<!-- Preferred Payment Method -->
+<section class="flex flex-col gap-element-gap">
+<h3 class="font-headline-md text-headline-md text-on-surface">Preferred Method</h3>
+<div class="grid grid-cols-2 gap-element-gap">
+<!-- Method: Stripe (Selected) -->
+<button class="relative flex flex-col items-center justify-center p-6 gap-3 bg-surface-container-lowest rounded-xl border-2 border-primary shadow-[0_4px_16px_rgba(0,26,66,0.04)] focus:outline-none focus:ring-4 focus:ring-primary/20 transition-all">
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">credit_card</span>
+<span class="font-label-md text-label-md text-on-surface">Stripe</span>
+<div class="absolute top-2 right-2 w-5 h-5 bg-primary rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" style="font-size: 14px; font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</button>
+<!-- Method: Bank Transfer (Unselected) -->
+<button class="flex flex-col items-center justify-center p-6 gap-3 bg-surface-container-lowest rounded-xl border-2 border-transparent shadow-[0_4px_16px_rgba(0,26,66,0.04)] hover:shadow-md hover:bg-surface-container-high focus:outline-none focus:ring-4 focus:ring-primary/20 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined text-4xl">account_balance</span>
+<span class="font-label-md text-label-md">Bank Transfer</span>
+</button>
+</div>
+</section>
+<!-- Primary Action -->
+<div class="mt-auto pt-4">
+<button class="w-full bg-primary text-on-primary rounded-[24px] py-4 px-6 flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.1)] hover:bg-primary/90 active:scale-[0.98] transition-all focus:outline-none focus:ring-4 focus:ring-primary/30">
+<span class="material-symbols-outlined">save</span>
+<span class="font-label-md text-label-md">Save Configuration</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar Shared Component -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 backdrop-blur-xl bg-white/70 shadow-[0_-4px_16px_rgba(0,26,66,0.04)]">
+<!-- Clients -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-transform w-[72px] focus:outline-none">
+<span class="material-symbols-outlined mb-1">group</span>
+<span class="font-label-md text-[10px] tracking-[0.05em] font-medium">Clients</span>
+</button>
+<!-- Invoices -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-transform w-[72px] focus:outline-none">
+<span class="material-symbols-outlined mb-1">receipt_long</span>
+<span class="font-label-md text-[10px] tracking-[0.05em] font-medium">Invoices</span>
+</button>
+<!-- Auto-Pay (Active Target) -->
+<button class="flex flex-col items-center justify-center active:scale-95 transition-transform w-[72px] focus:outline-none">
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 mb-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">sync_saved_locally</span>
+</div>
+<span class="font-label-md text-[10px] tracking-[0.05em] font-bold text-on-surface">Auto-Pay</span>
+</button>
+<!-- Settings -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-transform w-[72px] focus:outline-none">
+<span class="material-symbols-outlined mb-1">account_balance_wallet</span>
+<span class="font-label-md text-[10px] tracking-[0.05em] font-medium">Settings</span>
+</button>
+</nav>
+</body></html>

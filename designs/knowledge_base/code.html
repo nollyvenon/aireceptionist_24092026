@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Knowledge Base Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#131b2e",
+                        "primary-fixed": "#dae2fd",
+                        "surface": "#f7f9fb",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eceef0",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#07006c",
+                        "on-primary-fixed": "#131b2e",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-secondary-fixed": "#001a42",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-fixed-variant": "#004395",
+                        "outline-variant": "#c6c6cd",
+                        "on-surface-variant": "#45464d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "primary-fixed-dim": "#bec6e0",
+                        "surface-tint": "#565e74",
+                        "primary": "#000000",
+                        "secondary": "#0058be",
+                        "background": "#f7f9fb",
+                        "surface-container-high": "#e6e8ea",
+                        "on-background": "#191c1e",
+                        "on-tertiary-container": "#7073ff",
+                        "outline": "#76777d",
+                        "inverse-primary": "#bec6e0",
+                        "surface-container-low": "#f2f4f6",
+                        "tertiary-fixed": "#e1e0ff",
+                        "secondary-container": "#2170e4",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-surface": "#191c1e",
+                        "on-secondary-container": "#fefcff",
+                        "on-primary-container": "#7c839b",
+                        "surface-bright": "#f7f9fb",
+                        "surface-dim": "#d8dadc",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "on-tertiary-fixed": "#07006c",
+                        "surface-variant": "#e0e3e5",
+                        "tertiary": "#000000",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "inverse-on-surface": "#eff1f3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1.5rem",
+                        "3xl": "2rem"
+                    },
+                    "spacing": {
+                        "section-margin": "32px",
+                        "max-width": "1200px",
+                        "base": "8px",
+                        "container-padding": "24px",
+                        "element-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "label-md": ["JetBrains Mono", "monospace"],
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Inter", "sans-serif"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "caption": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Custom Scrollbar for sleekness */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.surface-variant');
+            border-radius: theme('borderRadius.full');
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline');
+        }
+
+        .ai-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: .7;
+                transform: scale(1.05);
+            }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(19, 27, 46, 0.08);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md pt-20 pb-24 md:pb-0 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-md bg-surface/70 shadow-sm flex items-center justify-between px-container-padding h-16 w-full mx-auto" style="border-bottom: none;">
+<div class="flex items-center gap-element-gap">
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<h1 class="font-headline-md-mobile text-headline-md-mobile md:font-headline-md md:text-headline-md text-on-surface font-bold tracking-tight">AI Assistant</h1>
+</div>
+<!-- Desktop Nav (Hidden on mobile) -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-2" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-2" href="#">
+<span class="material-symbols-outlined">cloud_download</span>
+                Live
+            </a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-2" href="#">
+<span class="material-symbols-outlined">contact_phone</span>
+                Contacts
+            </a>
+<a class="text-primary font-bold transition-colors font-label-md text-label-md flex items-center gap-2 border-b-2 border-primary pb-1" href="#">
+<span class="material-symbols-outlined">tune</span>
+                Settings
+            </a>
+</nav>
+<button class="w-10 h-10 rounded-full hover:bg-surface-variant flex items-center justify-center transition-colors active:scale-95 text-primary">
+<span class="material-symbols-outlined">settings_input_component</span>
+</button>
+</header>
+<main class="flex-grow max-w-max-width mx-auto w-full px-container-padding pt-section-margin">
+<!-- Page Header -->
+<div class="mb-section-margin flex flex-col md:flex-row md:items-end justify-between gap-element-gap">
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary mb-2">Knowledge Base</h2>
+<p class="text-on-surface-variant max-w-2xl">Manage the documents, URLs, and custom Q&amp;A pairs that inform your AI assistant's responses.</p>
+</div>
+<div class="flex gap-4">
+<button class="bg-surface border border-primary text-primary px-6 py-3 rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors flex items-center gap-2 active:scale-95">
+<span class="material-symbols-outlined">sync</span>
+                    Sync All
+                </button>
+<button class="bg-primary-container text-on-primary rounded-full px-6 py-3 font-label-md text-label-md hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm shadow-primary/20 active:scale-95">
+<span class="material-symbols-outlined">add</span>
+                    Add Source
+                </button>
+</div>
+</div>
+<!-- Overview Stats Bento -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-element-gap mb-section-margin">
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-surface-variant flex flex-col justify-between">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="bg-secondary/10 text-secondary px-2 py-1 rounded-full font-caption text-caption">12 Active</span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-primary mb-1">12</div>
+<div class="font-label-md text-label-md text-on-surface-variant">PDF Documents</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-surface-variant flex flex-col justify-between">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-tertiary-container" style="font-variation-settings: 'FILL' 1;">language</span>
+<span class="bg-tertiary-container/10 text-tertiary-container px-2 py-1 rounded-full font-caption text-caption">3 Syncing</span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-primary mb-1">8</div>
+<div class="font-label-md text-label-md text-on-surface-variant">Websites Synced</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-surface-variant flex flex-col justify-between">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-primary-fixed-variant" style="font-variation-settings: 'FILL' 1;">forum</span>
+<span class="bg-primary-fixed/30 text-on-primary-fixed px-2 py-1 rounded-full font-caption text-caption">Updated Today</span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-primary mb-1">145</div>
+<div class="font-label-md text-label-md text-on-surface-variant">Q&amp;A Pairs</div>
+</div>
+</div>
+<div class="bg-primary-container rounded-2xl p-6 shadow-md text-on-primary flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-primary-fixed/20 rounded-full blur-xl ai-pulse"></div>
+<div class="flex items-center justify-between mb-4 relative z-10">
+<span class="material-symbols-outlined text-primary-fixed" style="font-variation-settings: 'FILL' 1;">memory</span>
+<span class="flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-primary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary-fixed"></span>
+</span>
+</div>
+<div class="relative z-10">
+<div class="font-headline-md text-headline-md text-on-primary mb-1">System Ready</div>
+<div class="font-body-md text-body-md text-primary-fixed-dim">AI is fully trained on all active sources.</div>
+</div>
+</div>
+</div>
+<!-- Filter & Search -->
+<div class="flex flex-col md:flex-row gap-element-gap mb-8">
+<div class="relative flex-grow">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-lowest border-surface-variant rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-secondary focus:border-secondary transition-all outline-none text-primary font-body-md text-body-md shadow-sm" placeholder="Search knowledge base..." type="text"/>
+</div>
+<div class="flex gap-2 overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
+<button class="bg-primary-container text-on-primary px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap shadow-sm">All Sources</button>
+<button class="bg-surface-container-lowest text-on-surface-variant border border-surface-variant hover:bg-surface-container transition-colors px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap">Documents</button>
+<button class="bg-surface-container-lowest text-on-surface-variant border border-surface-variant hover:bg-surface-container transition-colors px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap">Websites</button>
+<button class="bg-surface-container-lowest text-on-surface-variant border border-surface-variant hover:bg-surface-container transition-colors px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap">Manual Q&amp;A</button>
+</div>
+</div>
+<!-- Sources List -->
+<div class="space-y-4 mb-section-margin">
+<!-- Item 1: Processing Website -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 shadow-sm border border-surface-variant flex flex-col md:flex-row items-start md:items-center justify-between gap-4 card-hover">
+<div class="flex items-start gap-4 w-full md:w-auto">
+<div class="w-12 h-12 rounded-lg bg-tertiary-container/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary-container" style="font-variation-settings: 'FILL' 1;">language</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Company Help Center</h3>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+                            https://help.example.com
+                            <span class="text-surface-tint text-sm border border-outline-variant px-2 py-0.5 rounded text-xs">Deep Scan</span>
+</p>
+</div>
+</div>
+<div class="flex items-center justify-between w-full md:w-auto gap-6 ml-16 md:ml-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary animate-spin">sync</span>
+<span class="font-label-md text-label-md text-secondary">Processing (45%)</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Item 2: Active PDF -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 shadow-sm border-l-2 border-l-secondary border-y border-r border-surface-variant flex flex-col md:flex-row items-start md:items-center justify-between gap-4 card-hover">
+<div class="flex items-start gap-4 w-full md:w-auto">
+<div class="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Employee_Handbook_2024.pdf</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Uploaded 2 days ago • 2.4 MB • 42 pages</p>
+</div>
+</div>
+<div class="flex items-center justify-between w-full md:w-auto gap-6 ml-16 md:ml-0">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="font-label-md text-label-md text-on-surface">Active</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 rounded-full hover:bg-surface-variant flex items-center justify-center text-on-surface-variant transition-colors" title="Re-sync">
+<span class="material-symbols-outlined">sync</span>
+</button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-variant flex items-center justify-center text-on-surface-variant transition-colors" title="More options">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 3: Error PDF -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 shadow-sm border border-error-container flex flex-col md:flex-row items-start md:items-center justify-between gap-4 card-hover">
+<div class="flex items-start gap-4 w-full md:w-auto">
+<div class="w-12 h-12 rounded-lg bg-error-container/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Q3_Financial_Report_Draft.pdf</h3>
+<p class="font-body-md text-body-md text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">error</span>
+                            Failed to parse document. Password protected.
+                        </p>
+</div>
+</div>
+<div class="flex items-center justify-between w-full md:w-auto gap-6 ml-16 md:ml-0">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-error">Failed</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="bg-surface border border-outline-variant text-primary px-4 py-2 rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors text-sm">
+                            Retry
+                        </button>
+<button class="w-10 h-10 rounded-full hover:bg-error-container/50 flex items-center justify-center text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 4: Manual Q&A -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 shadow-sm border-l-2 border-l-secondary border-y border-r border-surface-variant flex flex-col md:flex-row items-start md:items-center justify-between gap-4 card-hover">
+<div class="flex items-start gap-4 w-full md:w-auto">
+<div class="w-12 h-12 rounded-lg bg-primary-fixed/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-fixed-variant" style="font-variation-settings: 'FILL' 1;">forum</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Custom Support Responses</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Last updated today • 145 pairs</p>
+</div>
+</div>
+<div class="flex items-center justify-between w-full md:w-auto gap-6 ml-16 md:ml-0">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="font-label-md text-label-md text-on-surface">Active</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="bg-surface border border-outline-variant text-primary px-4 py-2 rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors text-sm">
+                            Edit
+                        </button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-variant flex items-center justify-center text-on-surface-variant transition-colors" title="More options">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface/70 backdrop-blur-md shadow-[0px_-4px_16px_rgba(19,27,46,0.02)] md:hidden" style="border-top: none;">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-variant rounded-full transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label-md text-label-md text-[10px]">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-variant rounded-full transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1">cloud_download</span>
+<span class="font-label-md text-label-md text-[10px]">Live</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-variant rounded-full transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1">contact_phone</span>
+<span class="font-label-md text-label-md text-[10px]">Contacts</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-6 py-1.5 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1">tune</span>
+<span class="font-label-md text-label-md text-[10px]">Settings</span>
+</a>
+</nav>
+<style>
+        /* Utility to hide scrollbar but keep functionality */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>

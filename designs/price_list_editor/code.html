@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Price List Editor - Cognitive Concierge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#bec6e0",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-container": "#2170e4",
+                        "on-surface-variant": "#45464d",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-bright": "#f7f9fb",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "secondary": "#0058be",
+                        "primary": "#000000",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#001a42",
+                        "primary-fixed-dim": "#bec6e0",
+                        "primary-fixed": "#dae2fd",
+                        "primary-container": "#131b2e",
+                        "on-primary-fixed": "#131b2e",
+                        "on-primary-container": "#7c839b",
+                        "outline-variant": "#c6c6cd",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "tertiary-fixed": "#e1e0ff",
+                        "background": "#f7f9fb",
+                        "tertiary": "#000000",
+                        "on-background": "#191c1e",
+                        "on-surface": "#191c1e",
+                        "outline": "#76777d",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#07006c",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "surface-container": "#eceef0",
+                        "on-tertiary-container": "#7073ff",
+                        "on-secondary-container": "#fefcff",
+                        "surface-tint": "#565e74",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary-container": "#07006c",
+                        "on-tertiary-fixed-variant": "#2f2ebe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "element-gap": "16px",
+                        "base": "8px",
+                        "section-margin": "32px",
+                        "container-padding": "24px",
+                        "max-width": "600px"
+                    },
+                    "fontFamily": {
+                        "caption": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom Toggle Switch Styles */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #2170e4;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #2170e4;
+        }
+        .toggle-checkbox:checked + .toggle-label:after {
+            transform: translateX(100%);
+            border-color: white;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen font-body-md font-body-md antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- Navigation Shell - Desktop (Hidden on mobile) -->
+<nav class="hidden md:flex flex-col h-screen w-72 rounded-r-xl bg-surface dark:bg-surface-container-lowest shadow-xl shadow-primary/2 py-6 fixed left-0 top-0 z-40">
+<!-- Drawer Header -->
+<div class="px-container-padding mb-8">
+<div class="flex items-center gap-4 left_align">
+<img alt="Agency Manager" class="w-12 h-12 rounded-full object-cover shadow-sm shadow-primary/5" data-alt="A highly detailed close up portrait of an elegant business professional looking forward with a slight smile in a modern corporate setting. The mood is confident and authoritative. Soft, even lighting highlights the subject's features against a bright, pristine white and subtle navy background. High-tech minimalist style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuxBT_Q51By4kJUfCmPywxqcnXE8pChj-Q8FINo-MNxz8KdvI4BPDXuRrqHfejvEmFMoaOWAlD2bGHsLPMjTnN7bOybuSQQSmE2DLe9Do_ZnF1Vn3hj4q8PY5NRzsoFWgxrV-Y_C_CLL46GObXwfMo8GjhjvfqWMg5PSHCJ0gDRv_-PXZ8fbM33L2oRfSv8C8QqzT8HUJWM3m83kc8LfELTyMql7yiBzxMa3J-ENK9HmHs0h0gFPXE4Q"/>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary font-bold">Agency Workspace</h2>
+<p class="font-caption text-caption text-on-surface-variant">Pro Plan Active</p>
+</div>
+</div>
+</div>
+<!-- Drawer Links -->
+<div class="flex flex-col gap-2 flex-grow">
+<!-- Active State Navigation Logic Applied to Settings -->
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant dark:text-outline-variant mx-2 rounded-lg hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant dark:text-outline-variant mx-2 rounded-lg hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-label-md text-label-md">Conversations</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant dark:text-outline-variant mx-2 rounded-lg hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">contacts</span>
+<span class="font-label-md text-label-md">CRM</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant dark:text-outline-variant mx-2 rounded-lg hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Automations</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary font-bold rounded-lg mx-2 active:scale-[0.98] duration-150 shadow-sm shadow-primary/5" href="#">
+<span class="material-symbols-outlined icon-fill">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</div>
+<div class="px-container-padding mt-auto">
+<span class="font-caption text-caption text-outline">v2.4.0</span>
+</div>
+</nav>
+<!-- Top App Bar (Mobile + Desktop Header) -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-xl bg-surface/70 dark:bg-surface-container/70 shadow-sm shadow-primary/5 flex items-center justify-between px-container-padding h-16 max-w-max-width mx-auto md:max-w-none md:ml-72 md:w-[calc(100%-18rem)] transition-all">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors rounded-full p-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container">bubble_chart</span>
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-on-primary-fixed hidden sm:block">Cognitive Concierge</span>
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-on-primary-fixed sm:hidden">Price List</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-full">
+<span class="material-symbols-outlined text-[18px] text-outline">search</span>
+<input class="bg-transparent border-none outline-none text-body-md font-body-md w-32 focus:w-48 transition-all text-on-surface placeholder:text-outline-variant py-1 focus:ring-0" placeholder="Search pricing..." type="text"/>
+</div>
+<button class="text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors rounded-full p-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<img alt="User Profile Avatar" class="w-8 h-8 rounded-full object-cover shadow-sm sm:hidden" data-alt="A highly detailed close up portrait of an elegant business professional looking forward with a slight smile in a modern corporate setting. The mood is confident and authoritative. Soft, even lighting highlights the subject's features against a bright, pristine white and subtle navy background. High-tech minimalist style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmYAPaNUPXt594Sk1MBql6T7X2F0NyAW92YhIeGbVZgBL7g99W--7rYjI5xlNOvwIWRdJQO443WCNSn7doDAgl4TaMkNnnlDNfWXQP9Zs4M1m4tSyXk9YIqgKW95x4YULQ9WiRfJvxKUK2GD4x0rH-GN8NEcfntTS50EIkRcf4wDK7X_D0-xNnKNOE5j2egIy0Ts5De6f_86-InGdDrVSL4aHSFEjgrpm8bEisyhr-ll53Sh1vJCSYlA"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-28 md:pb-12 md:pl-72 min-h-screen flex flex-col items-center">
+<div class="w-full max-w-4xl px-container-padding lg:px-8">
+<!-- Page Header -->
+<div class="mb-section-margin flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-secondary-container text-[20px]">smart_toy</span>
+<span class="font-label-md text-label-md text-secondary-container uppercase tracking-wider">AI Logic Configuration</span>
+</div>
+<h1 class="font-display-lg text-display-lg font-bold text-on-surface tracking-tight">Price List Editor</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-2xl">Configure the base pricing matrix used by the AI assistant when generating quotes for inbound leads.</p>
+</div>
+<div class="flex gap-3 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-6 py-2 bg-surface-container-highest text-on-surface font-label-md text-label-md rounded-full hover:bg-outline-variant transition-colors active:scale-95">Discard</button>
+<button class="flex-1 sm:flex-none px-6 py-2 bg-primary text-on-primary font-label-md text-label-md rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] hover:bg-inverse-surface transition-colors active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                        Save Matrix
+                    </button>
+</div>
+</div>
+<!-- Global Settings Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-element-gap mb-section-margin">
+<div class="bg-surface-container-lowest rounded-[24px] p-6 shadow-sm shadow-primary/5">
+<h3 class="font-headline-md text-headline-md font-semibold text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">language</span>
+                        Localization
+                    </h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-body-md text-body-md font-medium text-on-surface">Display Currency</p>
+<p class="font-caption text-caption text-on-surface-variant">Used in all AI generated text</p>
+</div>
+<div class="relative w-12 h-6 select-none transition-all duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 top-0 left-0 transition-all duration-300 ease-in-out border-outline-variant" id="currency_toggle" name="currency_toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer transition-colors duration-300 ease-in-out before:content-[''] before:absolute before:block before:w-12 before:h-6 before:rounded-full before:bg-secondary-container before:opacity-0 peer-checked:before:opacity-100" for="currency_toggle"></label>
+</div>
+<span class="font-label-md text-label-md font-bold text-secondary-container ml-2">NGN</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-[24px] p-6 shadow-sm shadow-primary/5">
+<h3 class="font-headline-md text-headline-md font-semibold text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">receipt_long</span>
+                        Tax Configuration
+                    </h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-body-md text-body-md font-medium text-on-surface">Auto-apply Tax</p>
+<p class="font-caption text-caption text-on-surface-variant">Add standard VAT to final quotes</p>
+</div>
+<div class="relative w-12 h-6 select-none transition-all duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 top-0 left-0 transition-all duration-300 ease-in-out border-outline-variant" id="tax_toggle" name="tax_toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer transition-colors duration-300 ease-in-out" for="tax_toggle"></label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Products Grid - Glassmorphism style -->
+<div class="mb-section-margin">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">Products &amp; Services</h2>
+<button class="text-secondary-container font-label-md text-label-md hover:text-secondary-fixed-variant transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        Add Item
+                    </button>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<!-- Item 1 -->
+<div class="group bg-surface-container-lowest rounded-[16px] p-4 shadow-sm shadow-primary/5 border border-transparent hover:border-surface-variant transition-all flex flex-col sm:flex-row gap-4 items-start sm:items-center relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">home_repair_service</span>
+</div>
+<div class="flex-grow w-full sm:w-auto">
+<input class="w-full bg-transparent border-none text-body-lg font-body-lg font-medium text-on-surface p-0 focus:ring-0 placeholder:text-outline-variant" placeholder="Service Name" type="text" value="Standard Consultation"/>
+<input class="w-full bg-transparent border-none text-caption font-caption text-on-surface-variant p-0 mt-1 focus:ring-0 placeholder:text-outline-variant" placeholder="Description (Optional)" type="text" value="1-hour introductory session"/>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto shrink-0 bg-surface-container-low rounded-[12px] p-1 px-3 focus-within:ring-2 focus-within:ring-secondary-container transition-shadow">
+<span class="font-label-md text-label-md text-outline-variant">₦</span>
+<input class="w-24 bg-transparent border-none text-body-lg font-body-lg font-medium text-on-surface p-1 text-right focus:ring-0" placeholder="0.00" type="number" value="25000"/>
+</div>
+<button class="text-outline-variant hover:text-error transition-colors p-2 shrink-0 self-end sm:self-center">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<!-- Item 2 -->
+<div class="group bg-surface-container-lowest rounded-[16px] p-4 shadow-sm shadow-primary/5 border border-transparent hover:border-surface-variant transition-all flex flex-col sm:flex-row gap-4 items-start sm:items-center relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">verified</span>
+</div>
+<div class="flex-grow w-full sm:w-auto">
+<input class="w-full bg-transparent border-none text-body-lg font-body-lg font-medium text-on-surface p-0 focus:ring-0 placeholder:text-outline-variant" placeholder="Service Name" type="text" value="Premium Implementation"/>
+<input class="w-full bg-transparent border-none text-caption font-caption text-on-surface-variant p-0 mt-1 focus:ring-0 placeholder:text-outline-variant" placeholder="Description (Optional)" type="text" value="Full setup and deployment"/>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto shrink-0 bg-surface-container-low rounded-[12px] p-1 px-3 focus-within:ring-2 focus-within:ring-secondary-container transition-shadow">
+<span class="font-label-md text-label-md text-outline-variant">₦</span>
+<input class="w-24 bg-transparent border-none text-body-lg font-body-lg font-medium text-on-surface p-1 text-right focus:ring-0" placeholder="0.00" type="number" value="150000"/>
+</div>
+<button class="text-outline-variant hover:text-error transition-colors p-2 shrink-0 self-end sm:self-center">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Special Offers Section - AI Insight Card Style -->
+<div class="relative bg-surface-container-lowest rounded-[24px] p-6 shadow-sm shadow-primary/5 overflow-hidden">
+<!-- AI Accent Border -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
+<div class="flex items-start justify-between mb-6">
+<div>
+<h2 class="font-headline-md text-headline-md font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container">auto_awesome</span>
+                            Special Offers Logic
+                        </h2>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Rules the AI will use to propose discounts during negotiation.</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-low rounded-[16px] p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+<div class="flex-grow">
+<p class="font-body-md text-body-md font-medium text-on-surface">Volume Discount</p>
+<p class="font-caption text-caption text-on-surface-variant">Apply when total exceeds ₦500,000</p>
+</div>
+<div class="flex items-center gap-2 bg-surface-container rounded-full px-4 py-2">
+<input class="w-12 bg-transparent border-none text-body-md font-body-md font-medium text-on-surface p-0 text-right focus:ring-0" placeholder="0" type="number" value="10"/>
+<span class="font-label-md text-label-md text-on-surface-variant">% off</span>
+</div>
+</div>
+</div>
+<button class="mt-4 text-secondary-container font-label-md text-label-md hover:text-secondary-fixed-variant transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                    Add Condition
+                </button>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar - Mobile (Hidden on MD and up) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full h-20 flex justify-around items-center px-4 pb-safe bg-surface/70 dark:bg-surface-container/70 backdrop-blur-xl shadow-lg shadow-primary/5 z-50 transition-all border-none">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-md text-label-md text-[10px] mt-1">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md text-[10px] mt-1">Leads</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-label-md text-[10px] mt-1">Billing</span>
+</a>
+<!-- Active State Logic Applied to Insights as fallback for Settings/Logic -->
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed bg-secondary-fixed/30 dark:bg-secondary-container rounded-full px-4 py-1 active:scale-90 duration-200 transition-all" href="#">
+<span class="material-symbols-outlined icon-fill">analytics</span>
+<span class="font-label-md text-label-md text-[10px] mt-1 font-bold">Insights</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for toggle switches
+        const toggles = document.querySelectorAll('.toggle-checkbox');
+        toggles.forEach(toggle => {
+            toggle.addEventListener('change', (e) => {
+                const label = e.target.nextElementSibling;
+                if(e.target.checked) {
+                    label.style.transform = "scale(0.95)";
+                    setTimeout(() => label.style.transform = "scale(1)", 150);
+                } else {
+                    label.style.transform = "scale(0.95)";
+                    setTimeout(() => label.style.transform = "scale(1)", 150);
+                }
+            });
+        });
+    </script>
+</body></html>

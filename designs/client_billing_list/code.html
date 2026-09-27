@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Client Billing</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with configuration -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "tertiary-fixed": "#e1e0ff",
+                    "on-error": "#ffffff",
+                    "on-background": "#191c1e",
+                    "error": "#ba1a1a",
+                    "surface": "#f7f9fb",
+                    "on-secondary-container": "#fefcff",
+                    "inverse-surface": "#2d3133",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#000000",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-tint": "#565e74",
+                    "on-primary-fixed": "#131b2e",
+                    "primary-container": "#131b2e",
+                    "tertiary-container": "#07006c",
+                    "primary-fixed-dim": "#bec6e0",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "outline": "#76777d",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary-container": "#7073ff",
+                    "surface-bright": "#f7f9fb",
+                    "primary": "#000000",
+                    "surface-container-low": "#f2f4f6",
+                    "on-secondary": "#ffffff",
+                    "on-primary-container": "#7c839b",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#c6c6cd",
+                    "background": "#f7f9fb",
+                    "on-surface-variant": "#45464d",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#c0c1ff",
+                    "on-surface": "#191c1e",
+                    "surface-container": "#eceef0",
+                    "on-secondary-fixed-variant": "#004395",
+                    "on-tertiary-fixed": "#07006c",
+                    "secondary-fixed": "#d8e2ff",
+                    "on-tertiary-fixed-variant": "#2f2ebe",
+                    "surface-container-highest": "#e0e3e5",
+                    "inverse-primary": "#bec6e0",
+                    "on-secondary-fixed": "#001a42",
+                    "secondary": "#0058be",
+                    "primary-fixed": "#dae2fd",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#2170e4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "24px",
+                    "base": "8px",
+                    "max-width": "600px",
+                    "section-margin": "32px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "caption": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased min-h-screen relative selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding h-16 bg-white/70 backdrop-blur-xl shadow-sm shadow-[0_4px_16px_rgba(0,26,66,0.04)] transition-all duration-200 ease-in-out">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Billing Suite</h1>
+</div>
+<div>
+<img alt="User Avatar" class="w-8 h-8 rounded-full object-cover border border-outline-variant/30" data-alt="A clean, highly professional headshot of a corporate executive in a modern, light-filled office space. Soft, natural light highlighting an expression of focused efficiency. High-tech minimalist aesthetic with a clean white and deep navy color palette in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAysj5MXwPMvdP8DXdkcY5jw6QOhvNzx1oDSJHnsGM1izLa_KALspkafw1cT-MUrTtJt_UyxRCy4a6eX4nUcD1C-PqsgeAurL6qjT8TjoE7tqNsJXkUYcTbHUYx8Ni3mJNs4AEcXEquvnNkxjd2akbHltfZUEDM_QVeAEUWvPE5J9JGDc8IksKbO9uD3BIf_XaE3BVuNzG-m9oQJlcwJIe8yXNP2oslO22b10jSqC8xOH2ZEcOlEfPS9Q"/>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-[88px] pb-[104px] px-container-padding flex flex-col gap-section-margin max-w-max-width mx-auto">
+<!-- Header Section -->
+<section class="flex flex-col gap-element-gap">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Client Billing</h2>
+<div class="flex flex-col gap-base">
+<!-- Search Bar -->
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-highest border-none rounded-[16px] py-3 pl-12 pr-4 font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-secondary focus:bg-surface-container-lowest transition-all placeholder:text-on-surface-variant" placeholder="Search clients or invoices..." type="text"/>
+</div>
+<!-- Filters -->
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="shrink-0 font-label-md text-label-md px-4 py-2 rounded-[32px] bg-secondary-fixed text-on-secondary-fixed border border-transparent shadow-[0_4px_16px_rgba(0,26,66,0.04)]">
+                        All Clients
+                    </button>
+<button class="shrink-0 font-label-md text-label-md px-4 py-2 rounded-[32px] bg-surface-container-lowest text-on-surface-variant border border-outline-variant hover:bg-surface-container transition-colors">
+                        Overdue Invoices
+                    </button>
+<button class="shrink-0 font-label-md text-label-md px-4 py-2 rounded-[32px] bg-surface-container-lowest text-on-surface-variant border border-outline-variant hover:bg-surface-container transition-colors">
+                        Pending
+                    </button>
+</div>
+</div>
+</section>
+<!-- Client Cards List -->
+<section class="flex flex-col gap-element-gap">
+<!-- Card 1: Active -->
+<div class="bg-surface-container-lowest rounded-[24px] p-element-gap shadow-[0_4px_16px_rgba(0,26,66,0.04)] border border-outline-variant/10 flex flex-col gap-4 relative overflow-hidden">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-[12px] bg-surface-container overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A minimalist, modern corporate logo design for an AI technology firm. Features a sleek, abstract geometric 'N' shape in vibrant electric blue and deep navy. Rendered on a pristine white background, representing high-tech minimalism and clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2_-qNu_0W9mqUppkN4Mdx49z01YlZ3CQdFp3U4lpUy6030zdY6qYhnoX-YBRq1Rx9ITrCw_LHTDVF0LdYa9t9_o7RgoM6wcyZE6vdikWkaBsCw3zjv5fDFELOg4odO1f40KabPORHF3op-4_72QItqQJ1qnGZjmTKcuLXnElQCEeKb_axNJWy48IdWlBsrU794D0iQ5ZyWFyQ-wjARS1fqakK3b5QzqNqOnsOgvKzzGt-yDQV71b2sg"/>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-on-surface">Nexus Corp</span>
+<span class="font-caption text-caption text-on-surface-variant">ID: #C-8092</span>
+</div>
+</div>
+<span class="font-label-md text-label-md px-3 py-1 rounded-[32px] bg-surface-container-high text-on-surface-variant flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                        Active
+                    </span>
+</div>
+<div class="h-px w-full bg-outline-variant/20"></div>
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="font-caption text-caption text-on-surface-variant mb-1">Current Plan</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Enterprise AI Suite</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline-md text-headline-md text-on-surface">$4,500<span class="font-body-md text-body-md text-on-surface-variant">/mo</span></span>
+</div>
+</div>
+</div>
+<!-- Card 2: Past Due -->
+<div class="bg-surface-container-lowest rounded-[24px] p-element-gap shadow-[0_4px_16px_rgba(0,26,66,0.04)] border border-error/20 flex flex-col gap-4 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-error"></div>
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-[12px] bg-surface-container overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A sophisticated, high-end agency logo. The design uses elegant serif typography intertwined with a minimalist geometric icon. The color palette is strictly deep black and crisp white, exuding authority, high-end corporate modernism, and refined professionalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALR5Hddr_E-vX7L2MYKJuih0lRVYiimCDAfjMAGJHQ3F_XGJjtfnmvnnPt4FL8xTHobPTbVXjVbh46188T9Rq8tqqxjGEjS_D4NJbp9VDll-FYJ5uKvO5t1OrwfPCjJGS3XyNNGgvJGc_imZEZw1CsBhp1z2ilmRXjjdPHZREEnjnSXQv5BpAepG3PJAv_1Gox78rftb8ek0LO1NC-JwYLGt_gxzRXMg0_QKbvLczghdv-Zk_DuQRlBQ"/>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-on-surface">Aura Agency</span>
+<span class="font-caption text-caption text-on-surface-variant">ID: #C-1143</span>
+</div>
+</div>
+<span class="font-label-md text-label-md px-3 py-1 rounded-[32px] bg-error-container text-on-error-container flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                        Past Due
+                    </span>
+</div>
+<div class="h-px w-full bg-outline-variant/20"></div>
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="font-caption text-caption text-on-surface-variant mb-1">Current Plan</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Basic AI Automations</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline-md text-headline-md text-on-surface">$850<span class="font-body-md text-body-md text-on-surface-variant">/mo</span></span>
+</div>
+</div>
+</div>
+<!-- Card 3: Pending -->
+<div class="bg-surface-container-lowest rounded-[24px] p-element-gap shadow-[0_4px_16px_rgba(0,26,66,0.04)] border border-outline-variant/10 flex flex-col gap-4 relative overflow-hidden">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-[12px] bg-surface-container overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A clean, abstract logo for a modern logistics firm. Incorporates dynamic, flowing lines indicating speed and data transfer. Rendered in subdued tertiary indigo tones against a light gray background, fitting seamlessly into a high-tech minimalist design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQGIoQXj6vlqIhcf505snz2jumORxuQkYc80zErwVIiWrfeKIrwhl-9qU2_Ei8NOlTujTIMOyHxrxHU1yyYaXsg6aBeKqvhcOc0Emoz881sgszLo9wjxOj54BixA6KGuQl3YnRBYdgWXKE_hvZg5Z3uZQctICODFG3N0Kz9S7oob4McEsCNUmOJA11OuN7pXrop3XcBn5st0tY1ElpxGJtuKGHEx3Bl3SSY7FqX0ltbDHed-s52GUX-w"/>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-on-surface">Flow Logistics</span>
+<span class="font-caption text-caption text-on-surface-variant">ID: #C-4902</span>
+</div>
+</div>
+<span class="font-label-md text-label-md px-3 py-1 rounded-[32px] bg-tertiary-fixed text-on-tertiary-fixed flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                        Pending
+                    </span>
+</div>
+<div class="h-px w-full bg-outline-variant/20"></div>
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="font-caption text-caption text-on-surface-variant mb-1">Current Plan</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Standard Support</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline-md text-headline-md text-on-surface">$1,200<span class="font-body-md text-body-md text-on-surface-variant">/mo</span></span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-white/70 backdrop-blur-xl border-t border-outline-variant/20 shadow-[0_-4px_16px_rgba(0,26,66,0.04)]">
+<!-- Active Tab: Clients -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-label-md mt-1">Clients</span>
+</button>
+<!-- Inactive Tab: Invoices -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-transform px-4 py-1">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md mt-1">Invoices</span>
+</button>
+<!-- Inactive Tab: Auto-Pay -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-transform px-4 py-1">
+<span class="material-symbols-outlined" data-icon="sync_saved_locally">sync_saved_locally</span>
+<span class="font-label-md text-label-md mt-1">Auto-Pay</span>
+</button>
+<!-- Inactive Tab: Settings -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-transform px-4 py-1">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label-md text-label-md mt-1">Settings</span>
+</button>
+</nav>
+</body></html>

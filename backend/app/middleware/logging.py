@@ -1,5 +1,6 @@
 """Request logging middleware"""
 
+from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi import Request
 from datetime import datetime
 import logging
@@ -7,11 +8,8 @@ import time
 
 logger = logging.getLogger(__name__)
 
-class LoggingMiddleware:
-    def __init__(self, app):
-        self.app = app
-
-    async def __call__(self, request: Request, call_next):
+class LoggingMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
         start_time = time.time()
         client_ip = request.client.host if request.client else "unknown"
 

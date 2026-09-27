@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quick Actions - Cognitive Concierge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#bec6e0",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-container": "#2170e4",
+                        "on-surface-variant": "#45464d",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-bright": "#f7f9fb",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "secondary": "#0058be",
+                        "primary": "#000000",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#001a42",
+                        "primary-fixed-dim": "#bec6e0",
+                        "primary-fixed": "#dae2fd",
+                        "primary-container": "#131b2e",
+                        "on-primary-fixed": "#131b2e",
+                        "on-primary-container": "#7c839b",
+                        "outline-variant": "#c6c6cd",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "tertiary-fixed": "#e1e0ff",
+                        "background": "#f7f9fb",
+                        "tertiary": "#000000",
+                        "on-background": "#191c1e",
+                        "on-surface": "#191c1e",
+                        "outline": "#76777d",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#07006c",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "surface-container": "#eceef0",
+                        "on-tertiary-container": "#7073ff",
+                        "on-secondary-container": "#fefcff",
+                        "surface-tint": "#565e74",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary-container": "#07006c",
+                        "on-tertiary-fixed-variant": "#2f2ebe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "element-gap": "16px",
+                        "base": "8px",
+                        "section-margin": "32px",
+                        "container-padding": "24px",
+                        "max-width": "600px"
+                    },
+                    "fontFamily": {
+                        "caption": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #F1F5F9; }
+        .ambient-shadow-base { box-shadow: 0 4px 16px rgba(0,0,0,0.04); }
+        .ambient-shadow-hover { box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col md:flex-row pb-24 md:pb-0">
+<!-- TopAppBar for Web -->
+<header class="hidden md:flex fixed top-0 w-full z-50 backdrop-blur-xl bg-surface/70 shadow-sm shadow-primary/5 h-16 items-center justify-between px-container-padding max-w-max-width mx-auto">
+<div class="flex items-center gap-element-gap">
+<span aria-hidden="true" class="material-symbols-outlined text-primary text-2xl">bubble_chart</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">Cognitive Concierge</span>
+</div>
+<div class="flex items-center gap-element-gap">
+<span class="font-body-md text-body-md text-on-surface-variant cursor-pointer hover:bg-surface-container-high transition-colors px-3 py-2 rounded-md active:scale-95 duration-200">Settings</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden cursor-pointer active:scale-95 duration-200" title="User Profile Avatar">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="A small, professional avatar of a young corporate executive against a clean, light-colored background. The lighting is soft and flattering, suitable for a modern business application interface. The mood is approachable yet authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6PGGLFi6IawbczqVLk1oYLiPBvWuFBJ4QxAvomZSq4SMFEF5TiYOhQBTesiP4YQYLT1GrD5gmVKPS4UxUs_KxJ4lWZK-AZVK-okXEYzDpamJEYrgaMoW1joP9MbH5w_9UW6p2xsPUGeytI_zaMpnsj2HHu1-DvFz6tSLKgQJAtWvXravZICgwMsXvAEvTI3Wwh1YoMSmaK_OMEgPDk4OiKFSI2WSg_zOwMVAPLC7jA1U9zRUqfKC1wA"/>
+</div>
+</div>
+</header>
+<!-- NavigationDrawer for Web -->
+<nav class="hidden md:flex flex-col h-screen py-6 w-72 rounded-r-xl bg-surface shadow-xl shadow-primary/2 fixed left-0 top-0 z-40 border-r border-surface-container-low pt-24">
+<div class="px-6 pb-6 border-b border-surface-container-low mb-6">
+<div class="flex items-center gap-4 mb-2">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0">
+<img alt="Agency Manager" class="w-full h-full object-cover" data-alt="A clean, professional profile picture of an agency manager. The individual looks confident and efficient, set against a pristine, well-lit office background with soft neutral tones typical of high-end corporate environments." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmRzm_pK1rkLX7syhHLlj9o6iYHmbBO_c9TYMZnk3refdgv9-f-5exlz1fp1Nz2pYgntJxwNkDVcQYvyre-3jB8N0AJo_gxcyagB44ExePAgSKaQ57JniyGzNKEx0TZaJ5rgIQrLZbwea37K9UO8PpAGS_bm4rrP0WSGQ-iRi6reYqz9icUJY2i45z8wNxBF1yX7rvMMVJ30IUpTbpqn043oMRBhxWFsVXqLliw16I7pT2XrGN1KVprA"/>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary truncate">Agency Workspace</h2>
+<p class="font-label-md text-label-md text-on-surface-variant truncate">Pro Plan Active</p>
+</div>
+</div>
+<p class="font-caption text-caption text-outline text-right">v2.4.0</p>
+</div>
+<ul class="flex-1 space-y-2">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all mx-2 rounded-lg active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all mx-2 rounded-lg active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-label-md text-label-md">Conversations</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all mx-2 rounded-lg active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">contacts</span>
+<span class="font-label-md text-label-md">CRM</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container font-bold rounded-lg mx-2 active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-label-md text-label-md">Automations</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all mx-2 rounded-lg active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-5xl mx-auto px-container-padding py-section-margin md:pt-24 md:pl-80 transition-all duration-300">
+<!-- Header Section -->
+<div class="mb-section-margin">
+<h1 class="font-display-lg text-display-lg text-primary mb-2 hidden md:block">Quick Actions</h1>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-2 md:hidden">Quick Actions</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Execute essential tasks efficiently. Trigger broadcasts, update pricing, or manage AI settings with immediate effect.</p>
+</div>
+<!-- Actions Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-element-gap">
+<!-- Broadcast Message (Prominent) -->
+<button class="col-span-1 md:col-span-2 lg:col-span-2 bg-primary text-on-primary rounded-[24px] p-6 text-left relative overflow-hidden group hover:ambient-shadow-hover transition-all duration-300 active:scale-95 flex flex-col justify-between min-h-[160px]">
+<div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="flex justify-between items-start z-10 relative">
+<div class="p-3 bg-white/20 rounded-xl backdrop-blur-md inline-flex">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">campaign</span>
+</div>
+<span class="font-label-md text-caption bg-white/10 px-3 py-1 rounded-full border border-white/20">High Reach</span>
+</div>
+<div class="z-10 relative mt-4">
+<h3 class="font-headline-md text-headline-md font-semibold mb-1">Broadcast Message</h3>
+<p class="font-body-md text-body-md text-inverse-primary opacity-90">Send bulk updates or promotions to selected segments.</p>
+</div>
+</button>
+<!-- Update Service Prices -->
+<button class="bg-surface-container-lowest rounded-[24px] p-6 text-left ambient-shadow-base hover:ambient-shadow-hover transition-all duration-300 active:scale-95 group border border-transparent hover:border-surface-container-highest flex flex-col justify-between min-h-[160px]">
+<div class="p-3 bg-surface-container rounded-xl inline-flex mb-4 group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-primary">currency_exchange</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-semibold text-primary mb-1">Update Service Prices</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Modify billing rates globally.</p>
+</div>
+</button>
+<!-- Pause AI Assistant (Critical Action) -->
+<button class="bg-surface-container-lowest rounded-[24px] p-6 text-left ambient-shadow-base hover:ambient-shadow-hover transition-all duration-300 active:scale-95 group border-l-2 border-error/50 hover:border-error flex flex-col justify-between min-h-[160px]">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-error-container rounded-xl inline-flex">
+<span class="material-symbols-outlined text-error">pause_circle</span>
+</div>
+<div class="flex items-center gap-1.5 bg-surface-container px-2 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider text-[10px]">Active</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-semibold text-primary mb-1">Pause AI Assistant</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Halt automated responses temporarily.</p>
+</div>
+</button>
+<!-- View Last Invoice -->
+<button class="bg-surface-container-lowest rounded-[24px] p-6 text-left ambient-shadow-base hover:ambient-shadow-hover transition-all duration-300 active:scale-95 group border border-transparent hover:border-surface-container-highest flex flex-col justify-between min-h-[160px]">
+<div class="p-3 bg-surface-container rounded-xl inline-flex mb-4 group-hover:bg-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-secondary">receipt_long</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-semibold text-primary mb-1">View Last Invoice</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Check recent billing details.</p>
+</div>
+</button>
+<!-- Request Support -->
+<button class="md:col-span-2 lg:col-span-1 bg-surface-container-lowest rounded-[24px] p-6 text-left ambient-shadow-base hover:ambient-shadow-hover transition-all duration-300 active:scale-95 group border border-transparent hover:border-surface-container-highest flex flex-col justify-between min-h-[160px]">
+<div class="p-3 bg-surface-container rounded-xl inline-flex mb-4 group-hover:bg-tertiary-fixed transition-colors">
+<span class="material-symbols-outlined text-tertiary">help_clinic</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-semibold text-primary mb-1">Request Support</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Contact account management.</p>
+</div>
+</button>
+</div>
+</main>
+<!-- BottomNavBar for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full h-20 flex justify-around items-center px-4 pb-safe z-50 bg-surface/70 backdrop-blur-xl shadow-lg shadow-primary/5">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 w-16 h-14 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">chat_bubble</span>
+<span class="font-label-md text-caption text-[10px]">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 w-16 h-14 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">group</span>
+<span class="font-label-md text-caption text-[10px]">Leads</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary bg-secondary-fixed/30 rounded-full px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-label-md text-caption text-[10px] font-bold">Actions</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 w-16 h-14 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">analytics</span>
+<span class="font-label-md text-caption text-[10px]">Insights</span>
+</a>
+</nav>
+</body></html>

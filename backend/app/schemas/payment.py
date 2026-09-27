@@ -13,6 +13,11 @@ class PaymentCreate(BaseModel):
     payment_method: str
     description: Optional[str] = None
 
+class PaymentUpdate(BaseModel):
+    status: Optional[str] = None
+    amount_cents: Optional[int] = None
+    description: Optional[str] = None
+
 class PaymentResponse(BaseModel):
     id: UUID
     customer_id: UUID

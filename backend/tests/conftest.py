@@ -66,22 +66,30 @@ def override_get_db():
     finally:
         db.close()
 
-app.dependency_overrides[get_db] = override_get_db
-
 @pytest.fixture
 def db():
     connection = engine.connect()
     transaction = connection.begin()
     session = TestingSessionLocal(bind=connection)
 
+    # Override get_db for this test's dependency injection
+    def override_get_db_for_test():
+        try:
+            yield session
+        finally:
+            pass  # Don't close, let the fixture handle it
+
+    app.dependency_overrides[get_db] = override_get_db_for_test
+
     yield session
 
     session.close()
     transaction.rollback()
     connection.close()
+    app.dependency_overrides.clear()
 
 @pytest.fixture
-def client():
+def client(db):
     return TestClient(app)
 
 @pytest.fixture
@@ -89,7 +97,7 @@ def test_organization(db: Session):
     org = Organization(
         id=uuid4(),
         name="Test Organization",
-        slug="test-org",
+        slug=f"test-org-{uuid4().hex[:8]}",
         email="test@org.com",
         phone="+1234567890",
         website="https://testorg.com",
