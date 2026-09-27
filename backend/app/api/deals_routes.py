@@ -25,7 +25,10 @@ async def list_deals(
     query = db.query(Deal).filter(Deal.organization_id == current_user.organization_id)
 
     if status:
-        query = query.filter(Deal.status == DealStatus(status))
+        try:
+            query = query.filter(Deal.status == DealStatus(status))
+        except ValueError:
+            pass
 
     total = query.count()
     deals = query.offset(skip).limit(limit).all()

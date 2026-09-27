@@ -121,7 +121,7 @@ class AppointmentService:
         query = db.query(Appointment).filter(Appointment.organization_id == organization_id)
 
         if status:
-            query = query.filter(Appointment.status == status)
+            query = query.filter(Appointment.status == AppointmentStatus(status))
         if customer_id:
             query = query.filter(Appointment.customer_id == customer_id)
         if assigned_to_id:

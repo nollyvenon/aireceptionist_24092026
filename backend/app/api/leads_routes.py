@@ -26,7 +26,10 @@ async def list_leads(
     query = db.query(Lead).filter(Lead.organization_id == current_user.organization_id)
 
     if status:
-        query = query.filter(Lead.status == LeadStatus(status))
+        try:
+            query = query.filter(Lead.status == LeadStatus(status))
+        except ValueError:
+            pass
     if assigned_to:
         query = query.filter(Lead.assigned_to_id == assigned_to)
 

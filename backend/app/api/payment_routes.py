@@ -113,9 +113,15 @@ async def list_payments(
     query = db.query(Payment).filter(Payment.organization_id == current_user.organization_id)
 
     if status:
-        query = query.filter(Payment.status == PaymentStatus(status))
+        try:
+            query = query.filter(Payment.status == PaymentStatus(status))
+        except ValueError:
+            pass
     if customer_id:
-        query = query.filter(Payment.customer_id == UUID(customer_id))
+        try:
+            query = query.filter(Payment.customer_id == UUID(customer_id))
+        except (ValueError, TypeError):
+            pass
 
     total = query.count()
     payments = query.offset(skip).limit(limit).all()

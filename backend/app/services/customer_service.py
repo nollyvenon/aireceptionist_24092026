@@ -4,7 +4,7 @@ from uuid import UUID
 from datetime import datetime
 from sqlalchemy.orm import Session
 
-from app.models.customer import Customer
+from app.models.customer import Customer, CustomerStatus
 from app.schemas.customer import CustomerCreate, CustomerUpdate
 
 class CustomerService:
@@ -70,7 +70,7 @@ class CustomerService:
         query = db.query(Customer).filter(Customer.organization_id == organization_id)
 
         if status:
-            query = query.filter(Customer.status == status)
+            query = query.filter(Customer.status == CustomerStatus(status))
 
         total = query.count()
         customers = query.offset(skip).limit(limit).all()

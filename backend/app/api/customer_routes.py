@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from uuid import UUID
 
 from database import get_db
-from app.models.customer import Customer
+from app.models.customer import Customer, CustomerStatus
 from app.schemas.customer import CustomerCreate, CustomerUpdate, CustomerResponse, CustomerListResponse
 from app.services.customer_service import CustomerService
 from app.middleware.auth import get_current_user
@@ -38,7 +38,7 @@ async def list_customers(
     query = db.query(Customer).filter(Customer.organization_id == current_user.organization_id)
 
     if status:
-        query = query.filter(Customer.status == status)
+        query = query.filter(Customer.status == CustomerStatus(status))
 
     if email:
         query = query.filter(Customer.email.ilike(f"%{email}%"))
