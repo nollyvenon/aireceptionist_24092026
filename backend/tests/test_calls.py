@@ -115,7 +115,7 @@ class TestCallsEndpoints:
             headers=auth_headers,
             params={
                 "token": test_auth_token,
-                "call_type": test_call.call_type
+                "call_type": test_call.call_type.value
             }
         )
         assert response.status_code == 200
@@ -129,7 +129,7 @@ class TestCallsEndpoints:
             headers=auth_headers,
             params={
                 "token": test_auth_token,
-                "status": test_call.status
+                "status": test_call.status.value
             }
         )
         assert response.status_code == 200
