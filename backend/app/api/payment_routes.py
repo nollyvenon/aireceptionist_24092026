@@ -160,6 +160,41 @@ async def get_payment(
         raise HTTPException(status_code=404, detail="Payment not found")
     return payment
 
+# Update payment
+@router.put("/{payment_id}", response_model=PaymentResponse)
+async def update_payment(
+    payment_id: UUID,
+    payment_update: PaymentUpdate,
+    current_user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Update payment status"""
+    payment = db.query(Payment).filter(
+        Payment.id == payment_id,
+        Payment.organization_id == current_user.organization_id
+    ).first()
+    if not payment:
+        raise HTTPException(status_code=404, detail="Payment not found")
+
+    if payment_update.status:
+        status_value = payment_update.status.lower()
+        if status_value == "completed":
+            status_value = "succeeded"
+        try:
+            payment.status = PaymentStatus(status_value)
+        except ValueError:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid status: {payment_update.status}"
+            )
+
+    if payment_update.description is not None:
+        payment.description = payment_update.description
+
+    db.commit()
+    db.refresh(payment)
+    return payment
+
 # Confirm payment
 @router.post("/{payment_id}/confirm", response_model=PaymentResponse)
 async def confirm_payment(
