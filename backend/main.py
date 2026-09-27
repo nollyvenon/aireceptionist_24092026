@@ -20,7 +20,8 @@ from app.api import (
     organization_routes, settings_routes, automation_routes, activity_routes, analytics_routes,
     messaging_routes, ai_receptionist_routes, marketplace_routes, admin_routes,
     leads_routes, contacts_routes, deals_routes, calls_routes, voicemail_routes,
-    audit_routes, feature_flags_routes
+    audit_routes, feature_flags_routes, security_routes, compliance_routes,
+    backup_routes, custom_fields_routes, segments_routes, documents_routes
 )
 
 logging.basicConfig(
@@ -109,6 +110,12 @@ app.include_router(calls_routes.router)
 app.include_router(voicemail_routes.router)
 app.include_router(audit_routes.router)
 app.include_router(feature_flags_routes.router)
+app.include_router(security_routes.router)
+app.include_router(compliance_routes.router)
+app.include_router(backup_routes.router)
+app.include_router(custom_fields_routes.router)
+app.include_router(segments_routes.router)
+app.include_router(documents_routes.router)
 
 # Error handlers
 @app.exception_handler(HTTPException)
