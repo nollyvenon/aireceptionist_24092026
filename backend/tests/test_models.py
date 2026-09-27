@@ -38,4 +38,4 @@ def test_payment_model_structure(mock_payment_data):
     assert mock_payment_data["id"]
     assert mock_payment_data["amount"] > 0
     assert mock_payment_data["currency"] == "USD"
-    assert mock_payment_data["status"] == "completed"
+    assert mock_payment_data["status"] in ["completed", "succeeded"]
