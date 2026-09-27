@@ -174,9 +174,9 @@ def test_organization(db):
 def test_user(db, test_organization):
     """Create test user"""
     from app.models.user import User
-    import hashlib
-    # Use simple SHA256 hash for testing (not secure, but bypasses bcrypt backend issues)
-    test_password_hash = hashlib.sha256("testpass123".encode()).hexdigest()
+    from app.services.auth_service import AuthService
+    # Use proper bcrypt hashing for testing
+    test_password_hash = AuthService.hash_password("testpass123")
     user = User(
         organization_id=test_organization.id,
         email=f"testuser_{uuid4().hex}@example.com",
