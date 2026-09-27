@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Plan &amp; Billing - Cognitive Concierge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "secondary": "#0058be",
+                        "on-secondary": "#ffffff",
+                        "outline": "#76777d",
+                        "on-secondary-container": "#fefcff",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "primary": "#000000",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-primary-fixed": "#131b2e",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container": "#eceef0",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#d8e2ff",
+                        "tertiary-fixed": "#e1e0ff",
+                        "error": "#ba1a1a",
+                        "tertiary": "#000000",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary-container": "#7073ff",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "surface": "#f7f9fb",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-tint": "#565e74",
+                        "background": "#f7f9fb",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "tertiary-container": "#07006c",
+                        "on-secondary-fixed": "#001a42",
+                        "on-background": "#191c1e",
+                        "outline-variant": "#c6c6cd",
+                        "surface-dim": "#d8dadc",
+                        "surface-variant": "#e0e3e5",
+                        "secondary-container": "#2170e4",
+                        "surface-container-highest": "#e0e3e5",
+                        "inverse-primary": "#bec6e0",
+                        "on-surface-variant": "#45464d",
+                        "primary-fixed": "#dae2fd",
+                        "surface-container-high": "#e6e8ea",
+                        "on-tertiary-fixed": "#07006c",
+                        "primary-container": "#131b2e",
+                        "on-primary-container": "#7c839b",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-margin": "32px",
+                        "element-gap": "16px",
+                        "container-padding": "24px",
+                        "base": "8px",
+                        "max-width": "600px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "caption": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        .ambient-shadow-base { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04); }
+        .ambient-shadow-active { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen flex flex-col md:flex-row font-body-md text-body-md">
+<!-- NavigationDrawer (Web) -->
+<nav class="fixed left-0 top-0 h-screen hidden md:flex flex-col border-r border-outline-variant bg-surface w-72 z-40">
+<div class="p-container-padding flex items-center gap-element-gap border-b border-outline-variant/30">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A polished, modern corporate logo icon featuring geometric shapes in deep navy blue on a clean white background. High contrast, sharp edges, suitable for an enterprise SaaS product. Professional and minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPPxWAodi6DGouLq2BUR6jjEPQYGzRcKo9j1vcIGbr-eBo4gK5ZYBA9fLaBziTL_QOodjkrJ2fiotcs-dIf5-RUlXPUEiObA86i92QqOG48vf8w2cNmMnTxVU4MuttLO_Hznq3Q1hR1tAorWLaLnEVwotiDKjOtia3afwMbLnWhOe01oJitKIX4Ny7cWsmx7LeV7gwaAEPhRPodVLZ4W6t0gITjupu3bDLyILRiiGUCS53XBzxfsjeGQ"/>
+</div>
+<div>
+<div class="font-headline-md text-headline-md font-black text-primary">Cognitive Concierge</div>
+</div>
+</div>
+<div class="p-container-padding flex items-center gap-element-gap mt-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-high flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive. Clean, well-lit studio environment, subtle soft lighting, modern minimalist background. The subject conveys confidence and efficiency, perfectly aligning with a high-end corporate assistant platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4bp-nmrFzEy0UKjAU-_HOTo3uKFU4G8PxQxeHzb9fN_bmOs3z6e_u8-2PJhSWh9x6QbicP2BPnxo39_hZfP-KQtBZN21_JqaZcY0GRTwYA8EhPgb652pX9XpHXsPDSrDLJCrANvpxbeezn0vduBiXWeKSMpEnLujAv9kG92T2gsSO4tX6oB1dcejidTwnLabUgWNbV0XCYv0GZB-RH2ub2TmOaYkxlkPlIjJ7Cl99uGDqert7tYBCPg"/>
+</div>
+<div>
+<div class="font-headline-md text-headline-md">Acme Corp</div>
+<div class="font-body-md text-body-md text-on-surface-variant">Starter Plan</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-4">
+<ul class="space-y-2">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low rounded-xl mx-2 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low rounded-xl mx-2 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-body-md text-body-md">Marketplace</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-xl mx-2 font-semibold transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">upgrade</span>
+<span class="font-body-md text-body-md">Plan &amp; Billing</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low rounded-xl mx-2 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-body-md text-body-md">AI Insights</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low rounded-xl mx-2 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- TopAppBar (Mobile) -->
+<header class="fixed top-0 w-full z-50 md:hidden bg-white/70 backdrop-blur-xl shadow-sm shadow-primary/5 flex justify-between items-center px-container-padding h-16">
+<button class="text-on-surface-variant p-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="font-headline-md text-headline-md font-bold text-primary">Cognitive Concierge</div>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high flex-shrink-0 active:scale-95 duration-200">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive. Clean, well-lit studio environment, subtle soft lighting, modern minimalist background. The subject conveys confidence and efficiency, perfectly aligning with a high-end corporate assistant platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRDe97M-acb8ho5aVVF0kjQuM21-KSN361QxuC7wYNhtkX3K5WU1doS77iYfTOuY49czQYMBi9AsnvA3TVMpIyWfj7yTTGWonPxGcS2NPpc4Y0XGS3-zzdSqNzsZxwLsR3VZzemgfmasGJ-nXYHMW5rXjscCtdOF0ZhXFC9eq0tagIB3SMrxhrOiJ1jCvrRgUk3heAM1HepCx7C7KQ-8lGxOv8qcm0cz35kgkXDHAXsSl0JqIL_s098A"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full pt-20 md:pt-0 md:ml-72 pb-24 md:pb-0 min-h-screen">
+<div class="max-w-7xl mx-auto px-container-padding py-section-margin">
+<!-- Page Header -->
+<div class="text-center mb-section-margin max-w-2xl mx-auto">
+<h1 class="font-display-lg text-display-lg text-primary mb-4 hidden md:block">Upgrade Your Potential</h1>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-4 md:hidden">Upgrade Your Potential</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Select the perfect tier to match your operational demands. Experience seamless scaling with our intelligent infrastructure.</p>
+<!-- Billing Toggle -->
+<div class="mt-8 flex justify-center items-center gap-4">
+<span class="font-label-md text-label-md text-on-surface-variant">Monthly</span>
+<button aria-pressed="false" class="relative w-14 h-8 bg-surface-variant rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-secondary/50" id="billing-toggle">
+<span class="absolute left-1 top-1 w-6 h-6 bg-white rounded-full transition-transform duration-300 transform shadow-sm"></span>
+</button>
+<span class="font-label-md text-label-md text-primary font-bold">Annually <span class="text-secondary ml-1 bg-secondary/10 px-2 py-0.5 rounded-full text-[10px]">Save 20%</span></span>
+</div>
+</div>
+<!-- Pricing Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-element-gap items-start relative">
+<!-- Starter Tier -->
+<div class="bg-white rounded-[24px] p-container-padding ambient-shadow-base flex flex-col h-full border border-surface-variant relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-surface-dim"></div>
+<div class="mb-6">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Starter</h3>
+<p class="font-caption text-caption text-on-surface-variant h-10">Essential tools for individual professionals.</p>
+<div class="mt-4 flex items-baseline gap-1">
+<span class="font-display-lg text-display-lg text-primary" data-annual="$39" data-monthly="$49">$49</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/mo</span>
+</div>
+</div>
+<ul class="space-y-4 mb-8 flex-1">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline-variant text-[20px] mt-0.5">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">500 Interactions / month</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline-variant text-[20px] mt-0.5">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Standard Integrations</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline-variant text-[20px] mt-0.5">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Email Support</span>
+</li>
+</ul>
+<button class="w-full py-3 rounded-full border border-primary text-primary font-label-md text-label-md hover:bg-surface-container-low transition-colors duration-200">
+                        Current Plan
+                    </button>
+</div>
+<!-- Professional Tier (Recommended) -->
+<div class="bg-white rounded-[24px] p-container-padding ambient-shadow-active flex flex-col h-full border-2 border-secondary relative overflow-hidden md:-mt-4 md:mb-4 z-10">
+<div class="absolute top-0 right-0 bg-secondary text-on-secondary font-label-md text-[10px] px-3 py-1 rounded-bl-lg font-bold tracking-wider uppercase">Popular</div>
+<div class="mb-6">
+<h3 class="font-headline-md text-headline-md text-secondary mb-2">Professional</h3>
+<p class="font-caption text-caption text-on-surface-variant h-10">Advanced capabilities for growing teams.</p>
+<div class="mt-4 flex items-baseline gap-1">
+<span class="font-display-lg text-display-lg text-primary" data-annual="$119" data-monthly="$149">$149</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/mo</span>
+</div>
+</div>
+<ul class="space-y-4 mb-8 flex-1">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">5,000 Interactions / month</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Custom API Integrations</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Priority 24/7 Support</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Advanced AI Analytics</span>
+</li>
+</ul>
+<button class="w-full py-3 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary/90 transition-colors duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]">
+                        Upgrade Now
+                    </button>
+</div>
+<!-- Enterprise Tier -->
+<div class="bg-white rounded-[24px] p-container-padding ambient-shadow-base flex flex-col h-full border border-surface-variant relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-surface-dim"></div>
+<div class="mb-6">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Enterprise</h3>
+<p class="font-caption text-caption text-on-surface-variant h-10">Bespoke solutions for maximum scale.</p>
+<div class="mt-4 flex items-baseline gap-1">
+<span class="font-display-lg text-display-lg text-primary">Custom</span>
+</div>
+</div>
+<ul class="space-y-4 mb-8 flex-1">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline-variant text-[20px] mt-0.5">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Unlimited Interactions</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline-variant text-[20px] mt-0.5">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Dedicated Account Manager</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline-variant text-[20px] mt-0.5">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Custom Model Training</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline-variant text-[20px] mt-0.5">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">SLA Guarantee</span>
+</li>
+</ul>
+<button class="w-full py-3 rounded-full border border-outline text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-colors duration-200">
+                        Contact Sales
+                    </button>
+</div>
+</div>
+<!-- Trust Indicators -->
+<div class="mt-section-margin pt-element-gap border-t border-outline-variant/30 text-center">
+<p class="font-caption text-caption text-on-surface-variant mb-4 uppercase tracking-widest">Trusted by industry leaders</p>
+<div class="flex flex-wrap justify-center gap-8 opacity-50 grayscale">
+<!-- Placeholder logos -->
+<span class="font-headline-md text-headline-md font-bold">Acme Corp</span>
+<span class="font-headline-md text-headline-md font-bold">Globex</span>
+<span class="font-headline-md text-headline-md font-bold">Soylent</span>
+<span class="font-headline-md text-headline-md font-bold">Initech</span>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 md:hidden bg-white/70 backdrop-blur-xl shadow-[0_-4px_16px_rgba(0,0,0,0.04)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1 text-[24px]">home</span>
+<span class="font-label-md text-[10px] leading-[10px] tracking-normal">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1 text-[24px]">storefront</span>
+<span class="font-label-md text-[10px] leading-[10px] tracking-normal">Market</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full px-4 py-1 hover:opacity-80 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<span class="font-label-md text-[10px] leading-[10px] tracking-normal">Plans</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1 text-[24px]">help</span>
+<span class="font-label-md text-[10px] leading-[10px] tracking-normal">Support</span>
+</a>
+</nav>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('billing-toggle');
+            const toggleIndicator = toggleBtn.querySelector('span');
+            const priceElements = document.querySelectorAll('[data-monthly]');
+            let isAnnual = false;
+
+            toggleBtn.addEventListener('click', () => {
+                isAnnual = !isAnnual;
+                
+                // Animate toggle
+                if (isAnnual) {
+                    toggleBtn.classList.remove('bg-surface-variant');
+                    toggleBtn.classList.add('bg-secondary');
+                    toggleIndicator.classList.add('translate-x-6');
+                } else {
+                    toggleBtn.classList.remove('bg-secondary');
+                    toggleBtn.classList.add('bg-surface-variant');
+                    toggleIndicator.classList.remove('translate-x-6');
+                }
+
+                // Update prices
+                priceElements.forEach(el => {
+                    const newPrice = isAnnual ? el.getAttribute('data-annual') : el.getAttribute('data-monthly');
+                    
+                    // Simple fade animation
+                    el.style.opacity = '0';
+                    setTimeout(() => {
+                        el.textContent = newPrice;
+                        el.style.opacity = '1';
+                        el.style.transition = 'opacity 0.2s ease';
+                    }, 200);
+                });
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live Call Monitoring</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#000000",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "primary-fixed": "#dae2fd",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-primary-container": "#7c839b",
+                        "inverse-surface": "#2d3133",
+                        "surface-variant": "#e0e3e5",
+                        "on-surface": "#191c1e",
+                        "on-background": "#191c1e",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#000000",
+                        "inverse-primary": "#bec6e0",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-secondary-fixed": "#001a42",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary-container": "#2170e4",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#131b2e",
+                        "on-surface-variant": "#45464d",
+                        "surface": "#f7f9fb",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "on-tertiary-container": "#7073ff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#07006c",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-secondary-fixed-variant": "#004395",
+                        "secondary": "#0058be",
+                        "surface-tint": "#565e74",
+                        "on-secondary-container": "#fefcff",
+                        "outline-variant": "#c6c6cd",
+                        "surface-dim": "#d8dadc",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#131b2e",
+                        "tertiary-container": "#07006c",
+                        "background": "#f7f9fb",
+                        "error-container": "#ffdad6",
+                        "outline": "#76777d",
+                        "tertiary-fixed": "#e1e0ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "base": "8px",
+                        "element-gap": "16px",
+                        "max-width": "600px",
+                        "section-margin": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "caption": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .audio-wave {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 24px;
+        }
+        .audio-wave .bar {
+            width: 3px;
+            background-color: var(--color-secondary-container, #2170e4);
+            border-radius: 9999px;
+            animation: wave 1s infinite ease-in-out;
+        }
+        .audio-wave .bar:nth-child(1) { animation-delay: 0.0s; height: 30%; }
+        .audio-wave .bar:nth-child(2) { animation-delay: 0.1s; height: 60%; }
+        .audio-wave .bar:nth-child(3) { animation-delay: 0.2s; height: 100%; }
+        .audio-wave .bar:nth-child(4) { animation-delay: 0.3s; height: 60%; }
+        .audio-wave .bar:nth-child(5) { animation-delay: 0.4s; height: 30%; }
+        
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1.2); }
+        }
+
+        .pulse-orb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--color-secondary-container, #2170e4);
+            animation: pulse 1.5s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .5; transform: scale(0.8); }
+        }
+
+        /* Transcription Scrollbar */
+        .transcription-area::-webkit-scrollbar {
+            width: 4px;
+        }
+        .transcription-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .transcription-area::-webkit-scrollbar-thumb {
+            background-color: var(--color-surface-variant, #e0e3e5);
+            border-radius: 20px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased h-screen flex flex-col md:flex-row overflow-hidden">
+<!-- TopAppBar (Web & Mobile Contextual) -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-md bg-surface/70 dark:bg-surface-dim/70 shadow-sm shadow-[0px_4px_16px_rgba(19,27,46,0.02)] hidden md:block">
+<div class="flex items-center justify-between px-container-padding h-16 w-full max-w-max-width mx-auto md:max-w-7xl">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold">
+                    AI
+                </div>
+<span class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">AI Assistant</span>
+</div>
+<nav class="hidden md:flex gap-8">
+<!-- Live is Active -->
+<a class="text-on-surface-variant dark:text-surface-variant font-label-md text-label-md hover:opacity-80 transition-opacity" href="#">Dashboard</a>
+<a class="text-primary dark:text-inverse-primary font-label-md text-label-md hover:opacity-80 transition-opacity border-b-2 border-primary pb-1" href="#">Live</a>
+<a class="text-on-surface-variant dark:text-surface-variant font-label-md text-label-md hover:opacity-80 transition-opacity" href="#">Contacts</a>
+<a class="text-on-surface-variant dark:text-surface-variant font-label-md text-label-md hover:opacity-80 transition-opacity" href="#">Settings</a>
+</nav>
+<div class="flex items-center">
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="settings_input_component" style="font-variation-settings: 'FILL' 0;">settings_input_component</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Mobile Header (Simplified for Live context) -->
+<header class="md:hidden flex items-center justify-between px-container-padding h-16 w-full z-50 bg-surface shadow-sm">
+<button class="p-2 -ml-2 text-on-surface-variant">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<span class="font-headline-md-mobile text-headline-md-mobile font-bold">Live Call</span>
+<div class="w-8"></div> <!-- Spacer -->
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 w-full max-w-3xl mx-auto mt-0 md:mt-24 mb-24 md:mb-8 px-container-padding flex flex-col h-[calc(100vh-64px)] md:h-[calc(100vh-128px)]">
+<!-- Active Call Header Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm shadow-[0px_4px_16px_rgba(19,27,46,0.02)] mb-section-margin shrink-0 relative overflow-hidden">
+<!-- Top subtle accent line -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-secondary-container"></div>
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-3">
+<span class="font-label-md text-label-md text-on-surface-variant bg-surface-container-highest px-3 py-1 rounded-full uppercase">Inbound Call</span>
+<div class="flex items-center gap-2 text-error">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-label-md text-label-md font-bold">04:23</span>
+</div>
+</div>
+<div class="audio-wave">
+<div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<img class="w-16 h-16 rounded-full object-cover shadow-sm" data-alt="A professional headshot of a female executive in a modern bright office setting. High quality photography, clean lighting, corporate modernism style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDziHt1TarszjBGFSglEvtKVXIHs08tnqL9no18tXfs9xlwXt_BvY3Lksu6KKBmYCETaev0NFLykTDpEVsK7X55XngnPF-7KWjL6zui-Le9ToPXNwC4yG2BugBl9u2-MtZ9Eg5uGAaLgAhZdnhqLGVlJXJLwJACKHyCAq-vq0OG8xZg8NuMtX22AN_NawzmjgdWWJYJQ4AAdhX49rekK4ttW-qyRX1g8ALXALN_zXNlezH4SKuxiCYDEA"/>
+<div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-1">Eleanor Vance</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">+1 (555) 019-2834 • Enterprise Lead</p>
+</div>
+</div>
+</div>
+<!-- Transcription Feed Area -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl shadow-sm shadow-[0px_4px_16px_rgba(19,27,46,0.02)] flex flex-col overflow-hidden mb-section-margin">
+<!-- Feed Header -->
+<div class="px-6 py-4 border-b border-surface-variant flex justify-between items-center bg-surface-bright shrink-0">
+<h3 class="font-headline-md text-headline-md text-on-surface">Live Transcript</h3>
+<span class="font-label-md text-label-md text-secondary-container flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">closed_caption</span>
+                    Auto-scrolling
+                </span>
+</div>
+<!-- Feed Content -->
+<div class="flex-1 p-6 overflow-y-auto transcription-area flex flex-col gap-6">
+<!-- Caller Message -->
+<div class="flex gap-4 max-w-[85%]">
+<img class="w-8 h-8 rounded-full object-cover shrink-0 mt-1" data-alt="A small circular avatar showing a professional female executive in a well lit office." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIl8Wb7XqEqjV23SzykFfYsTfzvL3YgE4bLNss8-ZKimuEN01gxIdexmQrPpu0HZBTaTXGRsqpcMF9uuyUYwUAQDTDECu6tvUXV54aacADcxm4lgNFPffKusVIR9Gn0SIgBkl1jFosAj6iLBmJT1emjkUUfqWPtWQJcr8NQ3n2HaNpta5Ssef4H7oR1oSKMbNHNTcSqflY4QV-Z1qEY5nrZ5Wr22175PlADVXi0fpqDZjVVp_njVlF6w"/>
+<div>
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-label-md text-label-md text-on-surface">Eleanor Vance</span>
+<span class="font-caption text-caption text-on-surface-variant">04:12</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl rounded-tl-sm text-on-surface font-body-md text-body-md">
+                            Hi, I'm calling to check the status of our recent enterprise deployment. We were supposed to receive the updated API keys this morning.
+                        </div>
+</div>
+</div>
+<!-- AI Message -->
+<div class="flex gap-4 max-w-[85%] self-end flex-row-reverse">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold shrink-0 mt-1 text-xs">AI</div>
+<div class="text-right">
+<div class="flex items-baseline gap-2 mb-1 justify-end">
+<span class="font-caption text-caption text-on-surface-variant">04:15</span>
+<span class="font-label-md text-label-md text-on-surface">AI Assistant</span>
+</div>
+<div class="bg-secondary-fixed p-4 rounded-xl rounded-tr-sm text-on-secondary-fixed font-body-md text-body-md text-left border-l-2 border-secondary-container">
+                            Hello Eleanor. I can certainly help with that. Let me securely retrieve the status of your enterprise deployment. One moment please.
+                        </div>
+</div>
+</div>
+<!-- Caller Message -->
+<div class="flex gap-4 max-w-[85%]">
+<img class="w-8 h-8 rounded-full object-cover shrink-0 mt-1" data-alt="A small circular avatar showing a professional female executive in a well lit office." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDj0sPNwxPl53AXG6ML22ZRffuHyiAILf2mVTqhAFy1V9WZ5aJD-S52Cl---8jgBLp1ATlgloID4V--s-RkZOGRhS5rqcXKqdYD6joohfu9ymoS6N9UqEIELBZB6T3hupWAFj9egS8k4k2MhG1TeIZsNvWRYOEZ66TtNFOOq_nU-mhlT1_T8rbhY5xSMOwOQLwCBVzoraMBhWY_v3j13Hwt7L03qoHghowmy9uOT9vdRn26tJcJEE_UvQ"/>
+<div>
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-label-md text-label-md text-on-surface">Eleanor Vance</span>
+<span class="font-caption text-caption text-on-surface-variant">04:18</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl rounded-tl-sm text-on-surface font-body-md text-body-md">
+                            Thank you. Also, we noticed a slight latency issue during the sandbox testing yesterday. Is that related?
+                        </div>
+</div>
+</div>
+<!-- AI Processing Status (Active) -->
+<div class="flex justify-center my-2">
+<div class="bg-surface-container-high px-4 py-2 rounded-full flex items-center gap-3 shadow-sm">
+<div class="pulse-orb"></div>
+<span class="font-label-md text-label-md text-on-surface-variant">AI is analyzing context...</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Control Actions Area -->
+<div class="flex justify-center gap-4 shrink-0 pb-4">
+<button class="w-14 h-14 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors shadow-sm active:scale-95">
+<span class="material-symbols-outlined">mic_off</span>
+</button>
+<button class="px-8 py-3 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-md shadow-primary/20 hover:opacity-90 transition-opacity active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">record_voice_over</span>
+                Take Over Call
+            </button>
+<button class="w-14 h-14 rounded-full bg-error-container text-on-error-container flex items-center justify-center hover:bg-error/20 transition-colors shadow-sm active:scale-95">
+<span class="material-symbols-outlined">call_end</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface/70 dark:bg-surface-dim/70 shadow-[0px_-4px_16px_rgba(19,27,46,0.02)] backdrop-blur-md md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-full transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-[10px]">Dashboard</span>
+</a>
+<!-- Active State: Live -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-6 py-1.5 hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="Graphic_Eq" data-weight="fill" style="font-variation-settings: 'FILL' 1;">cloud_download</span>
+<span class="font-label-md text-[10px]">Live</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-full transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="contact_phone">contact_phone</span>
+<span class="font-label-md text-[10px]">Contacts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-full transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="tune">tune</span>
+<span class="font-label-md text-[10px]">Settings</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Billing &amp; Usage Summary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style data-purpose="theme-configuration">
+    :root {
+      --font-inter: 'Inter', sans-serif;
+      --color-surface: #f7f9fb;
+      --color-surface-container-lowest: #ffffff;
+      --color-surface-container: #e6e8eb;
+      --color-on-surface: #17181a;
+      --color-on-surface-variant: #42464a;
+      --color-primary: #0f172a;
+      --color-primary-container: #c3e2ff;
+      --color-on-primary-container: #001d35;
+      --color-secondary-container: #d3e4f6;
+      --color-on-secondary-container: #0f1d29;
+      --color-tertiary-container: #f9d8f8;
+      --color-on-tertiary-container: #2c1230;
+      --color-error-container: #ffdad6;
+      --color-on-error-container: #410002;
+      --color-outline: #72777c;
+      --color-outline-variant: #c1c6cb;
+      --color-primary-fixed: #c3e2ff;
+      --color-on-primary-fixed: #001d35;
+      --color-secondary-fixed: #d3e4f6;
+      --color-on-secondary-fixed: #0f1d29;
+      --color-tertiary-fixed: #f9d8f8;
+      --color-on-tertiary-fixed: #2c1230;
+      
+      --color-blue-100: #c3e2ff;
+      --color-blue-500: #2563eb;
+      --color-blue-600: #1d4ed8;
+      --color-gray-100: #f3f4f6;
+      --color-gray-200: #e5e7eb;
+      --color-gray-300: #d1d5db;
+      --color-gray-500: #6b7280;
+      --color-gray-800: #1f2937;
+      --color-gray-900: #111827;
+      
+      --radius-sm: 0.25rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+    }
+    
+    body {
+      font-family: var(--font-inter);
+      background-color: var(--color-surface);
+      color: var(--color-on-surface);
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            surface: 'var(--color-surface)',
+            'surface-container-lowest': 'var(--color-surface-container-lowest)',
+            'surface-container': 'var(--color-surface-container)',
+            'on-surface': 'var(--color-on-surface)',
+            'on-surface-variant': 'var(--color-on-surface-variant)',
+            primary: 'var(--color-primary)',
+            'primary-container': 'var(--color-primary-container)',
+            'on-primary-container': 'var(--color-on-primary-container)',
+            'secondary-container': 'var(--color-secondary-container)',
+            'on-secondary-container': 'var(--color-on-secondary-container)',
+            outline: 'var(--color-outline)',
+            'outline-variant': 'var(--color-outline-variant)',
+            blue: {
+              100: 'var(--color-blue-100)',
+              500: 'var(--color-blue-500)',
+              600: 'var(--color-blue-600)',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+          },
+          borderRadius: {
+            'xl': '1rem',
+            '2xl': '1.25rem',
+            '3xl': '1.5rem',
+          },
+          boxShadow: {
+            'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+            DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+            'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen pb-20">
+<!-- BEGIN: MainContent -->
+<main class="flex-1 px-4 pt-8 pb-6 max-w-md mx-auto w-full">
+<!-- Header Section -->
+<header class="mb-8">
+<h1 class="text-2xl font-bold text-gray-900 mb-2">Billing &amp; Usage Summary</h1>
+<p class="text-sm text-gray-600 leading-relaxed">
+        Manage your current subscription and view AI usage statistics for the current billing cycle.
+      </p>
+</header>
+<!-- BEGIN: CurrentPlanCard -->
+<section class="bg-white rounded-[1.5rem] p-6 shadow-sm mb-6">
+<div class="flex justify-between items-start mb-2">
+<div class="text-xs font-mono text-gray-500 uppercase tracking-widest">Current Plan</div>
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-600">
+          Active
+        </span>
+</div>
+<h2 class="text-xl font-bold text-gray-900 mb-6">Enterprise Concierge</h2>
+<div class="grid grid-cols-2 gap-y-6 gap-x-4 mb-8">
+<div>
+<div class="text-xs text-gray-500 mb-1">Billing Cycle</div>
+<div class="font-medium text-gray-900">Monthly</div>
+</div>
+<div>
+<div class="text-xs text-gray-500 mb-1">Next Billing Date</div>
+<div class="font-medium text-gray-900">Nov 15, 2023</div>
+</div>
+<div>
+<div class="text-xs text-gray-500 mb-1">Plan Amount</div>
+<div class="font-medium text-gray-900">$499.00 / mo</div>
+</div>
+<div>
+<div class="text-xs text-gray-500 mb-1">Payment Method</div>
+<div class="font-medium text-gray-900 flex items-center gap-2">
+<i class="fa-regular fa-credit-card"></i>
+<span>•••• 4242</span>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<button class="w-full bg-black text-white font-medium py-3.5 px-4 rounded-xl shadow-sm hover:bg-gray-800 transition-colors font-mono text-sm">
+          Upgrade Plan
+        </button>
+<button class="w-full bg-white border border-gray-900 text-gray-900 font-medium py-3.5 px-4 rounded-xl hover:bg-gray-50 transition-colors font-mono text-sm">
+          Manage Payment
+        </button>
+</div>
+</section>
+<!-- END: CurrentPlanCard -->
+<!-- BEGIN: UsageCard -->
+<section class="bg-white rounded-[1.5rem] p-6 shadow-sm mb-8 border-l-4 border-blue-600 relative overflow-hidden">
+<!-- Decorative background -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-blue-50/50 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none"></div>
+<div class="flex items-center gap-2 mb-6 relative z-10">
+<i class="fa-solid fa-chart-line text-blue-600"></i>
+<h3 class="text-lg font-bold text-gray-900">AI Interaction Usage</h3>
+</div>
+<div class="flex items-baseline gap-2 mb-4 relative z-10">
+<span class="text-5xl font-bold text-gray-900 tracking-tight">850</span>
+<span class="text-gray-500 text-sm">/ 1000 interactions</span>
+</div>
+<div class="mb-2 relative z-10">
+<div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+<div class="bg-blue-600 h-3 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<div class="text-right text-xs text-gray-500 mb-6 relative z-10">
+        85% used this cycle
+      </div>
+<div class="bg-gray-50 rounded-xl p-4 flex gap-3 items-start relative z-10">
+<i class="fa-solid fa-circle-info text-gray-500 mt-0.5 shrink-0"></i>
+<p class="text-xs text-gray-600 leading-relaxed">
+          You are approaching your interaction limit. Consider upgrading to avoid overage charges of $0.05 per additional interaction.
+        </p>
+</div>
+</section>
+<!-- END: UsageCard -->
+<!-- BEGIN: RecentInvoices -->
+<section class="mb-8">
+<h3 class="text-lg font-bold text-gray-900 mb-4 px-2">Recent Invoices</h3>
+<div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-gray-100">
+<th class="py-4 px-4 text-xs font-mono text-gray-500 font-normal w-1/3">Invoice ID</th>
+<th class="py-4 px-4 text-xs font-mono text-gray-500 font-normal">Date</th>
+<th class="py-4 px-4 text-xs font-mono text-gray-500 font-normal text-right">Amount</th>
+<th class="py-4 px-4 text-xs font-mono text-gray-500 font-normal text-right w-12">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100">
+<tr>
+<td class="py-4 px-4 text-sm font-mono text-gray-900 whitespace-nowrap">
+                  INV-2023-10-01
+                </td>
+<td class="py-4 px-4 text-sm text-gray-900">
+                  Oct 15, 2023
+                </td>
+<td class="py-4 px-4 text-sm text-gray-900 text-right">
+                  $499.00
+                </td>
+<td class="py-4 px-4 text-right">
+<div class="w-6 h-6 rounded-full bg-gray-100 inline-block ml-auto"></div>
+</td>
+</tr>
+<tr>
+<td class="py-4 px-4 text-sm font-mono text-gray-900 whitespace-nowrap">
+                  INV-2023-09-01
+                </td>
+<td class="py-4 px-4 text-sm text-gray-900">
+                  Sep 15, 2023
+                </td>
+<td class="py-4 px-4 text-sm text-gray-900 text-right">
+                  $499.00
+                </td>
+<td class="py-4 px-4 text-right">
+<div class="w-6 h-6 rounded-full bg-gray-100 inline-block ml-auto"></div>
+</td>
+</tr>
+<tr>
+<td class="py-4 px-4 text-sm font-mono text-gray-900 whitespace-nowrap">
+                  INV-2023-08-01
+                </td>
+<td class="py-4 px-4 text-sm text-gray-900">
+                  Aug 15, 2023
+                </td>
+<td class="py-4 px-4 text-sm text-gray-900 text-right">
+                  $499.00
+                </td>
+<td class="py-4 px-4 text-right">
+<div class="w-6 h-6 rounded-full bg-gray-100 inline-block ml-auto"></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="mt-6 text-center">
+<a class="inline-flex items-center gap-2 text-sm font-mono text-blue-600 hover:text-blue-700" href="#">
+          View all invoices <i class="fa-solid fa-arrow-right text-xs"></i>
+</a>
+</div>
+</section>
+<!-- END: RecentInvoices -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: BottomNavigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-gray-50 border-t border-gray-200 px-6 py-3 flex justify-between items-center max-w-md mx-auto pb-safe">
+<a class="flex flex-col items-center text-gray-500 hover:text-gray-900 min-w-[64px]" href="#">
+<i class="fa-solid fa-border-all text-xl mb-1"></i>
+<span class="text-[10px] font-mono uppercase tracking-wider">Hub</span>
+</a>
+<a class="flex flex-col items-center text-gray-500 hover:text-gray-900 min-w-[64px]" href="#">
+<i class="fa-solid fa-user-group text-xl mb-1"></i>
+<span class="text-[10px] font-mono uppercase tracking-wider">Leads</span>
+</a>
+<a class="flex flex-col items-center text-white bg-blue-600 rounded-full px-6 py-2 min-w-[80px] shadow-sm" href="#">
+<i class="fa-solid fa-file-invoice text-xl mb-1"></i>
+<span class="text-[10px] font-mono uppercase tracking-wider">Invoices</span>
+</a>
+<a class="flex flex-col items-center text-gray-500 hover:text-gray-900 min-w-[64px]" href="#">
+<i class="fa-solid fa-gear text-xl mb-1"></i>
+<span class="text-[10px] font-mono uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+<!-- END: BottomNavigation -->
+<style data-purpose="safe-area">
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 1rem);
+    }
+  </style>
+</body></html>

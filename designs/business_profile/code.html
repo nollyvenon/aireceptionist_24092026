@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Business Profile - AutomateAI</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration (From Shared Guidance) -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+                "on-primary-fixed": "#131b2e",
+                "outline": "#76777d",
+                "tertiary-fixed": "#e1e0ff",
+                "on-surface-variant": "#45464d",
+                "primary-container": "#131b2e",
+                "surface-container-lowest": "#ffffff",
+                "surface-variant": "#e0e3e5",
+                "on-primary-container": "#7c839b",
+                "error-container": "#ffdad6",
+                "on-secondary-fixed-variant": "#004395",
+                "surface-container-low": "#f2f4f6",
+                "primary": "#000000",
+                "on-tertiary-fixed": "#07006c",
+                "tertiary": "#000000",
+                "surface-bright": "#f7f9fb",
+                "outline-variant": "#c6c6cd",
+                "on-secondary-fixed": "#001a42",
+                "on-tertiary": "#ffffff",
+                "surface": "#f7f9fb",
+                "primary-fixed": "#dae2fd",
+                "secondary-fixed": "#d8e2ff",
+                "surface-dim": "#d8dadc",
+                "inverse-primary": "#bec6e0",
+                "tertiary-fixed-dim": "#c0c1ff",
+                "on-background": "#191c1e",
+                "on-tertiary-fixed-variant": "#2f2ebe",
+                "secondary-fixed-dim": "#adc6ff",
+                "inverse-surface": "#2d3133",
+                "secondary": "#0058be",
+                "on-secondary": "#ffffff",
+                "error": "#ba1a1a",
+                "background": "#f7f9fb",
+                "surface-container-highest": "#e0e3e5",
+                "surface-container": "#eceef0",
+                "on-error": "#ffffff",
+                "tertiary-container": "#07006c",
+                "inverse-on-surface": "#eff1f3",
+                "on-secondary-container": "#fefcff",
+                "surface-tint": "#565e74",
+                "secondary-container": "#2170e4",
+                "on-primary": "#ffffff",
+                "on-primary-fixed-variant": "#3f465c",
+                "on-error-container": "#93000a",
+                "surface-container-high": "#e6e8ea",
+                "on-tertiary-container": "#7073ff",
+                "primary-fixed-dim": "#bec6e0",
+                "on-surface": "#191c1e"
+            },
+            borderRadius: {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            spacing: {
+                "base": "8px",
+                "section-margin": "32px",
+                "element-gap": "16px",
+                "max-width": "600px",
+                "container-padding": "24px"
+            },
+            fontFamily: {
+                "body-md": ["Inter", "sans-serif"],
+                "display-lg": ["Inter", "sans-serif"],
+                "caption": ["Inter", "sans-serif"],
+                "headline-lg": ["Inter", "sans-serif"],
+                "label-md": ["JetBrains Mono", "monospace"],
+                "body-lg": ["Inter", "sans-serif"],
+                "headline-md": ["Inter", "sans-serif"],
+                "headline-lg-mobile": ["Inter", "sans-serif"]
+            },
+            fontSize: {
+                "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                "caption": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+                "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "500" }],
+                "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "600" }]
+            },
+            boxShadow: {
+              'level-1': '0 4px 16px 0 rgba(0, 0, 0, 0.04)',
+              'level-2': '0 12px 32px 0 rgba(0, 0, 0, 0.08)',
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[style*="FILL' 1"] {
+          font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Hide scrollbar for cleaner UI on webkit */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent; 
+        }
+
+        /* Essential utility for backdrop blur consistency */
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased pb-24 md:pb-0 pt-16 selection:bg-secondary-container selection:text-on-secondary-container min-h-screen">
+<!-- TopAppBar from JSON -->
+<header class="fixed top-0 w-full z-50 glass-nav shadow-sm flex justify-between items-center px-container-padding h-16 max-w-max-width mx-auto bg-surface/70 border-none">
+<div class="flex items-center gap-element-gap hover:opacity-80 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-primary" data-icon="smart_toy">smart_toy</span>
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">AutomateAI</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform duration-200 text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="active:scale-95 transition-transform duration-200 text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="max-w-max-width mx-auto px-container-padding py-section-margin md:mt-8 space-y-section-margin">
+<!-- Header Section -->
+<section class="space-y-base">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-background">Business Profile</h1>
+<p class="text-on-surface-variant font-body-md text-body-md">Configure your local Lagos business details. This information directly trains your AI assistant to quote correct prices and locations to customers.</p>
+</section>
+<!-- Business Identity Card (Glassmorphism / High-end UI) -->
+<section class="bg-surface-container-lowest rounded-xl shadow-level-1 p-container-padding space-y-6 relative overflow-hidden">
+<!-- Subtle AI background accent -->
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary-fixed-dim opacity-30 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex items-start gap-element-gap">
+<div class="w-16 h-16 rounded-full bg-surface-container overflow-hidden shrink-0 shadow-sm border border-outline-variant/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-outline" data-icon="storefront" style="font-size: 32px;">storefront</span>
+</div>
+<div class="flex-1 space-y-3">
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-1">Business Name</label>
+<input class="w-full bg-surface-container-low border border-transparent focus:border-secondary focus:ring-1 focus:ring-secondary rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface placeholder:text-outline transition-all" placeholder="Enter business name" type="text" value="Mama K's Salon &amp; Spa"/>
+</div>
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-1">Business Category</label>
+<select class="w-full bg-surface-container-low border border-transparent focus:border-secondary focus:ring-1 focus:ring-secondary rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface transition-all appearance-none">
+<option>Beauty &amp; Salon</option>
+<option>Food &amp; Restaurant (Buka)</option>
+<option>Retail &amp; Boutique</option>
+<option>Professional Services</option>
+</select>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-surface-variant">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-headline-md text-headline-md">Instagram Integration</p>
+<p class="font-caption text-caption text-on-surface-variant">Sync DMs and posts for automated replies.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 bg-surface-container-low px-3 py-1 rounded-full font-label-md text-label-md text-outline">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                            Disconnected
+                        </span>
+<button class="bg-surface-container-highest hover:bg-surface-variant text-on-surface font-body-md text-body-md px-4 py-2 rounded-lg transition-colors active:scale-95 duration-200">
+                            Connect
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Location Profile (Lagos Specific) -->
+<section class="bg-surface-container-lowest rounded-xl shadow-level-1 overflow-hidden">
+<div class="p-container-padding space-y-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="location_on">location_on</span>
+<h2 class="font-headline-md text-headline-md">Operating Locations</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-element-gap">
+<div class="space-y-4">
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-1">Primary District</label>
+<select class="w-full bg-surface-container-low border border-transparent focus:border-secondary focus:ring-1 focus:ring-secondary rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface transition-all appearance-none">
+<option>Ikeja</option>
+<option>Victoria Island (VI)</option>
+<option>Lekki Phase 1</option>
+<option>Yaba</option>
+<option>Surulere</option>
+<option>Festac Town</option>
+<option>Ikoyi</option>
+</select>
+</div>
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-1">Delivery/Service Radius</label>
+<div class="flex items-center gap-4">
+<input class="w-full accent-secondary" max="50" min="1" type="range" value="15"/>
+<span class="font-label-md text-label-md text-on-surface whitespace-nowrap bg-surface-container-low px-2 py-1 rounded">15 km</span>
+</div>
+</div>
+</div>
+<!-- Map visualization container -->
+<div class="relative w-full h-32 md:h-auto rounded-lg overflow-hidden bg-surface-container flex items-center justify-center border border-outline-variant/20">
+<img class="absolute inset-0 w-full h-full object-cover opacity-80" data-alt="A stylized, modern light-mode map visualization of Lagos, Nigeria, highlighting districts like Ikeja and Lekki. The map uses a minimalist corporate aesthetic with soft white and light gray tones, accented by subtle deep navy and electric blue pins. The style is clean, technical, and highly organized, suitable for a premium enterprise dashboard." data-location="Lagos, Nigeria" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMAwzOoru-OVjX7W6ILhKcEXdXPi86Suk8PZyVhtb0Ce8uCzEs4J65oU6ORcR7fh44yyZuVQ-_yFSXYYC9PInczBCAin1HJa2oxvRrn7kftH1Zx6GnFFAgn8kLDEpQ9ES9mQBEPnwG6xqU4RmvnwSCzZqagcd5yOowwoFdaMfrKeykH947kXNwoA11G1R2s7-OwQczk18FdcOEXExaxDYQjFUdq1TfVO2ErvbwzmwP314hegBARvWIfw"/>
+<!-- Map overlay gradient to ensure text readability if needed -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/80 to-transparent"></div>
+<div class="absolute bottom-2 left-2 flex gap-1">
+<span class="bg-surface-container-lowest/90 px-2 py-0.5 rounded font-caption text-caption text-on-surface shadow-sm border border-outline-variant/20">Ikeja HQ</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Service & Pricing Menu (AI Insight Border Pattern) -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="receipt_long">receipt_long</span>
+                        Service Menu
+                    </h2>
+<p class="font-caption text-caption text-on-surface-variant">The AI bot will use these exact prices when quoting customers.</p>
+</div>
+<button class="flex items-center gap-1 text-secondary hover:text-on-secondary-fixed-variant transition-colors font-body-md text-body-md active:scale-95 duration-200">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span> Item
+                </button>
+</div>
+<!-- Bento Grid style list -->
+<div class="grid grid-cols-1 gap-3">
+<!-- Item 1 (AI Insight Border) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-4 flex items-center gap-4 border-l-2 border-secondary relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-r from-secondary-fixed/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+<div class="flex-1 grid grid-cols-12 gap-4 items-center">
+<div class="col-span-12 sm:col-span-6">
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 font-body-md text-body-md text-on-surface font-medium" placeholder="Service Name" type="text" value="Wash &amp; Set (Natural Hair)"/>
+</div>
+<div class="col-span-8 sm:col-span-4 flex items-center">
+<span class="text-on-surface-variant font-label-md text-label-md pr-2">₦</span>
+<input class="w-full bg-surface-container-low border-none focus:ring-1 focus:ring-secondary rounded px-2 py-1 font-label-md text-label-md text-on-surface" placeholder="0.00" type="number" value="8500"/>
+</div>
+<div class="col-span-4 sm:col-span-2 flex justify-end">
+<button class="text-outline hover:text-error transition-colors p-1">
+<span class="material-symbols-outlined" data-icon="delete" style="font-size: 20px;">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-4 flex items-center gap-4 border border-surface-variant relative overflow-hidden group">
+<div class="flex-1 grid grid-cols-12 gap-4 items-center">
+<div class="col-span-12 sm:col-span-6">
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 font-body-md text-body-md text-on-surface font-medium" placeholder="Service Name" type="text" value="Braids (Knotless - Mid Back)"/>
+</div>
+<div class="col-span-8 sm:col-span-4 flex items-center">
+<span class="text-on-surface-variant font-label-md text-label-md pr-2">₦</span>
+<input class="w-full bg-surface-container-low border-none focus:ring-1 focus:ring-secondary rounded px-2 py-1 font-label-md text-label-md text-on-surface" placeholder="0.00" type="number" value="25000"/>
+</div>
+<div class="col-span-4 sm:col-span-2 flex justify-end">
+<button class="text-outline hover:text-error transition-colors p-1">
+<span class="material-symbols-outlined" data-icon="delete" style="font-size: 20px;">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 3 (Example of food biz) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-4 flex items-center gap-4 border border-surface-variant relative overflow-hidden group opacity-60">
+<div class="flex-1 grid grid-cols-12 gap-4 items-center">
+<div class="col-span-12 sm:col-span-6">
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 font-body-md text-body-md text-on-surface font-medium" placeholder="New Service (e.g., Jollof Rice - Large)" type="text" value=""/>
+</div>
+<div class="col-span-8 sm:col-span-4 flex items-center">
+<span class="text-on-surface-variant font-label-md text-label-md pr-2">₦</span>
+<input class="w-full bg-surface-container-low border-none focus:ring-1 focus:ring-secondary rounded px-2 py-1 font-label-md text-label-md text-on-surface" placeholder="Price" type="number" value=""/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Save Actions -->
+<section class="flex flex-col sm:flex-row gap-4 pt-4 border-t border-surface-variant">
+<button class="flex-1 bg-primary text-on-primary font-body-md text-body-md font-medium py-3 px-6 rounded-[24px] shadow-sm hover:opacity-90 active:scale-[0.98] transition-all duration-200 flex justify-center items-center gap-2 relative overflow-hidden">
+<div class="absolute inset-0 bg-white/10 rounded-full blur-[2px] opacity-0 hover:opacity-100 transition-opacity pointer-events-none"></div>
+<span class="material-symbols-outlined text-sm" data-icon="save">save</span>
+                Save Profile
+            </button>
+<button class="flex-1 bg-surface-container-lowest border border-outline-variant text-primary font-body-md text-body-md font-medium py-3 px-6 rounded-[24px] hover:bg-surface-container-low active:scale-[0.98] transition-all duration-200 flex justify-center items-center">
+                Cancel
+            </button>
+</section>
+</main>
+<!-- BottomNavBar from JSON (Mobile Only) -->
+<!-- Logic: Screen is "Business Profile" -> closest match is "Settings" -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 glass-nav shadow-lg bg-surface/70 border-none px-4 py-3 pb-safe flex justify-around items-center">
+<!-- Hub (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md mt-1 text-[10px]">Hub</span>
+</a>
+<!-- Chatbots (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-label-md text-label-md mt-1 text-[10px]">Chatbots</span>
+</a>
+<!-- Invoices (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md mt-1 text-[10px]">Invoices</span>
+</a>
+<!-- Settings (Active Match for Profile) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-md text-label-md mt-1 text-[10px]">Settings</span>
+</a>
+</nav>
+</body></html>

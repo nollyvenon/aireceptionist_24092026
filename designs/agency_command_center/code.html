@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Agency Command Center - Dashboard</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed": "#d8e2ff",
+                      "inverse-on-surface": "#eff1f3",
+                      "on-primary-fixed": "#131b2e",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "surface": "#f7f9fb",
+                      "outline-variant": "#c6c6cd",
+                      "surface-container-low": "#f2f4f6",
+                      "surface-container-highest": "#e0e3e5",
+                      "inverse-surface": "#2d3133",
+                      "tertiary-fixed-dim": "#c0c1ff",
+                      "inverse-primary": "#bec6e0",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "primary-fixed-dim": "#bec6e0",
+                      "outline": "#76777d",
+                      "on-secondary": "#ffffff",
+                      "surface-container": "#eceef0",
+                      "on-error": "#ffffff",
+                      "surface-dim": "#d8dadc",
+                      "on-primary-container": "#7c839b",
+                      "error": "#ba1a1a",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed": "#e1e0ff",
+                      "tertiary-container": "#07006c",
+                      "surface-container-high": "#e6e8ea",
+                      "primary-container": "#131b2e",
+                      "on-tertiary-fixed": "#07006c",
+                      "surface-tint": "#565e74",
+                      "on-secondary-fixed-variant": "#004395",
+                      "on-secondary-container": "#fefcff",
+                      "surface-bright": "#f7f9fb",
+                      "on-surface": "#191c1e",
+                      "tertiary": "#000000",
+                      "primary": "#000000",
+                      "on-background": "#191c1e",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-container": "#7073ff",
+                      "background": "#f7f9fb",
+                      "secondary-container": "#2170e4",
+                      "surface-variant": "#e0e3e5",
+                      "error-container": "#ffdad6",
+                      "primary-fixed": "#dae2fd",
+                      "on-surface-variant": "#45464d",
+                      "secondary": "#0058be",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#2f2ebe",
+                      "on-secondary-fixed": "#001a42"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "24px",
+                      "max-width": "600px",
+                      "element-gap": "16px",
+                      "section-margin": "32px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          }
+        }
+      </script>
+<style>
+        body {
+            background-color: #F1F5F9;
+        }
+        
+        .shadow-level-1 {
+            box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.04);
+        }
+        
+        .shadow-level-2 {
+            box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="bg-surface dark:bg-inverse-surface h-screen w-64 fixed left-0 top-0 bg-surface-container dark:bg-surface-container-low shadow-sm shadow-sm flex flex-col h-full py-6 px-4 z-50">
+<!-- Brand -->
+<div class="mb-section-margin flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-md font-bold shadow-level-1">
+                A
+            </div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary leading-tight">AI Automate Pro</h1>
+<p class="font-caption text-caption text-on-surface-variant">Enterprise Lead</p>
+</div>
+</div>
+<!-- Links -->
+<div class="flex-1 flex flex-col gap-2">
+<!-- Active: Dashboard -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-surface-container text-secondary dark:text-secondary-fixed-dim font-bold border-r-4 border-secondary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span>Clients</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span>Automation Health</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span>Revenue</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span>Integrations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<!-- CTA -->
+<div class="mt-auto">
+<button class="w-full bg-primary text-on-primary py-3 px-4 rounded-[24px] font-label-md text-label-md hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-level-1 flex items-center justify-center gap-2 active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Add New Client
+            </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface/70 dark:bg-inverse-surface/70 backdrop-blur-xl docked full-width top-0 sticky z-40 bg-surface/70 dark:bg-inverse-surface/70 flat no shadows flex justify-between items-center w-full px-8 h-16">
+<div class="font-headline-md text-headline-md font-extrabold text-on-surface dark:text-inverse-on-surface">
+                Agency Command Center
+            </div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-6 font-label-md text-label-md">
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-inverse-primary transition-all duration-200 ease-in-out" href="#">Portfolio</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-inverse-primary transition-all duration-200 ease-in-out" href="#">Analytics</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-inverse-primary transition-all duration-200 ease-in-out" href="#">Reports</a>
+</nav>
+<div class="flex items-center gap-4 border-l border-outline-variant pl-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden shadow-sm">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a female executive in a modern, well-lit office environment. She is wearing a dark navy blazer and has a subtle, confident smile. The background is slightly blurred, featuring glass walls and minimal high-tech decor. High key lighting, 8k resolution, photorealistic corporate style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2XTxxpJ4eQapX_Of1wwD8ArGQ7XSQU7ofL7q5zsRZlQxNNV8E0SwT6u_BXY94nEbz5Nmm-5KAZwU6qGLohE5b0KHGvB34NJgWnnW40uwPshd5NMxxXNaY_HgeJqLw8tOUmZe5HxIu9Uge8PgkMADf97JkpEt8By41KCSgZKP44hoAGDFz8k52STinfQEd4qd5VTpk9Aa2_Tncm5lxVl9rX4O4DOYa-2QbONAaE2IXNEwDA3i9x35iUA"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-8 max-w-7xl mx-auto w-full flex-1">
+<div class="mb-section-margin flex justify-between items-end">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-2">Overview</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Real-time performance metrics across all client accounts.</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-surface-container text-on-surface px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                        Last 30 Days
+                    </button>
+<button class="bg-surface-container text-on-surface px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        Filter
+                    </button>
+</div>
+</div>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-element-gap mb-section-margin">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 shadow-level-1 flex flex-col justify-between border-l-2 border-secondary relative overflow-hidden group">
+<div class="absolute -right-6 -top-6 w-24 h-24 bg-secondary/5 rounded-full blur-xl group-hover:bg-secondary/10 transition-colors"></div>
+<div class="flex items-center gap-3 text-on-surface-variant mb-4">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md uppercase tracking-wider">Total Clients</span>
+</div>
+<div class="flex items-baseline gap-3">
+<span class="font-display-lg text-display-lg text-on-surface">12</span>
+<span class="font-caption text-caption text-secondary flex items-center bg-secondary/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+                            2 new this month
+                        </span>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 shadow-level-1 flex flex-col justify-between border-l-2 border-[#00d084] relative overflow-hidden group">
+<div class="absolute -right-6 -top-6 w-24 h-24 bg-[#00d084]/5 rounded-full blur-xl group-hover:bg-[#00d084]/10 transition-colors"></div>
+<div class="flex items-center gap-3 text-on-surface-variant mb-4">
+<span class="material-symbols-outlined">attach_money</span>
+<span class="font-label-md text-label-md uppercase tracking-wider">Total Revenue</span>
+</div>
+<div class="flex items-baseline gap-3">
+<span class="font-display-lg text-display-lg text-on-surface">$2,400</span>
+<span class="font-caption text-caption text-[#00d084] flex items-center bg-[#00d084]/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+                            +15% MRR
+                        </span>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 shadow-level-1 flex flex-col justify-between border-l-2 border-[#8b5cf6] relative overflow-hidden group">
+<div class="absolute -right-6 -top-6 w-24 h-24 bg-[#8b5cf6]/5 rounded-full blur-xl group-hover:bg-[#8b5cf6]/10 transition-colors"></div>
+<div class="flex items-center gap-3 text-on-surface-variant mb-4">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-label-md text-label-md uppercase tracking-wider">Auto Success</span>
+</div>
+<div class="flex items-baseline gap-3">
+<span class="font-display-lg text-display-lg text-on-surface">98%</span>
+<span class="font-caption text-caption text-on-surface-variant">
+                            Across 1.2k tasks
+                        </span>
+</div>
+<!-- Mini progress bar -->
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-4 overflow-hidden">
+<div class="bg-[#8b5cf6] h-full w-[98%] rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Active Clients Table Card -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-1 overflow-hidden">
+<div class="px-6 py-5 border-b border-surface-container flex justify-between items-center bg-surface/50 backdrop-blur-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Active Client Roster</h3>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface border border-surface-container rounded-lg font-body-md text-body-md focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all w-64" placeholder="Search clients..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-label-md text-label-md text-on-surface-variant border-b border-surface-container">
+<th class="px-6 py-4 font-medium">Client Name</th>
+<th class="px-6 py-4 font-medium">MRR</th>
+<th class="px-6 py-4 font-medium">Active Bots</th>
+<th class="px-6 py-4 font-medium">Pending Invoices</th>
+<th class="px-6 py-4 font-medium">Status</th>
+<th class="px-6 py-4 font-medium text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-md text-body-md">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest/50 transition-colors group cursor-pointer">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary font-bold shadow-sm">
+                                            M
+                                        </div>
+<div>
+<div class="font-semibold text-on-surface">Mama K's Salon</div>
+<div class="text-caption text-on-surface-variant">Beauty &amp; Wellness</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-medium">$850</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#8b5cf6] text-[18px]">smart_toy</span>
+                                        3 Active
+                                    </div>
+</td>
+<td class="px-6 py-4">
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-md text-[12px] flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                                        1 Overdue ($250)
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<span class="bg-secondary-container/20 text-secondary px-3 py-1 rounded-full font-label-md text-[12px] flex items-center gap-1 w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                        Healthy
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary p-2 rounded-full hover:bg-surface-container transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest/50 transition-colors group cursor-pointer">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary font-bold shadow-sm">
+                                            L
+                                        </div>
+<div>
+<div class="font-semibold text-on-surface">The Lagos Grill</div>
+<div class="text-caption text-on-surface-variant">Hospitality</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-medium">$1,200</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#8b5cf6] text-[18px]">smart_toy</span>
+                                        5 Active
+                                    </div>
+</td>
+<td class="px-6 py-4">
+<span class="text-on-surface-variant text-[14px]">
+                                        None
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<span class="bg-[#00d084]/20 text-[#009e60] px-3 py-1 rounded-full font-label-md text-[12px] flex items-center gap-1 w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-[#009e60]"></span>
+                                        Optimal
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary p-2 rounded-full hover:bg-surface-container transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest/50 transition-colors group cursor-pointer">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary font-bold shadow-sm">
+                                            T
+                                        </div>
+<div>
+<div class="font-semibold text-on-surface">TechCorp Inc.</div>
+<div class="text-caption text-on-surface-variant">B2B Software</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-medium">$350</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline-variant text-[18px]">smart_toy</span>
+                                        1 Paused
+                                    </div>
+</td>
+<td class="px-6 py-4">
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full font-label-md text-[12px] flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                                        1 Upcoming ($350)
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full font-label-md text-[12px] flex items-center gap-1 w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                                        Review Needed
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary p-2 rounded-full hover:bg-surface-container transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-surface-container bg-surface-container-lowest flex justify-center">
+<button class="text-secondary font-label-md text-label-md hover:underline">View All 12 Clients</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>
