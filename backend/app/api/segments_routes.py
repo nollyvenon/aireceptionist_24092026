@@ -8,18 +8,10 @@ from database import get_db
 from app.models.advanced import CustomerSegment
 from app.models.user import User
 from app.services.auth_service import AuthService
+from app.middleware.auth import get_current_user
 from app.services.user_service import UserService
 
 router = APIRouter(prefix="/api/v1/customer-segments", tags=["segments"])
-
-def get_current_user(token: str = Query(...), db: Session = Depends(get_db)) -> User:
-    token_data = AuthService.verify_token(token)
-    if not token_data:
-        raise HTTPException(status_code=401, detail="Invalid token")
-    user = UserService.get_user(token_data.user_id, db)
-    if not user:
-        raise HTTPException(status_code=401, detail="User not found")
-    return user
 
 @router.get("")
 async def list_segments(

@@ -7,29 +7,17 @@ from typing import List
 
 from database import get_db
 from app.services.ai_service import AIReceptionistService
+from app.middleware.auth import get_current_user
 from app.services.auth_service import AuthService
 
 router = APIRouter(prefix="/api/v1/ai", tags=["ai"])
-
-def get_current_org(token: str = Query(...), db: Session = Depends(get_db)):
-    """Get current organization"""
-    token_data = AuthService.verify_token(token)
-    if not token_data:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
-    from app.services.user_service import UserService
-    user = UserService.get_user(token_data.user_id, db)
-    if not user:
-        raise HTTPException(status_code=401, detail="User not found")
-
-    return user
 
 @router.post("/message")
 async def process_message(
     customer_id: UUID,
     message: str = Query(...),
     conversation_history: List[dict] = [],
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Process customer message with AI"""
@@ -47,7 +35,7 @@ async def process_message(
 @router.get("/availability")
 async def get_available_appointments(
     customer_id: UUID,
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Get available appointments for customer"""
@@ -61,7 +49,7 @@ async def get_available_appointments(
 @router.post("/voice/initiate")
 async def initiate_voice_call(
     customer_phone: str = Query(...),
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Initiate voice call with AI"""
@@ -75,7 +63,7 @@ async def initiate_voice_call(
 @router.post("/chat/start")
 async def start_chat(
     customer_id: UUID,
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Start chat session"""
@@ -87,7 +75,7 @@ async def start_chat(
 
 @router.get("/health")
 async def ai_health(
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Check AI service health"""

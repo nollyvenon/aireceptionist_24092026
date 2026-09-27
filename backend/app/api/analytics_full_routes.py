@@ -10,19 +10,11 @@ from app.models.payment import Payment, PaymentStatus
 from app.models.crm import Lead, Deal
 from app.models.communication import Call
 from app.services.auth_service import AuthService
+from app.middleware.auth import get_current_user
 from app.services.user_service import UserService
 from database import get_db
 
 router = APIRouter(prefix="/api/v1/analytics", tags=["analytics"])
-
-def get_current_user(token: str = Query(...), db: Session = Depends(get_db)) -> User:
-    token_data = AuthService.verify_token(token)
-    if not token_data:
-        raise HTTPException(status_code=401, detail="Invalid token")
-    user = UserService.get_user(token_data.user_id, db)
-    if not user:
-        raise HTTPException(status_code=401, detail="User not found")
-    return user
 
 @router.get("/revenue")
 async def get_revenue_analytics(
