@@ -106,13 +106,13 @@ async def list_payments(
     limit: int = 50,
     status: str = None,
     customer_id: str = None,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """List payments with optional status filtering"""
-    query = db.query(Payment).filter(
-        Payment.organization_id == current_user.get("organization_id")
-    )
+    org_id = current_user.organization_id if hasattr(current_user, 'organization_id') else current_user.get("organization_id")
+    query = db.query(Payment).filter(Payment.organization_id == org_id)
+
     if status:
         query = query.filter(Payment.status == PaymentStatus(status))
     if customer_id:
