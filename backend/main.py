@@ -21,7 +21,8 @@ from app.api import (
     messaging_routes, ai_receptionist_routes, marketplace_routes, admin_routes,
     leads_routes, contacts_routes, deals_routes, calls_routes, voicemail_routes,
     audit_routes, feature_flags_routes, security_routes, compliance_routes,
-    backup_routes, custom_fields_routes, segments_routes, documents_routes
+    backup_routes, custom_fields_routes, segments_routes, documents_routes,
+    system_routes, feedback_routes, referrals_routes
 )
 
 logging.basicConfig(
@@ -116,6 +117,9 @@ app.include_router(backup_routes.router)
 app.include_router(custom_fields_routes.router)
 app.include_router(segments_routes.router)
 app.include_router(documents_routes.router)
+app.include_router(system_routes.router)
+app.include_router(feedback_routes.router)
+app.include_router(referrals_routes.router)
 
 # Error handlers
 @app.exception_handler(HTTPException)
