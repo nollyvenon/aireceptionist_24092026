@@ -41,7 +41,8 @@ async def get_current_user(
             detail="Invalid token"
         )
 
-    user = UserService.get_user(token_data.user_id, db)
+    from uuid import UUID
+    user = UserService.get_user(UUID(token_data.user_id), db)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
