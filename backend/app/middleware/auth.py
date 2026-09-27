@@ -1,6 +1,6 @@
 """Authentication utilities"""
 
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -8,19 +8,32 @@ from app.services.auth_service import AuthService
 from app.services.user_service import UserService
 
 
-async def get_current_user(token: str, db: Session = Depends(get_db)):
-    """Get current user from token"""
-    if not token:
+async def get_current_user(
+    authorization: str = Header(None),
+    token: str = None,
+    db: Session = Depends(get_db)
+):
+    """Get current user from token in Authorization header or query parameter"""
+    auth_token = None
+
+    # Try to get token from Authorization header first
+    if authorization:
+        if authorization.startswith("Bearer "):
+            auth_token = authorization[7:]
+        else:
+            auth_token = authorization
+
+    # Fall back to token query parameter
+    if not auth_token and token:
+        auth_token = token
+
+    if not auth_token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="No token provided"
         )
 
-    # Remove "Bearer " prefix if present
-    if token.startswith("Bearer "):
-        token = token[7:]
-
-    token_data = AuthService.verify_token(token)
+    token_data = AuthService.verify_token(auth_token)
 
     if token_data is None:
         raise HTTPException(

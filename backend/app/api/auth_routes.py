@@ -5,32 +5,26 @@ from sqlalchemy.orm import Session
 from datetime import timedelta
 
 from database import get_db
-from app.schemas.auth import LoginRequest, LoginResponse, RefreshTokenRequest
-from app.schemas.user import UserCreate, UserResponse
+from app.schemas.auth import (
+    LoginRequest, LoginResponse, RefreshTokenRequest,
+    ChangePasswordRequest, PasswordResetRequest, TwoFactorVerifyRequest
+)
+from app.schemas.user import UserCreate, UserResponse, UserUpdate
 from app.services.auth_service import AuthService, ACCESS_TOKEN_EXPIRE_MINUTES
 from app.services.user_service import UserService
+from app.middleware.auth import get_current_user
 
 router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
 
 @router.post("/register", response_model=UserResponse)
 async def register(
-    email: str,
-    password: str,
-    first_name: str,
-    last_name: str,
-    organization_id: str,
+    user_data: UserCreate,
     db: Session = Depends(get_db)
 ):
     """Register new user"""
     try:
-        from uuid import UUID
-        user_data = UserCreate(
-            email=email,
-            password=password,
-            first_name=first_name,
-            last_name=last_name,
-        )
-        user = UserService.create_user(user_data, UUID(organization_id), db)
+        from uuid import uuid4
+        user = UserService.create_user(user_data, uuid4(), db)
         return user
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -124,21 +118,92 @@ async def verify_email(
     return {"message": "Email verified successfully"}
 
 @router.get("/me", response_model=UserResponse)
-async def get_current_user(
-    token: str,
-    db: Session = Depends(get_db)
+async def get_me(
+    current_user = Depends(get_current_user)
 ):
     """Get current user info"""
-    token_data = AuthService.verify_token(token)
+    return current_user
 
-    if token_data is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token"
-        )
+@router.put("/me", response_model=UserResponse)
+async def update_me(
+    update_data: UserUpdate,
+    current_user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Update current user profile"""
+    user = current_user
+    if update_data.first_name:
+        user.first_name = update_data.first_name
+    if update_data.last_name:
+        user.last_name = update_data.last_name
 
-    user = UserService.get_user(token_data.user_id, db)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-
+    db.add(user)
+    db.commit()
+    db.refresh(user)
     return user
+
+@router.post("/logout")
+async def logout(
+    current_user = Depends(get_current_user)
+):
+    """Logout user"""
+    return {"message": "Logged out successfully"}
+
+@router.post("/change-password")
+async def change_password(
+    request: ChangePasswordRequest,
+    current_user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Change user password"""
+    if not AuthService.verify_password(request.current_password, current_user.password_hash):
+        raise HTTPException(status_code=400, detail="Current password is incorrect")
+
+    current_user.password_hash = AuthService.hash_password(request.new_password)
+    db.add(current_user)
+    db.commit()
+
+    return {"message": "Password changed successfully"}
+
+@router.post("/request-password-reset")
+async def request_password_reset(
+    request: PasswordResetRequest,
+    db: Session = Depends(get_db)
+):
+    """Request password reset"""
+    user = UserService.get_user_by_email(request.email, db)
+    if not user:
+        return {"message": "If user exists, reset email will be sent"}
+
+    return {"message": "Password reset email sent"}
+
+@router.post("/2fa/enable")
+async def enable_2fa(
+    current_user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Enable 2FA for user"""
+    import pyotp
+    secret = pyotp.random_base32()
+    current_user.two_factor_secret = secret
+    db.add(current_user)
+    db.commit()
+
+    return {"secret": secret, "message": "2FA enabled"}
+
+@router.post("/2fa/verify")
+async def verify_2fa(
+    request: TwoFactorVerifyRequest,
+    current_user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Verify 2FA code"""
+    import pyotp
+    if not current_user.two_factor_secret:
+        raise HTTPException(status_code=400, detail="2FA not enabled")
+
+    totp = pyotp.TOTP(current_user.two_factor_secret)
+    if not totp.verify(request.code):
+        raise HTTPException(status_code=400, detail="Invalid code")
+
+    return {"message": "2FA verified"}

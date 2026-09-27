@@ -8,21 +8,9 @@ from database import get_db
 from app.schemas.organization import OrganizationCreate, OrganizationUpdate, OrganizationResponse
 from app.services.organization_service import OrganizationService
 from app.services.auth_service import AuthService
+from app.middleware.auth import get_current_user
 
 router = APIRouter(prefix="/api/v1/organizations", tags=["organizations"])
-
-def get_current_user_org(token: str = Query(...), db: Session = Depends(get_db)):
-    """Get current user and their organization"""
-    token_data = AuthService.verify_token(token)
-    if not token_data:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-
-    from app.services.user_service import UserService
-    user = UserService.get_user(token_data.user_id, db)
-    if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
-
-    return user
 
 @router.post("", response_model=OrganizationResponse)
 async def create_organization(
@@ -39,7 +27,7 @@ async def create_organization(
 @router.get("/{org_id}", response_model=OrganizationResponse)
 async def get_organization(
     org_id: UUID,
-    user = Depends(get_current_user_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Get organization details"""
@@ -56,7 +44,7 @@ async def get_organization(
 async def update_organization(
     org_id: UUID,
     org_data: OrganizationUpdate,
-    user = Depends(get_current_user_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Update organization"""
@@ -72,7 +60,7 @@ async def update_organization(
 @router.get("/{org_id}/settings")
 async def get_organization_settings(
     org_id: UUID,
-    user = Depends(get_current_user_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Get organization settings"""
@@ -93,3 +81,67 @@ async def get_organization_settings(
         "business_hours": settings.business_hours,
         "timezone": settings.organization.timezone,
     }
+
+@router.put("/{org_id}/settings")
+async def update_organization_settings(
+    org_id: UUID,
+    settings_data: dict,
+    user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Update organization settings"""
+    if user.organization_id != org_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+
+    try:
+        settings = OrganizationService.update_organization_settings(org_id, settings_data, db)
+        return {"message": "Settings updated"}
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+@router.get("/{org_id}/members")
+async def get_organization_members(
+    org_id: UUID,
+    user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get organization members"""
+    if user.organization_id != org_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+
+    members = OrganizationService.get_organization_members(org_id, db)
+    return {"members": members}
+
+@router.post("/{org_id}/invite")
+async def invite_member(
+    org_id: UUID,
+    invite_data: dict,
+    user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Invite a new member"""
+    if user.organization_id != org_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+
+    try:
+        result = OrganizationService.invite_member(org_id, invite_data.get("email"), invite_data.get("role"), db)
+        return {"message": "Invitation sent"}
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+@router.delete("/{org_id}/members/{member_id}")
+async def remove_member(
+    org_id: UUID,
+    member_id: UUID,
+    user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Remove a member from organization"""
+    if user.organization_id != org_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+
+    try:
+        OrganizationService.remove_member(org_id, member_id, db)
+        return {"message": "Member removed"}
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))

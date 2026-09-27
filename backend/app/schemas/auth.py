@@ -21,3 +21,13 @@ class TokenData(BaseModel):
     organization_id: Optional[str] = None
     email: Optional[str] = None
     scopes: list[str] = []
+
+class ChangePasswordRequest(BaseModel):
+    current_password: str = Field(..., min_length=8)
+    new_password: str = Field(..., min_length=8)
+
+class PasswordResetRequest(BaseModel):
+    email: EmailStr
+
+class TwoFactorVerifyRequest(BaseModel):
+    code: str = Field(..., min_length=6, max_length=6)
