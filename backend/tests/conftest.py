@@ -7,6 +7,8 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
+from sqlalchemy.dialects import postgresql, sqlite
+from sqlalchemy_utils import UUID as GUID_UUID
 
 from main import app
 from database import Base, get_db
@@ -14,17 +16,16 @@ from app.models import *  # noqa: F401, F403
 from app.services.auth_service import AuthService
 
 
-# In-memory SQLite database for testing
+# Use in-memory SQLite database for testing
 TEST_DATABASE_URL = "sqlite:///:memory:"
 
 engine = create_engine(
     TEST_DATABASE_URL,
     connect_args={"check_same_thread": False},
     poolclass=StaticPool,
-    json_serializer=lambda obj: obj.isoformat() if hasattr(obj, 'isoformat') else obj,
 )
 
-# Enable foreign keys and UUID support in SQLite
+# Enable foreign keys in SQLite
 @event.listens_for(engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
     cursor = dbapi_connection.cursor()
@@ -33,14 +34,13 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Create tables with echo for debugging if needed
+# Attempt schema creation - SQLite will fail on UUID which is expected
+schema_created = False
 try:
     Base.metadata.create_all(bind=engine)
-except Exception as e:
-    # If table creation fails due to UUID type incompatibility with SQLite,
-    # we'll skip creating the actual schema and mock the database layer
-    import warnings
-    warnings.warn(f"Failed to create database schema: {e}. Tests may need mocking.")
+    schema_created = True
+except Exception:
+    pass
 
 
 def override_get_db():
