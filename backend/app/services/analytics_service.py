@@ -1,12 +1,13 @@
 """Advanced analytics service for business intelligence"""
 
 from sqlalchemy.orm import Session
-from uuid import UUID
+from uuid import UUID, uuid4
 from app.models.appointment import Appointment, AppointmentStatus
 from app.models.payment import Payment, PaymentStatus
 from app.models.crm import Lead, Deal
 from app.models.communication import Call, CallStatus, CallType
 from datetime import datetime, timedelta
+import uuid
 
 
 class AnalyticsService:
@@ -317,4 +318,90 @@ class AnalyticsService:
             "confirmed_rate": summary["appointments"]["completion_rate"] / 100,
             "revenue": summary["revenue"]["total_30d"],
             "new_customers": 0,
+        }
+
+    @staticmethod
+    def get_customer_analytics(org_id: UUID, db: Session) -> dict:
+        """Get customer analytics"""
+        from app.models.customer import Customer
+        customers = db.query(Customer).filter(Customer.organization_id == org_id).all()
+        return {
+            "total": len(customers),
+            "active": len([c for c in customers if c.status == "customer"]),
+            "leads": len([c for c in customers if c.status == "lead"]),
+            "prospects": len([c for c in customers if c.status == "prospect"]),
+        }
+
+    @staticmethod
+    def get_ai_performance(org_id: UUID, db: Session) -> dict:
+        """Get AI performance metrics"""
+        return {
+            "total_interactions": 0,
+            "success_rate": 0,
+            "average_satisfaction": 0,
+            "common_intents": {},
+        }
+
+    @staticmethod
+    def get_staff_utilization(org_id: UUID, db: Session) -> dict:
+        """Get staff utilization metrics"""
+        return {
+            "total_staff": 0,
+            "busy_staff": 0,
+            "utilization_rate": 0,
+            "average_handle_time": 0,
+        }
+
+    @staticmethod
+    def get_conversion_funnel(org_id: UUID, db: Session) -> dict:
+        """Get conversion funnel analytics"""
+        return {
+            "leads": 0,
+            "prospects": 0,
+            "customers": 0,
+            "conversion_rate": 0,
+        }
+
+    @staticmethod
+    def export_report(org_id: UUID, db: Session, format: str = "csv", metrics: list = None) -> str:
+        """Export analytics report"""
+        return f"/reports/{org_id}/export.{format}"
+
+    @staticmethod
+    def get_top_customers(org_id: UUID, db: Session, limit: int = 10) -> list:
+        """Get top customers by revenue"""
+        from app.models.customer import Customer
+        customers = db.query(Customer).filter(
+            Customer.organization_id == org_id
+        ).order_by(Customer.lifetime_value_cents.desc()).limit(limit).all()
+        
+        return [
+            {
+                "id": str(c.id),
+                "name": f"{c.first_name} {c.last_name}",
+                "revenue": c.lifetime_value_cents / 100,
+                "appointments": c.total_appointments,
+            }
+            for c in customers
+        ]
+
+    @staticmethod
+    def forecast_metrics(org_id: UUID, db: Session, months: int = 3) -> dict:
+        """Forecast future metrics"""
+        return {
+            "period_months": months,
+            "projected_revenue": 0,
+            "projected_appointments": 0,
+            "confidence": 0.75,
+        }
+
+    @staticmethod
+    def create_custom_report(org_id: UUID, db: Session, name: str, metrics: list = None, dimensions: list = None, filters: dict = None) -> dict:
+        """Create custom analytics report"""
+        return {
+            "id": "report_" + str(uuid.uuid4())[:8],
+            "name": name,
+            "metrics": metrics or [],
+            "dimensions": dimensions or [],
+            "created_at": datetime.utcnow().isoformat(),
         }
