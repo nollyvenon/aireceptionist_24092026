@@ -22,7 +22,7 @@ from app.api import (
     leads_routes, contacts_routes, deals_routes, calls_routes, voicemail_routes,
     audit_routes, feature_flags_routes, security_routes, compliance_routes,
     backup_routes, custom_fields_routes, segments_routes, documents_routes,
-    system_routes, feedback_routes, referrals_routes
+    system_routes, feedback_routes, referrals_routes, analytics_full_routes
 )
 
 logging.basicConfig(
@@ -100,6 +100,7 @@ app.include_router(settings_routes.router)
 app.include_router(automation_routes.router)
 app.include_router(activity_routes.router)
 app.include_router(analytics_routes.router)
+app.include_router(analytics_full_routes.router)
 app.include_router(messaging_routes.router)
 app.include_router(ai_receptionist_routes.router)
 app.include_router(marketplace_routes.router)
