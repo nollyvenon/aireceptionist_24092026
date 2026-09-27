@@ -8,27 +8,14 @@ from datetime import datetime, date
 from database import get_db
 from app.schemas.appointment import AppointmentCreate, AppointmentUpdate, AppointmentResponse, AppointmentListResponse
 from app.services.appointment_service import AppointmentService
-from app.services.auth_service import AuthService
+from app.middleware.auth import get_current_user
 
 router = APIRouter(prefix="/api/v1/appointments", tags=["appointments"])
-
-def get_current_org(token: str = Query(...), db: Session = Depends(get_db)):
-    """Get current organization"""
-    token_data = AuthService.verify_token(token)
-    if not token_data:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
-    from app.services.user_service import UserService
-    user = UserService.get_user(token_data.user_id, db)
-    if not user:
-        raise HTTPException(status_code=401, detail="User not found")
-
-    return user
 
 @router.post("", response_model=AppointmentResponse)
 async def create_appointment(
     appointment_data: AppointmentCreate,
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create new appointment"""
@@ -49,7 +36,7 @@ async def list_appointments(
     limit: int = Query(50, ge=1, le=100),
     status: str = Query(None),
     customer_id: UUID = Query(None),
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """List appointments"""
@@ -72,7 +59,7 @@ async def list_appointments(
 @router.get("/{appointment_id}", response_model=AppointmentResponse)
 async def get_appointment(
     appointment_id: UUID,
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Get appointment by ID"""
@@ -87,7 +74,7 @@ async def get_appointment(
 async def update_appointment(
     appointment_id: UUID,
     appointment_data: AppointmentUpdate,
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Update appointment"""
@@ -106,7 +93,7 @@ async def update_appointment(
 async def cancel_appointment(
     appointment_id: UUID,
     cancellation_reason: str = Query(...),
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Cancel appointment"""
@@ -127,7 +114,7 @@ async def get_available_slots(
     assigned_to_id: UUID,
     date: date = Query(...),
     duration_minutes: int = Query(60),
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Get available time slots for a date"""
@@ -144,7 +131,7 @@ async def get_available_slots(
 @router.post("/{appointment_id}/confirm")
 async def confirm_appointment(
     appointment_id: UUID,
-    user = Depends(get_current_org),
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Confirm appointment"""
