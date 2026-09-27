@@ -106,7 +106,7 @@ class FeedbackService:
         ).order_by(Feedback.created_at.desc()).all()
 
     @staticmethod
-    def get_recent_feedback(org_id: UUID, days: int = 30, db: Session) -> list:
+    def get_recent_feedback(org_id: UUID, db: Session, days: int = 30) -> list:
         start_date = datetime.utcnow() - timedelta(days=days)
         return db.query(Feedback).filter(
             Feedback.organization_id == org_id,
@@ -124,14 +124,14 @@ class FeedbackService:
         return feedback
 
     @staticmethod
-    def get_high_ratings(org_id: UUID, min_rating: int = 4, db: Session) -> list:
+    def get_high_ratings(org_id: UUID, db: Session, min_rating: int = 4) -> list:
         return db.query(Feedback).filter(
             Feedback.organization_id == org_id,
             Feedback.rating >= min_rating
         ).order_by(Feedback.created_at.desc()).all()
 
     @staticmethod
-    def get_low_ratings(org_id: UUID, max_rating: int = 2, db: Session) -> list:
+    def get_low_ratings(org_id: UUID, db: Session, max_rating: int = 2) -> list:
         return db.query(Feedback).filter(
             Feedback.organization_id == org_id,
             Feedback.rating <= max_rating

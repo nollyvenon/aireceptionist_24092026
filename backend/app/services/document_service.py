@@ -114,7 +114,7 @@ class DocumentService:
         }
 
     @staticmethod
-    def delete_old_documents(org_id: UUID, days: int = 90, db: Session) -> int:
+    def delete_old_documents(org_id: UUID, db: Session, days: int = 90) -> int:
         from datetime import timedelta
         cutoff_date = datetime.utcnow() - timedelta(days=days)
         query = db.query(Document).filter(

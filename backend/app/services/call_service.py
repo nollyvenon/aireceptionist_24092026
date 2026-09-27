@@ -78,7 +78,7 @@ class CallService:
         ).order_by(Call.created_at.desc()).all()
 
     @staticmethod
-    def get_call_analytics(org_id: UUID, days: int = 30, db: Session) -> dict:
+    def get_call_analytics(org_id: UUID, db: Session, days: int = 30) -> dict:
         start_date = datetime.utcnow() - timedelta(days=days)
         calls = db.query(Call).filter(
             Call.organization_id == org_id,

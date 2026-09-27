@@ -26,9 +26,15 @@ async def list_calls(
     query = db.query(Call).filter(Call.organization_id == current_user.organization_id)
 
     if call_type:
-        query = query.filter(Call.call_type == CallType(call_type))
+        try:
+            query = query.filter(Call.call_type == CallType(call_type))
+        except ValueError:
+            pass
     if status:
-        query = query.filter(Call.status == CallStatus(status))
+        try:
+            query = query.filter(Call.status == CallStatus(status))
+        except ValueError:
+            pass
 
     total = query.count()
     calls = query.order_by(Call.created_at.desc()).offset(skip).limit(limit).all()

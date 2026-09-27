@@ -124,7 +124,7 @@ class ReferralService:
         ).order_by(Referral.created_at.asc()).all()
 
     @staticmethod
-    def get_recent_referrals(org_id: UUID, days: int = 30, db: Session) -> list:
+    def get_recent_referrals(org_id: UUID, db: Session, days: int = 30) -> list:
         start_date = datetime.utcnow() - timedelta(days=days)
         return db.query(Referral).filter(
             Referral.organization_id == org_id,

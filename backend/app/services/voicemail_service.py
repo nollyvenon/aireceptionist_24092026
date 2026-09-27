@@ -95,7 +95,7 @@ class VoicemailService:
         return voicemail
 
     @staticmethod
-    def delete_old_voicemails(org_id: UUID, days: int = 30, db: Session) -> int:
+    def delete_old_voicemails(org_id: UUID, db: Session, days: int = 30) -> int:
         cutoff_date = datetime.utcnow() - timedelta(days=days)
         query = db.query(Voicemail).filter(
             Voicemail.organization_id == org_id,

@@ -80,7 +80,7 @@ class BackupService:
         }
 
     @staticmethod
-    def cleanup_old_backups(org_id: UUID, keep_count: int = 10, db: Session) -> int:
+    def cleanup_old_backups(org_id: UUID, db: Session, keep_count: int = 10) -> int:
         backups = db.query(BackupJob).filter(
             BackupJob.organization_id == org_id,
             BackupJob.status == "completed"

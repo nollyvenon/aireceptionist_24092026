@@ -61,7 +61,7 @@ class AuditService:
         ).order_by(AuditLog.created_at.desc()).all()
 
     @staticmethod
-    def get_audit_summary(org_id: UUID, days: int = 30, db: Session) -> dict:
+    def get_audit_summary(org_id: UUID, db: Session, days: int = 30) -> dict:
         start_date = datetime.utcnow() - timedelta(days=days)
         logs = db.query(AuditLog).filter(
             AuditLog.organization_id == org_id,
@@ -93,7 +93,7 @@ class AuditService:
         return summary
 
     @staticmethod
-    def delete_old_logs(org_id: UUID, days: int = 90, db: Session) -> int:
+    def delete_old_logs(org_id: UUID, db: Session, days: int = 90) -> int:
         cutoff_date = datetime.utcnow() - timedelta(days=days)
         query = db.query(AuditLog).filter(
             AuditLog.organization_id == org_id,
