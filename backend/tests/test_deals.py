@@ -22,7 +22,7 @@ class TestDealsEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert data["total"] == 0
-        assert len(data["data"]) == 0
+        assert len(data["items"]) == 0
 
     def test_list_deals_with_data(self, client, auth_headers, test_deal, test_auth_token):
         """Test listing deals with existing data"""
@@ -185,7 +185,7 @@ class TestDealsEndpoints:
         )
         assert response.status_code == 200
         data = response.json()
-        assert len(data["data"]) <= 10
+        assert len(data["items"]) <= 10
 
     def test_list_deals_by_customer(self, client, auth_headers, test_auth_token, test_deal):
         """Test filtering deals by customer"""

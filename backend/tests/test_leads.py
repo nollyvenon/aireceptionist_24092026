@@ -22,7 +22,7 @@ class TestLeadsEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert data["total"] == 0
-        assert len(data["data"]) == 0
+        assert len(data["items"]) == 0
 
     def test_list_leads_with_data(self, client, auth_headers, test_lead, test_auth_token):
         """Test listing leads with existing data"""
@@ -170,4 +170,4 @@ class TestLeadsEndpoints:
         )
         assert response.status_code == 200
         data = response.json()
-        assert len(data["data"]) <= 10
+        assert len(data["items"]) <= 10

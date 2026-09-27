@@ -19,7 +19,7 @@ class TestPaymentEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert data["total"] == 0
-        assert len(data["data"]) == 0
+        assert len(data["items"]) == 0
 
     def test_list_payments_with_data(self, client, auth_headers, test_payment, test_auth_token):
         """Test listing payments with existing data"""
@@ -151,7 +151,7 @@ class TestPaymentEndpoints:
         )
         assert response.status_code == 200
         data = response.json()
-        assert len(data["data"]) <= 10
+        assert len(data["items"]) <= 10
 
     def test_payment_with_transaction_id(self, client, auth_headers, test_auth_token, test_customer):
         """Test creating payment with transaction ID"""

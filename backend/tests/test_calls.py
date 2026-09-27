@@ -19,7 +19,7 @@ class TestCallsEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert data["total"] == 0
-        assert len(data["data"]) == 0
+        assert len(data["items"]) == 0
 
     def test_list_calls_with_data(self, client, auth_headers, test_call, test_auth_token):
         """Test listing calls with existing data"""
@@ -185,7 +185,7 @@ class TestCallsEndpoints:
         )
         assert response.status_code == 200
         data = response.json()
-        assert len(data["data"]) <= 10
+        assert len(data["items"]) <= 10
 
     def test_call_with_recording_url(self, client, auth_headers, test_auth_token):
         """Test call with recording URL"""

@@ -20,7 +20,7 @@ class TestAppointmentEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert data["total"] == 0
-        assert len(data["data"]) == 0
+        assert len(data["items"]) == 0
 
     def test_list_appointments_with_data(self, client, auth_headers, test_appointment, test_auth_token):
         """Test listing appointments with existing data"""
@@ -188,7 +188,7 @@ class TestAppointmentEndpoints:
         )
         assert response.status_code == 200
         data = response.json()
-        assert len(data["data"]) <= 10
+        assert len(data["items"]) <= 10
 
     def test_appointment_with_notes(self, client, auth_headers, test_auth_token, test_customer):
         """Test creating appointment with notes"""

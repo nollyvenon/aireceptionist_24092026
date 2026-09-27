@@ -19,7 +19,7 @@ class TestVoicemailEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert data["total"] == 0
-        assert len(data["data"]) == 0
+        assert len(data["items"]) == 0
 
     def test_list_voicemails_with_data(self, client, auth_headers, test_voicemail, test_auth_token):
         """Test listing voicemails with existing data"""
@@ -159,7 +159,7 @@ class TestVoicemailEndpoints:
         )
         assert response.status_code == 200
         data = response.json()
-        assert len(data["data"]) <= 10
+        assert len(data["items"]) <= 10
 
         # Second page
         response = client.get(
@@ -169,7 +169,7 @@ class TestVoicemailEndpoints:
         )
         assert response.status_code == 200
         data = response.json()
-        assert len(data["data"]) <= 10
+        assert len(data["items"]) <= 10
 
     def test_list_voicemails_by_caller(self, client, auth_headers, test_auth_token, test_voicemail):
         """Test filtering voicemails by caller number"""

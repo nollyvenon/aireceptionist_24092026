@@ -19,7 +19,7 @@ class TestCustomerEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert data["total"] == 0
-        assert len(data["data"]) == 0
+        assert len(data["items"]) == 0
 
     def test_list_customers_with_data(self, client, auth_headers, test_customer, test_auth_token):
         """Test listing customers with existing data"""
@@ -133,7 +133,7 @@ class TestCustomerEndpoints:
         )
         assert response.status_code == 200
         data = response.json()
-        assert len(data["data"]) <= 10
+        assert len(data["items"]) <= 10
 
     def test_search_customers_by_email(self, client, auth_headers, test_auth_token, test_customer):
         """Test searching customers by email"""

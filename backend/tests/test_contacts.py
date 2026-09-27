@@ -25,7 +25,7 @@ class TestContactEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert data["total"] == 0
-        assert len(data["data"]) == 0
+        assert len(data["items"]) == 0
 
     def test_list_contacts_with_data(
         self,
@@ -43,7 +43,7 @@ class TestContactEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert data["total"] >= 1
-        assert len(data["data"]) >= 1
+        assert len(data["items"]) >= 1
 
     def test_create_contact(self, client: TestClient, auth_headers: dict, test_auth_token: str, test_customer, test_organization):
         """Test creating a new contact"""
@@ -143,7 +143,7 @@ class TestContactEndpoints:
         )
         assert response.status_code == 200
         data = response.json()
-        assert all(c["id"] for c in data["data"])
+        assert all(c["id"] for c in data["items"])
 
     def test_contact_isolation_by_organization(self, client: TestClient, db: Session, test_contact, test_user, test_auth_token: str):
         """Test that contacts are isolated by organization"""
@@ -177,7 +177,7 @@ class TestContactEndpoints:
         )
         assert response.status_code == 200
         data = response.json()
-        assert len(data["data"]) <= 10
+        assert len(data["items"]) <= 10
 
         # Get second page
         response = client.get(
@@ -187,4 +187,4 @@ class TestContactEndpoints:
         )
         assert response.status_code == 200
         data = response.json()
-        assert len(data["data"]) <= 10
+        assert len(data["items"]) <= 10
