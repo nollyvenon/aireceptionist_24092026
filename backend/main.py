@@ -18,7 +18,9 @@ from app.middleware.logging import LoggingMiddleware
 from app.api import (
     auth_routes, customer_routes, appointment_routes, payment_routes, ai_routes,
     organization_routes, settings_routes, automation_routes, activity_routes, analytics_routes,
-    messaging_routes, ai_receptionist_routes, marketplace_routes, admin_routes
+    messaging_routes, ai_receptionist_routes, marketplace_routes, admin_routes,
+    leads_routes, contacts_routes, deals_routes, calls_routes, voicemail_routes,
+    audit_routes, feature_flags_routes
 )
 
 logging.basicConfig(
@@ -100,6 +102,13 @@ app.include_router(messaging_routes.router)
 app.include_router(ai_receptionist_routes.router)
 app.include_router(marketplace_routes.router)
 app.include_router(admin_routes.router)
+app.include_router(leads_routes.router)
+app.include_router(contacts_routes.router)
+app.include_router(deals_routes.router)
+app.include_router(calls_routes.router)
+app.include_router(voicemail_routes.router)
+app.include_router(audit_routes.router)
+app.include_router(feature_flags_routes.router)
 
 # Error handlers
 @app.exception_handler(HTTPException)
