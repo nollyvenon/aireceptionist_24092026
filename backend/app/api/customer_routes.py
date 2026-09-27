@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from uuid import UUID
 
 from database import get_db
+from app.models.customer import Customer
 from app.schemas.customer import CustomerCreate, CustomerUpdate, CustomerResponse, CustomerListResponse
 from app.services.customer_service import CustomerService
 from app.middleware.auth import get_current_user
@@ -29,17 +30,21 @@ async def list_customers(
     skip: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=100),
     status: str = Query(None),
+    email: str = Query(None),
     current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """List customers"""
-    customers, total = CustomerService.list_organization_customers(
-        current_user.organization_id,
-        db,
-        skip=skip,
-        limit=limit,
-        status=status
-    )
+    query = db.query(Customer).filter(Customer.organization_id == current_user.organization_id)
+
+    if status:
+        query = query.filter(Customer.status == status)
+
+    if email:
+        query = query.filter(Customer.email.ilike(f"%{email}%"))
+
+    total = query.count()
+    customers = query.offset(skip).limit(limit).all()
 
     return {
         "items": customers,

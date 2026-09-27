@@ -24,7 +24,7 @@ async def create_payment(
     """Create a payment intent with Stripe"""
     try:
         payment = await payment_service.create_payment_intent(
-            organization_id=current_user.organization_id if hasattr(current_user, "organization_id") else current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             amount_cents=payment_data.amount_cents,
             currency=payment_data.currency,
             payment_method=payment_data.payment_method,
@@ -46,7 +46,7 @@ async def create_paypal_payment(
     """Create a PayPal payment"""
     try:
         payment = await payment_service.create_paypal_payment(
-            organization_id=current_user.organization_id if hasattr(current_user, "organization_id") else current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             amount_cents=payment_data.amount_cents,
             currency=payment_data.currency,
             customer_id=payment_data.customer_id,
@@ -67,7 +67,7 @@ async def create_flutterwave_payment(
     """Create a Flutterwave payment"""
     try:
         payment = await payment_service.create_flutterwave_payment(
-            organization_id=current_user.organization_id if hasattr(current_user, "organization_id") else current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             amount_cents=payment_data.amount_cents,
             currency=payment_data.currency,
             customer_id=payment_data.customer_id,
@@ -88,7 +88,7 @@ async def create_paystack_payment(
     """Create a Paystack payment"""
     try:
         payment = await payment_service.create_paystack_payment(
-            organization_id=current_user.organization_id if hasattr(current_user, "organization_id") else current_user.get("organization_id"),
+            organization_id=current_user.organization_id,
             amount_cents=payment_data.amount_cents,
             currency=payment_data.currency,
             customer_id=payment_data.customer_id,
@@ -110,8 +110,7 @@ async def list_payments(
     db: Session = Depends(get_db)
 ):
     """List payments with optional status filtering"""
-    org_id = current_user.organization_id if hasattr(current_user, 'organization_id') else current_user.organization_id if hasattr(current_user, "organization_id") else current_user.get("organization_id")
-    query = db.query(Payment).filter(Payment.organization_id == org_id)
+    query = db.query(Payment).filter(Payment.organization_id == current_user.organization_id)
 
     if status:
         query = query.filter(Payment.status == PaymentStatus(status))
@@ -149,7 +148,7 @@ async def get_payment(
     """Get payment details by ID"""
     payment = db.query(Payment).filter(
         Payment.id == payment_id,
-        Payment.organization_id == current_user.organization_id if hasattr(current_user, "organization_id") else current_user.get("organization_id")
+        Payment.organization_id == current_user.organization_id
     ).first()
     if not payment:
         raise HTTPException(status_code=404, detail="Payment not found")
@@ -249,6 +248,6 @@ async def payment_analytics(
 ):
     """Get payment analytics summary"""
     return await payment_service.get_analytics(
-        organization_id=current_user.organization_id if hasattr(current_user, "organization_id") else current_user.get("organization_id"),
+        organization_id=current_user.organization_id,
         db=db
     )

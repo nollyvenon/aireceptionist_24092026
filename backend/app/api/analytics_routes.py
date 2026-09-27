@@ -10,11 +10,6 @@ from app.middleware.auth import get_current_user
 router = APIRouter(prefix="/api/v1/analytics", tags=["analytics"])
 analytics_service = AnalyticsService()
 
-def get_org_id(current_user):
-    """Extract organization_id from current_user (User object or dict)"""
-    if hasattr(current_user, 'organization_id'):
-        return current_user.organization_id
-    return current_user.get("organization_id")
 
 @router.get("/dashboard")
 async def get_dashboard_metrics(
@@ -24,7 +19,7 @@ async def get_dashboard_metrics(
     """Get dashboard overview metrics"""
     try:
         metrics = await analytics_service.get_dashboard_metrics(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return metrics
@@ -40,7 +35,7 @@ async def get_revenue_analytics(
     """Get revenue metrics"""
     try:
         revenue = await analytics_service.get_revenue_analytics(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             period=period,
             db=db
         )
@@ -58,7 +53,7 @@ async def get_appointment_analytics(
     """Get appointment statistics"""
     try:
         stats = await analytics_service.get_appointment_analytics(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return stats
@@ -73,7 +68,7 @@ async def get_customer_analytics(
     """Get customer insights"""
     try:
         analytics = await analytics_service.get_customer_analytics(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return analytics
@@ -88,7 +83,7 @@ async def get_leads_analytics(
     """Get lead analytics"""
     try:
         analytics = await analytics_service.get_customer_analytics(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return analytics
@@ -103,7 +98,7 @@ async def get_calls_analytics(
     """Get call analytics"""
     try:
         analytics = await analytics_service.get_customer_analytics(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return analytics
@@ -118,7 +113,7 @@ async def get_performance_metrics(
     """Get performance metrics"""
     try:
         performance = await analytics_service.get_ai_performance(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return performance
@@ -133,7 +128,7 @@ async def get_staff_performance_metrics(
     """Get staff performance metrics"""
     try:
         utilization = await analytics_service.get_staff_utilization(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return utilization
@@ -148,7 +143,7 @@ async def get_conversion_funnel_analytics(
     """Get conversion funnel analytics"""
     try:
         funnel = await analytics_service.get_conversion_funnel(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return funnel
@@ -163,7 +158,7 @@ async def get_crm_pipeline_analytics(
     """Get CRM pipeline analytics"""
     try:
         pipeline = await analytics_service.get_conversion_funnel(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return pipeline
@@ -179,7 +174,7 @@ async def export_analytics_report(
     """Export analytics report"""
     try:
         report_url = await analytics_service.export_report(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             format=format,
             metrics=None,
             db=db
@@ -197,7 +192,7 @@ async def get_top_customers(
     """Get top customers by revenue"""
     try:
         customers = await analytics_service.get_top_customers(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             limit=limit,
             db=db
         )
@@ -213,7 +208,7 @@ async def get_staff_utilization(
     """Get staff utilization rates"""
     try:
         utilization = await analytics_service.get_staff_utilization(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return utilization
@@ -228,7 +223,7 @@ async def get_conversion_funnel(
     """Get conversion funnel metrics"""
     try:
         funnel = await analytics_service.get_conversion_funnel(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return funnel
@@ -244,7 +239,7 @@ async def get_forecast(
     """Forecast future metrics"""
     try:
         forecast = await analytics_service.forecast_metrics(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             months=months,
             db=db
         )
@@ -261,7 +256,7 @@ async def export_report(
     """Export analytics report to CSV/PDF"""
     try:
         report_url = await analytics_service.export_report(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             format=report_config.get("format", "csv"),
             metrics=report_config.get("metrics"),
             db=db
@@ -279,7 +274,7 @@ async def create_custom_report(
     """Create custom analytics report"""
     try:
         report = await analytics_service.create_custom_report(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             name=report_data.get("name"),
             metrics=report_data.get("metrics"),
             dimensions=report_data.get("dimensions"),
@@ -298,7 +293,7 @@ async def get_ai_performance(
     """Get AI receptionist performance metrics"""
     try:
         performance = await analytics_service.get_ai_performance(
-            organization_id=get_org_id(current_user),
+            organization_id=current_user.organization_id,
             db=db
         )
         return performance
