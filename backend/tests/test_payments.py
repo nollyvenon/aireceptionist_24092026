@@ -109,7 +109,7 @@ class TestPaymentEndpoints:
             headers=auth_headers,
             params={
                 "token": test_auth_token,
-                "status": test_payment.status
+                "status": test_payment.status.value
             }
         )
         assert response.status_code == 200

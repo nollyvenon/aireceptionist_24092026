@@ -100,11 +100,12 @@ async def create_paystack_payment(
         raise HTTPException(status_code=400, detail=str(e))
 
 # List payments
-@router.get("/", response_model=list[PaymentResponse])
+@router.get("/")
 async def list_payments(
     skip: int = 0,
     limit: int = 50,
     status: str = None,
+    customer_id: str = None,
     current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
@@ -113,8 +114,30 @@ async def list_payments(
         Payment.organization_id == current_user.get("organization_id")
     )
     if status:
-        query = query.filter(Payment.status == status)
-    return query.offset(skip).limit(limit).all()
+        query = query.filter(Payment.status == PaymentStatus(status))
+    if customer_id:
+        query = query.filter(Payment.customer_id == UUID(customer_id))
+
+    total = query.count()
+    payments = query.offset(skip).limit(limit).all()
+
+    return {
+        "items": [
+            {
+                "id": str(p.id),
+                "amount_cents": p.amount_cents,
+                "currency": p.currency,
+                "status": p.status.value,
+                "payment_method": p.payment_method.value,
+                "created_at": p.created_at.isoformat(),
+                "customer_id": str(p.customer_id),
+            }
+            for p in payments
+        ],
+        "total": total,
+        "skip": skip,
+        "limit": limit,
+    }
 
 # Get payment by ID
 @router.get("/{payment_id}", response_model=PaymentResponse)
