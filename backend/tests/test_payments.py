@@ -3,7 +3,7 @@
 import pytest
 from uuid import uuid4
 
-from app.models.payment import Payment, PaymentStatus
+from app.models.payment import Payment, PaymentStatus, PaymentMethod
 
 
 class TestPaymentEndpoints:
@@ -36,13 +36,12 @@ class TestPaymentEndpoints:
         """Test creating a new payment"""
         payment_data = {
             "customer_id": str(test_customer.id),
-            "amount": 5000.00,
+            "amount_cents": 500000,
             "currency": "USD",
-            "status": "pending",
             "payment_method": "stripe",
             "description": "Monthly subscription",
         }
-        
+
         response = client.post(
             "/api/v1/payments",
             json=payment_data,
@@ -136,10 +135,10 @@ class TestPaymentEndpoints:
             payment = Payment(
                 organization_id=test_organization.id,
                 customer_id=test_customer.id,
-                amount=1000.0 * (i + 1),
+                amount_cents=100000 * (i + 1),
                 currency="USD",
-                status=PaymentStatus.COMPLETED if i % 2 == 0 else PaymentStatus.PENDING,
-                payment_method="stripe",
+                status=PaymentStatus.SUCCEEDED if i % 2 == 0 else PaymentStatus.PENDING,
+                payment_method=PaymentMethod.STRIPE,
             )
             db.add(payment)
         db.commit()
@@ -157,13 +156,11 @@ class TestPaymentEndpoints:
         """Test creating payment with transaction ID"""
         payment_data = {
             "customer_id": str(test_customer.id),
-            "amount": 9999.99,
+            "amount_cents": 999999,
             "currency": "USD",
-            "status": "completed",
             "payment_method": "stripe",
-            "transaction_id": "txn_1234567890",
         }
-        
+
         response = client.post(
             "/api/v1/payments",
             json=payment_data,
