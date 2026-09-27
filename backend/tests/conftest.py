@@ -280,13 +280,13 @@ def test_appointment(db, test_organization, test_customer):
 @pytest.fixture
 def test_payment(db, test_organization, test_customer):
     """Create test payment"""
-    from app.models.payment import Payment, PaymentStatus
+    from app.models.payment import Payment, PaymentStatus, PaymentMethod
     payment = Payment(
         organization_id=test_organization.id,
         customer_id=test_customer.id,
-        amount=1000.0,
-        status=PaymentStatus.COMPLETED,
-        payment_method="stripe",
+        amount_cents=100000,
+        status=PaymentStatus.SUCCEEDED,
+        payment_method=PaymentMethod.STRIPE,
     )
     db.add(payment)
     db.commit()
