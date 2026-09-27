@@ -6,12 +6,12 @@ from uuid import UUID
 from typing import Optional
 
 from database import get_db
-from app.models.communication import Call, CallStatus
+from app.models.communication import Call, CallStatus, CallType
 from app.models.user import User
 from app.services.auth_service import AuthService
 from app.services.user_service import UserService
 
-router = APIRouter(prefix="/api/v1/calls", tags=["calls"])
+router = APIRouter(prefix="/api/v1/communication/calls", tags=["calls"])
 
 def get_current_user(token: str = Query(...), db: Session = Depends(get_db)) -> User:
     token_data = AuthService.verify_token(token)
@@ -22,16 +22,19 @@ def get_current_user(token: str = Query(...), db: Session = Depends(get_db)) -> 
         raise HTTPException(status_code=401, detail="User not found")
     return user
 
-@router.get("/logs")
-async def get_call_logs(
+@router.get("")
+async def list_calls(
     skip: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=100),
+    call_type: Optional[str] = None,
     status: Optional[str] = None,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     query = db.query(Call).filter(Call.organization_id == current_user.organization_id)
 
+    if call_type:
+        query = query.filter(Call.call_type == CallType(call_type))
     if status:
         query = query.filter(Call.status == CallStatus(status))
 
@@ -39,23 +42,28 @@ async def get_call_logs(
     calls = query.order_by(Call.created_at.desc()).offset(skip).limit(limit).all()
 
     return {
-        "data": [
+        "items": [
             {
                 "id": str(c.id),
-                "from": c.from_number,
-                "to": c.to_number,
-                "type": c.call_type.value,
+                "from_number": c.from_number,
+                "to_number": c.to_number,
+                "call_type": c.call_type.value,
                 "status": c.status.value,
                 "duration": c.duration,
+                "recording_url": c.recording_url,
+                "transcript": c.transcript,
+                "notes": c.notes,
                 "created_at": c.created_at.isoformat(),
             }
             for c in calls
         ],
         "total": total,
+        "skip": skip,
+        "limit": limit,
     }
 
-@router.post("/logs")
-async def create_call_log(
+@router.post("")
+async def create_call(
     body: dict,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
@@ -64,7 +72,7 @@ async def create_call_log(
         organization_id=current_user.organization_id,
         from_number=body.get("from_number"),
         to_number=body.get("to_number"),
-        call_type=body.get("call_type"),
+        call_type=CallType(body.get("call_type", "inbound")),
         status=CallStatus(body.get("status", "completed")),
         duration=body.get("duration", 0),
         recording_url=body.get("recording_url"),
@@ -76,27 +84,6 @@ async def create_call_log(
     db.refresh(call)
 
     return {"id": str(call.id)}
-
-@router.get("/summary")
-async def get_call_summary(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    calls = db.query(Call).filter(Call.organization_id == current_user.organization_id).all()
-
-    total = len(calls)
-    completed = len([c for c in calls if c.status == CallStatus.COMPLETED])
-    failed = len([c for c in calls if c.status == CallStatus.FAILED])
-    missed = len([c for c in calls if c.status == CallStatus.MISSED])
-    avg_duration = sum(c.duration for c in calls) / len(calls) if calls else 0
-
-    return {
-        "total": total,
-        "completed": completed,
-        "failed": failed,
-        "missed": missed,
-        "avg_duration": avg_duration,
-    }
 
 @router.get("/{call_id}")
 async def get_call(
@@ -114,9 +101,59 @@ async def get_call(
 
     return {
         "id": str(call.id),
-        "from": call.from_number,
-        "to": call.to_number,
+        "from_number": call.from_number,
+        "to_number": call.to_number,
+        "call_type": call.call_type.value,
+        "status": call.status.value,
         "duration": call.duration,
         "transcript": call.transcript,
         "recording_url": call.recording_url,
+        "notes": call.notes,
+        "created_at": call.created_at.isoformat(),
     }
+
+@router.put("/{call_id}")
+async def update_call(
+    call_id: UUID,
+    body: dict,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    call = db.query(Call).filter(
+        Call.id == call_id,
+        Call.organization_id == current_user.organization_id
+    ).first()
+
+    if not call:
+        raise HTTPException(status_code=404, detail="Call not found")
+
+    if "transcript" in body:
+        call.transcript = body.get("transcript")
+    if "notes" in body:
+        call.notes = body.get("notes")
+    if "status" in body:
+        call.status = CallStatus(body.get("status"))
+
+    db.commit()
+    db.refresh(call)
+
+    return {"id": str(call.id)}
+
+@router.delete("/{call_id}")
+async def delete_call(
+    call_id: UUID,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    call = db.query(Call).filter(
+        Call.id == call_id,
+        Call.organization_id == current_user.organization_id
+    ).first()
+
+    if not call:
+        raise HTTPException(status_code=404, detail="Call not found")
+
+    db.delete(call)
+    db.commit()
+
+    return {"status": "deleted"}

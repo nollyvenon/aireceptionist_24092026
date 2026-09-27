@@ -3,6 +3,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from uuid import UUID
+from typing import Optional
 
 from database import get_db
 from app.models.communication import Voicemail
@@ -10,7 +11,7 @@ from app.models.user import User
 from app.services.auth_service import AuthService
 from app.services.user_service import UserService
 
-router = APIRouter(prefix="/api/v1/voicemail", tags=["voicemail"])
+router = APIRouter(prefix="/api/v1/communication/voicemails", tags=["voicemail"])
 
 def get_current_user(token: str = Query(...), db: Session = Depends(get_db)) -> User:
     token_data = AuthService.verify_token(token)
@@ -25,30 +26,37 @@ def get_current_user(token: str = Query(...), db: Session = Depends(get_db)) -> 
 async def list_voicemails(
     skip: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=100),
-    unread_only: bool = Query(False),
+    is_listened: Optional[bool] = None,
+    caller_number: Optional[str] = None,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     query = db.query(Voicemail).filter(Voicemail.organization_id == current_user.organization_id)
 
-    if unread_only:
-        query = query.filter(Voicemail.is_listened == False)
+    if is_listened is not None:
+        query = query.filter(Voicemail.is_listened == is_listened)
+    if caller_number:
+        query = query.filter(Voicemail.caller_number == caller_number)
 
     total = query.count()
     voicemails = query.order_by(Voicemail.created_at.desc()).offset(skip).limit(limit).all()
 
     return {
-        "data": [
+        "items": [
             {
                 "id": str(v.id),
                 "caller_number": v.caller_number,
                 "duration": v.duration,
+                "audio_url": v.audio_url,
+                "transcript": v.transcript,
                 "is_listened": v.is_listened,
                 "created_at": v.created_at.isoformat(),
             }
             for v in voicemails
         ],
         "total": total,
+        "skip": skip,
+        "limit": limit,
     }
 
 @router.post("")
@@ -91,10 +99,38 @@ async def get_voicemail(
         "audio_url": voicemail.audio_url,
         "transcript": voicemail.transcript,
         "is_listened": voicemail.is_listened,
+        "created_at": voicemail.created_at.isoformat(),
     }
 
-@router.put("/{voicemail_id}/mark-listened")
-async def mark_listened(
+@router.put("/{voicemail_id}")
+async def update_voicemail(
+    voicemail_id: UUID,
+    body: dict,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    voicemail = db.query(Voicemail).filter(
+        Voicemail.id == voicemail_id,
+        Voicemail.organization_id == current_user.organization_id
+    ).first()
+
+    if not voicemail:
+        raise HTTPException(status_code=404, detail="Voicemail not found")
+
+    if "is_listened" in body:
+        voicemail.is_listened = body.get("is_listened")
+    if "transcript" in body:
+        voicemail.transcript = body.get("transcript")
+    if "notes" in body:
+        voicemail.notes = body.get("notes")
+
+    db.commit()
+    db.refresh(voicemail)
+
+    return {"id": str(voicemail.id)}
+
+@router.delete("/{voicemail_id}")
+async def delete_voicemail(
     voicemail_id: UUID,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
@@ -107,26 +143,7 @@ async def mark_listened(
     if not voicemail:
         raise HTTPException(status_code=404, detail="Voicemail not found")
 
-    voicemail.is_listened = True
+    db.delete(voicemail)
     db.commit()
 
-    return {"message": "Voicemail marked as listened"}
-
-@router.get("/summary")
-async def voicemail_summary(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    voicemails = db.query(Voicemail).filter(
-        Voicemail.organization_id == current_user.organization_id
-    ).all()
-
-    total = len(voicemails)
-    unlistened = len([v for v in voicemails if not v.is_listened])
-    total_duration = sum(v.duration for v in voicemails)
-
-    return {
-        "total": total,
-        "unlistened": unlistened,
-        "total_duration": total_duration,
-    }
+    return {"status": "deleted"}
