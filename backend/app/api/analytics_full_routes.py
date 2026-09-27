@@ -26,7 +26,7 @@ async def get_revenue_analytics(
     payments = db.query(Payment).filter(
         Payment.organization_id == current_user.organization_id,
         Payment.created_at >= start_date,
-        Payment.status == PaymentStatus.COMPLETED
+        Payment.status == PaymentStatus.SUCCEEDED
     ).all()
 
     total_revenue = sum(p.amount for p in payments)
@@ -181,7 +181,7 @@ async def get_dashboard_summary(
     payments = db.query(Payment).filter(
         Payment.organization_id == current_user.organization_id,
         Payment.created_at >= start_date,
-        Payment.status == PaymentStatus.COMPLETED
+        Payment.status == PaymentStatus.SUCCEEDED
     ).all()
 
     revenue = sum(p.amount for p in payments)

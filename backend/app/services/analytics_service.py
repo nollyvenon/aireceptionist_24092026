@@ -22,7 +22,7 @@ class AnalyticsService:
         payments = db.query(Payment).filter(
             Payment.organization_id == org_id,
             Payment.created_at >= start_date,
-            Payment.status == PaymentStatus.COMPLETED
+            Payment.status == PaymentStatus.SUCCEEDED
         ).all()
 
         if not payments:
