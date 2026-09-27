@@ -33,7 +33,7 @@ async def list_integrations():
 async def install_integration(
     integration_name: str,
     config: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Install marketplace integration"""
@@ -54,7 +54,7 @@ async def install_integration(
 # List installed integrations
 @router.get("/installed")
 async def list_installed_integrations(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """List installed integrations"""
@@ -66,7 +66,7 @@ async def list_installed_integrations(
 @router.post("/keys")
 async def create_api_key(
     key_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create API key for developers"""
@@ -87,7 +87,7 @@ async def create_api_key(
 # List API keys
 @router.get("/keys")
 async def list_api_keys(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """List API keys"""
@@ -99,7 +99,7 @@ async def list_api_keys(
 @router.post("/webhooks")
 async def create_webhook(
     webhook_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create webhook endpoint"""
@@ -120,7 +120,7 @@ async def create_webhook(
 # List webhooks
 @router.get("/webhooks")
 async def list_webhooks(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """List webhooks"""

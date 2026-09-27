@@ -15,7 +15,7 @@ router = APIRouter(prefix="/api/v1/admin", tags=["admin"])
 # Tenant management
 @router.get("/tenants")
 async def list_tenants(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """List all tenants (admin only)"""
@@ -25,7 +25,7 @@ async def list_tenants(
 async def suspend_tenant(
     tenant_id: UUID,
     reason: str,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """Suspend a tenant (admin only)"""
@@ -44,7 +44,7 @@ async def suspend_tenant(
 # Subscription management
 @router.get("/subscriptions")
 async def list_subscriptions(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """List all subscriptions"""
@@ -54,7 +54,7 @@ async def list_subscriptions(
 async def upgrade_subscription(
     subscription_id: UUID,
     new_plan: str,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """Upgrade subscription"""
@@ -75,7 +75,7 @@ async def upgrade_subscription(
 # System monitoring
 @router.get("/metrics")
 async def get_system_metrics(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """Get system metrics"""
@@ -94,7 +94,7 @@ async def get_system_metrics(
 @router.post("/feature-flags")
 async def create_feature_flag(
     flag_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """Create feature flag"""
@@ -106,7 +106,7 @@ async def create_feature_flag(
 
 @router.get("/feature-flags")
 async def list_feature_flags(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """List all feature flags"""
@@ -123,7 +123,7 @@ async def list_feature_flags(
 async def get_audit_logs(
     skip: int = 0,
     limit: int = 100,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """Get system audit logs"""
@@ -139,7 +139,7 @@ async def get_audit_logs(
 @router.post("/impersonate/{user_id}")
 async def impersonate_user(
     user_id: UUID,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """Impersonate user (admin only)"""
@@ -157,7 +157,7 @@ async def impersonate_user(
 # Health check
 @router.get("/health")
 async def admin_health_check(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """System health check"""
@@ -175,7 +175,7 @@ async def admin_health_check(
 # System settings
 @router.get("/settings")
 async def get_system_settings(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """Get system-wide settings"""
@@ -192,7 +192,7 @@ async def get_system_settings(
 @router.put("/settings")
 async def update_system_settings(
     settings: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(check_admin_role),
 ):
     """Update system settings"""

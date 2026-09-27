@@ -18,7 +18,7 @@ payment_service = PaymentService()
 @router.post("/", response_model=PaymentResponse)
 async def create_payment(
     payment_data: PaymentCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create a payment intent with Stripe"""
@@ -40,7 +40,7 @@ async def create_payment(
 @router.post("/paypal", response_model=PaymentResponse)
 async def create_paypal_payment(
     payment_data: PaymentCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create a PayPal payment"""
@@ -61,7 +61,7 @@ async def create_paypal_payment(
 @router.post("/flutterwave", response_model=PaymentResponse)
 async def create_flutterwave_payment(
     payment_data: PaymentCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create a Flutterwave payment"""
@@ -82,7 +82,7 @@ async def create_flutterwave_payment(
 @router.post("/paystack", response_model=PaymentResponse)
 async def create_paystack_payment(
     payment_data: PaymentCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create a Paystack payment"""
@@ -143,7 +143,7 @@ async def list_payments(
 @router.get("/{payment_id}", response_model=PaymentResponse)
 async def get_payment(
     payment_id: UUID,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Get payment details by ID"""
@@ -159,7 +159,7 @@ async def get_payment(
 @router.post("/{payment_id}/confirm", response_model=PaymentResponse)
 async def confirm_payment(
     payment_id: UUID,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Confirm a payment"""
@@ -174,7 +174,7 @@ async def confirm_payment(
 async def refund_payment(
     payment_id: UUID,
     refund_reason: str,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Process a refund for a payment"""
@@ -212,7 +212,7 @@ async def paypal_webhook(payload: dict, db: Session = Depends(get_db)):
 @router.post("/invoices", response_model=dict)
 async def create_invoice(
     payment_id: UUID,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create an invoice for a payment"""
@@ -227,7 +227,7 @@ async def create_invoice(
 async def apply_coupon(
     coupon_code: str,
     payment_id: UUID,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Apply a coupon to a payment"""
@@ -244,7 +244,7 @@ async def apply_coupon(
 # Payment analytics
 @router.get("/analytics/summary", response_model=dict)
 async def payment_analytics(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Get payment analytics summary"""

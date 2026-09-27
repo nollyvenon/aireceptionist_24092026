@@ -18,7 +18,7 @@ email_service = EmailService()
 @router.post("/sms/send")
 async def send_sms(
     message_data: MessageCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Send SMS message"""
@@ -36,7 +36,7 @@ async def send_sms(
 @router.post("/whatsapp/send")
 async def send_whatsapp(
     message_data: MessageCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Send WhatsApp message"""
@@ -54,7 +54,7 @@ async def send_whatsapp(
 @router.post("/email/send")
 async def send_email(
     message_data: MessageCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Send email message"""
@@ -73,7 +73,7 @@ async def send_email(
 @router.post("/campaigns", response_model=dict)
 async def create_campaign(
     campaign_data: CampaignCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create messaging campaign"""
@@ -98,7 +98,7 @@ async def create_campaign(
 async def list_campaigns(
     skip: int = 0,
     limit: int = 50,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """List all campaigns"""
@@ -110,7 +110,7 @@ async def list_campaigns(
 @router.post("/templates", response_model=dict)
 async def create_template(
     template_data: TemplateCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create message template"""
@@ -131,7 +131,7 @@ async def create_template(
 @router.get("/templates")
 async def list_templates(
     channel: str = None,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """List message templates"""
@@ -146,7 +146,7 @@ async def list_templates(
 @router.get("/history/{customer_id}")
 async def get_message_history(
     customer_id: UUID,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Get customer message history"""
@@ -159,7 +159,7 @@ async def get_message_history(
 @router.post("/drips", response_model=dict)
 async def create_drip_campaign(
     drip_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create drip email/SMS sequence"""
@@ -179,7 +179,7 @@ async def create_drip_campaign(
 @router.post("/broadcast", response_model=dict)
 async def send_broadcast(
     broadcast_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Send broadcast message to segment"""
@@ -198,7 +198,7 @@ async def send_broadcast(
 # Conversation inbox
 @router.get("/inbox")
 async def get_inbox(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Get conversation inbox"""

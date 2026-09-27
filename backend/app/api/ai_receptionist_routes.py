@@ -16,7 +16,7 @@ router = APIRouter(prefix="/api/v1/ai", tags=["ai-receptionist"])
 @router.post("/chat")
 async def chat_with_ai(
     message: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Chat with AI receptionist"""
@@ -44,7 +44,7 @@ async def chat_with_ai(
 @router.post("/voice/call")
 async def initiate_voice_call(
     call_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Initiate voice call with AI"""
@@ -80,7 +80,7 @@ async def voice_call_webhook(
 @router.get("/conversations/{conversation_id}")
 async def get_conversation(
     conversation_id: UUID,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Get conversation history"""
@@ -109,7 +109,7 @@ async def get_conversation(
 @router.post("/booking")
 async def process_booking_intent(
     booking_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Process booking intent from AI conversation"""
@@ -133,7 +133,7 @@ async def process_booking_intent(
 @router.post("/reschedule")
 async def process_reschedule(
     reschedule_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Process reschedule request from AI"""
@@ -154,7 +154,7 @@ async def process_reschedule(
 @router.post("/cancel")
 async def process_cancellation(
     cancel_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Process cancellation request from AI"""
@@ -173,7 +173,7 @@ async def process_cancellation(
 @router.post("/escalate")
 async def escalate_to_human(
     escalate_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Escalate conversation to human agent"""
@@ -193,7 +193,7 @@ async def escalate_to_human(
 async def chat_multilingual(
     language: str,
     message: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Chat with AI in different language"""
@@ -229,7 +229,7 @@ async def ai_health_check():
 @router.post("/knowledge")
 async def add_knowledge(
     knowledge_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Add knowledge to AI knowledge base"""
@@ -249,7 +249,7 @@ async def add_knowledge(
 @router.post("/sentiment")
 async def analyze_sentiment(
     text: dict,
-    current_user: dict = Depends(get_current_user)
+    current_user = Depends(get_current_user)
 ):
     """Analyze customer sentiment"""
     try:
@@ -266,7 +266,7 @@ async def analyze_sentiment(
 @router.post("/lead-score")
 async def score_lead(
     lead_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Score lead based on conversation"""

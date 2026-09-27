@@ -16,7 +16,7 @@ automation_service = AutomationService()
 @router.post("/", response_model=dict)
 async def create_automation(
     automation_data: AutomationCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Create automation workflow"""
@@ -43,7 +43,7 @@ async def create_automation(
 async def list_automations(
     skip: int = 0,
     limit: int = 50,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """List all automations"""
@@ -55,7 +55,7 @@ async def list_automations(
 @router.get("/{automation_id}")
 async def get_automation(
     automation_id: UUID,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Get automation details"""
@@ -72,7 +72,7 @@ async def get_automation(
 async def update_automation(
     automation_id: UUID,
     automation_data: AutomationUpdate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Update automation"""
@@ -94,7 +94,7 @@ async def update_automation(
 @router.delete("/{automation_id}")
 async def delete_automation(
     automation_id: UUID,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Delete automation"""
@@ -113,7 +113,7 @@ async def delete_automation(
 @router.post("/{automation_id}/toggle")
 async def toggle_automation(
     automation_id: UUID,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Enable/disable automation"""
@@ -134,7 +134,7 @@ async def toggle_automation(
 async def trigger_automation_manual(
     automation_id: UUID,
     trigger_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Manually trigger automation"""
@@ -187,7 +187,7 @@ async def get_automation_templates():
 async def test_automation(
     automation_id: UUID,
     test_data: dict,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Test automation with sample data"""
